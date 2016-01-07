@@ -1,0 +1,11 @@
+{
+  "applications": {
+    "White Rabbit": {
+      "parseAppId": "IWr9xzTirLbjXH80mbTCtT9lWB73ggQe3PhA6nPg",
+      "herokuAppId": "e11766f7-a94f-408d-8a57-dff513c664ec"
+    },
+    "_default": {
+      "link": "White Rabbit"
+    }
+  }
+}
