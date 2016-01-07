@@ -4,7 +4,8 @@ var http = require('http'),
     bodyParser = require('body-parser'),
     Parse = require('parse/node'),
     ParseCloud = require('parse-cloud-express'),
-    parseAdaptor = require("./cloud/prerender-parse.js");
+    parseAdaptor = require("./cloud/prerender-parse.js"),
+    rewrite = require('express-rewrite');
 
 
 
