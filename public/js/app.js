@@ -8,6 +8,7 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider, Parse
     enabled: true,
     requireBase: false
   });
+  $locationProvider.hashPrefix('!');
   $stateProvider.state('home', {
     url: '/',
     controller: 'HomeCtrl',
@@ -137,12 +138,13 @@ app.directive('fileDropzone', function() {
   };
 });
 
-app.run(function($rootScope, $state) {
+app.run(function($rootScope, $state, $location) {
   $rootScope.$state = $state;
   $rootScope.hideNavigation = false;
   $rootScope.bodyClass = 'with-nav';
   $rootScope.titlePrefix = '';
   $rootScope.serverDomain = 'http://www.whiterabbitapps.net';
+  $rootScope.url = $location.url();
   $rootScope.currentUser = Parse.User.current();
   $(function() {
     var iOS, p;
