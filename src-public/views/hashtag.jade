@@ -1,0 +1,14 @@
+.hashtag
+  .header
+    h2 &#x23{{hashtag}}
+
+  div.entries(ng-repeat="entry in entries")
+    .entry
+      .date {{prettyDate(entry.date.iso)}}
+      img(ng-src="{{entry.image.url}}" ng-show="entry.image" style="width:400px; margin: 0 auto;")
+      .type(class="{{entry.type}}")
+      //- h3.text {{entry.text}}
+      p(ng-bind-html="entry.text | hashtagFilter")
+      .shelter(ng-show="entry.shelter")
+        a(href="/location/{{entry.shelter.short_name}}")
+          | {{entry.shelter.name}}

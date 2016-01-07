@@ -1,0 +1,67 @@
+h1 
+  | Animals
+  .button.add(ng-click="addAnimal()")
+
+select(id="group-select", name="group", ng-model="selectedGroup", ng-change="fetchAnimals()", ng-options="group for group in ['Mine', 'Featured', 'Adoptable', 'Kittens', 'New']")
+select(id="shelter-select", name="shelter", ng-model="selectedShelter", ng-change="fetchAnimals()", ng-show="selectedGroup == 'Adoptable'", ng-options="shelter.name for shelter in shelters track by shelter.objectId")
+
+
+
+div.animals
+  .animal(ng-repeat="animal in animals")
+
+    .not-editing(ng-hide="animal.editing")
+      .header
+        .cover-container
+          img.cover-photo(ng-src="{{animal.coverPhoto.url || '/img/blank_cover.png'}}")
+        .profile-col
+          .profile-photo
+            img.profile(ng-src="{{animal.profilePhoto.file || animal.profilePhoto.url || '/img/avatar_blank.png'}}")
+        
+        .info
+          a(ng-href="/cat/{{animal.username}}")
+            h1 {{animal.name}}
+          .gender {{animal.gender}}
+          .age {{animal.age()}}
+          .breed {{animal.breed.name}}
+          .adoptable {{animal.shelter ? (animal.adoptable ? 'Adoptable through ' : 'Adopted through ') : ''}}
+          .shelter 
+            a(href="/location/{{animal.shelter.short_name}}")
+              | {{animal.shelter.name}}
+        .actions(style="float:right;top:-180px;right:20px;position:relative;")
+          .button.edit(ng-click="editingAnimal(animal)")
+          .button.close(ng-click="removeAnimal(animal)")
+          .clear
+        .clear
+
+
+
+    .editing(ng-hide="!animal.editing")
+      div.profile-photo(file-dropzone='[image/png, image/jpeg, image/gif]', file='animal.profilePhoto.file', file-name='animal.profilePhoto.filename', data-max-file-size='3', style='width:100px;height:100px;')
+        img.profile(ng-src="{{animal.profilePhoto.file || animal.profilePhoto.url || '/img/avatar_blank.png'}}")
+      input.form-control.name(ng-model="animal.name", placeholder="Name")
+      input.form-control.username(ng-model="animal.username", placeholder="@username")
+      .form-control.gender
+        .label Gender
+        select(id="gender-select", name="gender", ng-model="animal.gender", ng-options="gender for gender in ['Male', 'Female']")
+      .form-control.breed
+        .label Breed
+        select(id="breed-select", name="breed", ng-model="animal.breed", ng-options="breed.name for breed in breeds track by breed.objectId")
+      .form-control.featured
+        .label Featured?
+        input(type="checkbox", ng-model="animal.featured")
+      .form-control.adoptable
+        .label Adoptable?
+        input(type="checkbox", ng-model="animal.adoptable")
+      .form-control.shelter
+        .label Shelter
+        select(id="shelter-select", name="shelter", ng-model="animal.shelter", ng-options="shelter.name for shelter in shelters track by shelter.objectId")
+      input.form-control.sourceLink(ng-model="animal.originalSourceLink", placeholder="Source Url")
+      input.form-control.birthDate(ng-model="animal.birthDate", type="date", placeholder="Birth Date")
+
+      .actions(style="float:right;margin-top: 20px; margin-bottom: 50px;")
+        .button.save(ng-click="editAnimal(animal)", ng-hide="animal.saving")
+        .button.close(ng-click="cancelEditing(animal)")
+        .clear
+        
+      .clear

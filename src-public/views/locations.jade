@@ -1,0 +1,70 @@
+h1 Locations
+.button.add(ng-click="addLocation()")
+
+select(id="type-select", name="type", ng-model="selectedType", ng-change="fetchLocations()")
+  option(value="{{type}}", ng-repeat="type in types") {{type}}
+
+
+.location(ng-repeat="location in locations")
+  .not-editing(ng-hide="location.editing")
+    img.logo(ng-src="{{location.logo.file || location.logo.url || '/img/avatar_blank.png'}}")
+    
+    .info
+      .name 
+        a(href="/#!/location/{{location.short_name}}")
+          | {{location.name}}
+      .address1 {{location.address}}
+      .address2 {{location.city}}, {{location.state}} {{location.zip}}
+      .geo {{location.geo.latitude}},{{location.geo.longitude}}
+      .phone {{location.phone}}
+      .email {{location.email}}
+      .web
+        a(ng-href="{{location.website}}" target="_blank")
+          | {{location.website}}
+      .fbUrl
+        a(ng-href="{{location.fbUrl}}" target="_blank")
+          | {{location.fbUrl}}
+      .twitterUrl
+        a(ng-href="{{location.twitterUrl}}" target="_blank")
+          | {{location.twitterUrl}}
+      .instagramUrl
+        a(ng-href="{{location.instagramUrl}}" target="_blank")
+          | {{location.instagramUrl}}
+      .yelpUrl
+        a(ng-href="{{location.yelpUrl}}" target="_blank")
+          | {{location.yelpUrl}}
+      .youtubeUrl
+        a(ng-href="{{location.youtubeUrl}}" target="_blank")
+          | {{location.youtubeUrl}}
+    .actions
+      .button.edit(ng-click="editingLocation(location)")
+      .button.close(ng-click="removeLocation(location)")
+      .clear
+    .clear
+  .edit(ng-hide="!location.editing")
+
+    div(file-dropzone='[image/png, image/jpeg, image/gif]', file='location.logo.file', file-name='location.logo.filename', data-max-file-size='3', style='width:100px;height:100px;')
+      img.logo(ng-src="{{location.logo.file || location.logo.url || '/img/avatar_blank.png'}}")
+
+    select(name="type", ng-model="location.type")
+      option(value="{{type}}", ng-repeat="type in types") {{type}}
+
+    input.form-control.name(ng-model="location.name", placeholder="Name")
+    input.form-control.name(ng-model="location.short_name", placeholder="short_name")
+    input.form-control.address(ng-model="location.address", placeholder="Address")
+    input.form-control.city(ng-model="location.city", placeholder="City")
+    input.form-control.state(ng-model="location.state", placeholder="State")
+    input.form-control.zip(ng-model="location.zip", placeholder="Zip")
+    input.form-control.latitude(ng-model="location.geo.latitude")
+    input.form-control.longitude(ng-model="location.geo.longitude")
+    input.form-control.email(ng-model="location.email", placeholder="Email")
+    input.form-control.phone(ng-model="location.phone", placeholder="Phone")
+    input.form-control.website(ng-model="location.website", placeholder="Website")
+    input.form-control.fbUrl(ng-model="location.fbUrl", placeholder="Facebook Url")
+    input.form-control.twitterUrl(ng-model="location.twitterUrl", placeholder="Twitter Url")
+    input.form-control.instagramUrl(ng-model="location.instagramUrl", placeholder="Instagram Url")
+    input.form-control.yelpUrl(ng-model="location.yelpUrl", placeholder="Yelp Url")
+    input.form-control.youtubeUrl(ng-model="location.youtubeUrl", placeholder="Youtube Url")
+    .actions
+      .button.save(ng-click="editLocation(location)")
+      .button.close(ng-click="cancelEditing(location)")

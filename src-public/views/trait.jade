@@ -1,0 +1,20 @@
+h1 Traits ({{traits.length}})
+
+div(ng-repeat="trait in traits")
+  form(ng-hide="trait.editing")
+    .input-group
+      h3.form-control(ng-dblclick="editingTrait(trait)", readonly) {{trait.name}}
+      span.input-group-btn(style="width:70px;")
+        .button.edit(ng-click="editingTrait(trait)")
+        .button.close(ng-click="removeTrait(trait)")
+  form(ng-submit="editTrait(trait)", ng-show="trait.editing")
+    .input-group
+      input.form-control(ng-model="trait.name")
+      span.input-group-btn
+        .button.close(ng-click="cancelEditing(trait)")
+
+form(role="form", ng-submit="addTrait()")
+  .input-group
+    input.form-control(type="text", ng-model="newTrait.name", autofocus)
+    span.input-group-btn
+      .button.add(type="submit")

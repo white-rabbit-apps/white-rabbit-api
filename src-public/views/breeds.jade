@@ -1,0 +1,31 @@
+h1 Breeds ({{breeds.length}})
+
+.breeds
+  div.breed(ng-repeat="breed in breeds")
+    form(ng-hide="breed.editing")
+      .input-group
+        span.input-group-addon {{ breed.random }}
+          img.image(ng-src="{{breed.image.file || breed.image.url || '/img/avatar_blank.png'}}")
+        input.form-control.name(ng-model="breed.name", ng-dblclick="editingBreed(breed)", readonly)
+        input.form-control.origin(ng-model="breed.originCountry", ng-dblclick="editingBreed(breed)", readonly)
+        textarea.form-control.description(ng-model="breed.description", ng-dblclick="editingBreed(breed)", readonly)
+        span.input-group-btn(style="width: 70px;")
+          .button.edit(ng-click="editingBreed(breed)")
+          .button.close(ng-click="removeBreed(breed)")
+    form(ng-submit="editBreed(breed)", ng-show="breed.editing")
+      .input-group
+        .input-group-addon
+          div.image(file-dropzone='[image/png, image/jpeg, image/gif]', file='breed.image.file', file-name='breed.image.filename', data-max-file-size='3', style='width:150px;height:150px;')
+            img.image(ng-src="{{breed.image.file || breed.image.url || '/img/avatar_blank.png'}}")
+        input.form-control(ng-model="breed.name")
+        input.form-control(ng-model="breed.originCountry", placeholder="Country of Origin")
+        textarea.form-control.description(ng-model="breed.description", placeholder="Description")
+        span.input-group-btn(style="width: 70px;")
+          .button.save(ng-click="editBreed(breed)")
+          .button.close(ng-click="cancelEditing(breed)")
+
+form(role="form", ng-submit="addBreed()")
+  .input-group
+    input.form-control(type="text", ng-model="newBreed.name", autofocus)
+    span.input-group-btn
+      .button.add(type="submit")

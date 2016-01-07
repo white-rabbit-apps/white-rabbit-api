@@ -1,0 +1,27 @@
+h1 Users
+
+
+table#users.table.dataTable.no-footer(role='grid', aria-describedby='dataTables-users')
+  thead
+    tr(role='row')
+      th.sorting(tabindex='0', aria-controls='dataTables-example', rowspan='1', colspan='1', style='width: 60px;')
+      th.sorting_asc(tabindex='0', aria-controls='dataTables-example', rowspan='1', colspan='1', aria-sort='ascending', aria-label='Rendering engine: activate to sort column descending', style='width: 154px;') First Name
+      th.sorting(tabindex='0', aria-controls='dataTables-example', rowspan='1', colspan='1', aria-label='Browser: activate to sort column ascending', style='width: 189px;') Last Name
+      th.sorting(tabindex='0', aria-controls='dataTables-example', rowspan='1', colspan='1', aria-label='Platform(s): activate to sort column ascending', style='width: 175px;') Email
+      th.sorting(tabindex='0', aria-controls='dataTables-example', rowspan='1', colspan='1', aria-label='Engine version: activate to sort column ascending', style='width: 131px;') Admin
+      th.sorting(tabindex='0', aria-controls='dataTables-example', rowspan='1', colspan='1', aria-label='Engine version: activate to sort column ascending', style='width: 131px;') Shelter
+      th.sorting(tabindex='0', aria-controls='dataTables-example', rowspan='1', colspan='1', aria-label='Engine version: activate to sort column ascending', style='width: 131px;')
+      //- th.sorting(tabindex='0', aria-controls='dataTables-example', rowspan='1', colspan='1', aria-label='CSS grade: activate to sort column ascending', style='width: 101px;') Website
+  tbody
+    tr.gradeA.user.odd(role='row', ng-repeat="user in users")
+      td
+        img.profile(ng-src="{{user.profilePhoto.url}}")
+      td {{user.firstName}}
+      td {{user.lastName}}
+      td {{user.email}}
+      td {{user.admin}}
+      td {{user.shelter.name}}
+      td
+        a(ng-click='makeAdmin(user)')
+          | Make Admin
+      //- td {{user.zip}}
