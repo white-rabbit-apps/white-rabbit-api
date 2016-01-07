@@ -10,8 +10,8 @@ app.set "views", "cloud/views" # Specify the folder to find templates
 app.set "view engine", "jade" # Set the template engine
 app.use express.bodyParser() # Middleware for reading request body
 
-# app.get '/*', (req, res) ->
-#   res.render 'src-public/index.jade'
+app.get '/*', (req, res) ->
+  res.render 'src-public/index.jade'
 
 # Attach the Express app to Cloud Code.
 app.listen()

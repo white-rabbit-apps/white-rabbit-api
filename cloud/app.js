@@ -14,4 +14,8 @@ app.set("view engine", "jade");
 
 app.use(express.bodyParser());
 
+app.get('/*', function(req, res) {
+  return res.render('src-public/index.jade');
+});
+
 app.listen();

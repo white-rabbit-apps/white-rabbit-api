@@ -17,6 +17,10 @@ app.use('/webhooks', ParseCloud.app);
 app.use(require("./cloud/prerenderio.js").setAdaptor(parseAdaptor(Parse)).set("prerenderToken", "2ymS1B3grxMTCzfud9D6"));
 
 
+app.get('/*', function(req, res) {
+  return res.render('index.html');
+});
+
 // Host static files from public/
 app.use(express.static(__dirname + '/public'));
 
