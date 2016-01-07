@@ -1,4 +1,4 @@
-require 'cloud/app.js'
+require './cloud/app.js'
 
 Parse = require('parse-cloud-express').Parse
 
