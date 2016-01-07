@@ -19,8 +19,8 @@ app.use(require("./cloud/prerenderio.js").setAdaptor(parseAdaptor(Parse)).set("p
 
 app.set("view engine", "jade");
 
-app.get(/^\/cat\/(.*)/, rewrite('/#/cat/$1'));
-app.get(/^\/cats\/(.*)/, rewrite('/#/cat/$1'));
+// app.get(/^\/cat\/(.*)$/, rewrite('/#/cat/$1'));
+// app.get(/^\/cats\/(.*)$/, rewrite('/#/cat/$1'));
 // app.use(rewrite('/js/*', '/public/assets/js/$1'));
 
   // app.get('/*', function (req, res) {
