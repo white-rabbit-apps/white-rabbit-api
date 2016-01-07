@@ -57,6 +57,7 @@ app.controller 'AnimalCtrl', ($scope, Animal, AnimalTimelineEntry, $stateParams,
         $scope.isAlive = false
 
       $rootScope.title = $scope.animal.name + ' on ' + $rootScope.title
+      $rootScope.description = 'Check out ' + $scope.animal.name + '\'s profile on White Rabbit Apps'
       $rootScope.mainImage = $scope.animal.profilePhoto.url
       $scope.createNewEntry()
       $scope.fetchEntries()

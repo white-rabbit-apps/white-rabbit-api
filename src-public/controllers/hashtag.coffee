@@ -3,6 +3,7 @@ app.controller 'HashtagCtrl', ($scope, AnimalTimelineEntry, $stateParams, $rootS
   $scope.hashtag = $stateParams.hashtag
 
   $rootScope.title = '#' + $scope.hashtag + ' on ' + $rootScope.title
+  $rootScope.description = 'Check out posts tagged #' + $scope.hashtag + ' on White Rabbit Apps'
   $rootScope.hideNavigation = false
   $rootScope.bodyClass = 'no-nav'
 

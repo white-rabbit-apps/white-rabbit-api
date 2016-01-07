@@ -161,6 +161,7 @@ app.run ($rootScope, $state, $location) ->
   $rootScope.hideNavigation = false
   $rootScope.bodyClass = 'with-nav'
   $rootScope.title = 'White Rabbit Apps'
+  $rootScope.description = 'Follow the white rabbit...'
 
   $rootScope.serverDomain = 'http://www.whiterabbitapps.net'
   $rootScope.url = $location.url()

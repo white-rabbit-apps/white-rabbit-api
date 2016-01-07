@@ -15,6 +15,8 @@ app.controller 'LocationCtrl', ($scope, $rootScope, $stateParams, Location, Anim
       console.log($scope.location)
 
       $rootScope.title = $scope.location.name + ' on ' + $rootScope.title
+      $rootScope.description = 'Check out ' + $scope.location.name + ' on White Rabbit Apps'
+      $rootScope.mainImage = $scope.location.logo.url
 
       $scope.fetchAnimals()
       $scope.fetchAlumni()
