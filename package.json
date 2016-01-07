@@ -4,7 +4,7 @@
   "description": "Follow the white rabbit...",
   "main": "server",
   "scripts": {
-    "production": "lineman clean build && npm i express@3 && node -e \"var e = require('express'), a = e(); a.use(e.static('dist/')); a.listen(process.env.PORT)\"",
+    "production": "lineman build && npm i express@3 && node -e \"var e = require('express'), a = e(); a.use(e.static('dist/')); a.listen(process.env.PORT)\"",
     "postinstall": "node_modules/.bin/bower install | xargs echo && gulp build",
     "watch": "node_modules/.bin/gulp watch",
     "deploy-parse": "parse deploy"
@@ -24,7 +24,23 @@
     "lodash": "2.4.x",
     "prerender-node": "^2.1.0",
     "run-sequence": "0.3.x",
-    "lineman": "*"
+    "lineman": "*",
+    "grunt": "~0.4.5",
+    "grunt-cli": "~0.1.13",
+    "grunt-html2js": "~0.2.7",
+    "grunt-contrib-uglify": "~0.5.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-connect": "~0.8.0",
+    "grunt-contrib-compress": "~0.9.1",
+    "grunt-contrib-concat": "~0.4.0",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-bower-task": "~0.3.4",
+    "grunt-karma": "~0.8.0",
+    "karma": "~0.12.0",
+    "karma-jasmine": "~0.1.0",
+    "karma-phantomjs-launcher": "~0.1.4",
+    "karma-ng-html2js-preprocessor": "~0.1.0"
   },
   "engines": {
     "node": "0.12.2"
