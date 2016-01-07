@@ -4,7 +4,7 @@
   "description": "Follow the white rabbit...",
   "main": "server",
   "scripts": {
-    "production": "lineman build && npm i express@3 && node -e \"var e = require('express'), a = e(); a.use(e.static('dist/')); a.listen(process.env.PORT)\"",
+    "production": "npm i express@3 && node -e \"var e = require('express'), a = e(); a.use(e.static('dist/')); a.listen(process.env.PORT)\"",
     "postinstall": "node_modules/.bin/bower install | xargs echo && gulp build",
     "watch": "node_modules/.bin/gulp watch",
     "deploy-parse": "parse deploy"
