@@ -31,7 +31,7 @@ app.set("view engine", "jade");
   //     res.render('./index');
   // });
 
-app.get('/*', function(request, response, next) {
+app.get('/cat/*', function(request, response, next) {
   response.sendfile(__dirname + '/public/index.html');
 });
 
