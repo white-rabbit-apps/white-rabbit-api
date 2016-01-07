@@ -1,0 +1,20 @@
+{
+  "name": "angular-parse",
+  "main": [
+    "angular-parse.js"
+  ],
+  "dependencies": {},
+  "install": {
+    "path": "lib"
+  },
+  "homepage": "https://github.com/jimrhoskins/angular-parse",
+  "_release": "fac11b2c7d",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "fac11b2c7d29020c4ddabf2504841f968be25bd0"
+  },
+  "_source": "git://github.com/jimrhoskins/angular-parse.git",
+  "_target": "*",
+  "_originalSource": "angular-parse"
+}

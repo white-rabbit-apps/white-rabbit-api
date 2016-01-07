@@ -1,0 +1,30 @@
+<div >
+  <div class="header">
+    <h1> Forum</h1>
+  </div>
+  <div class="new-form" ng-controller="PostForm" ng-include="'partials/form.html'"> </div>
+
+  <div class="page-header clearfix">
+    <h4 class="pull-left"> Disussions</h4>
+    <h4 class="pull-right">Comments</h4>
+  </div>
+  <div ng-repeat="post in posts" class="post row-fluid">
+    <div class="span2">
+      Avatar
+    </div>
+    <div class="span8">
+      <a class="title" ng-href="#/posts/{{post.objectId}}">
+        {{post.title}} 
+      </a>
+      <div class="meta">
+        Posted by
+        {{post.author.username}}
+      </div>
+    </div>
+    <div class="comment-count span2">
+      {{post.commentCount}}
+    </div>
+  </div>
+  {{cars}}
+</div>
+
