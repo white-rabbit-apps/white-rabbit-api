@@ -18,9 +18,9 @@ app.use(require("./cloud/prerenderio.js").setAdaptor(parseAdaptor(Parse)).set("p
 
 app.set("view engine", "jade");
 
-app.get('/*', function(req, res) {
-  return res.render('public/index.jade');
-});
+// app.get('/*', function(req, res) {
+//   return res.render('public/index.jade');
+// });
 
 // Host static files from public/
 app.use(express.static(__dirname + '/public'));
