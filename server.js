@@ -4,8 +4,8 @@ var http = require('http'),
     bodyParser = require('body-parser'),
     Parse = require('parse/node'),
     ParseCloud = require('parse-cloud-express'),
-    parseAdaptor = require('./cloud/prerender-parse.js'),
-    prerender = require("./cloud/prerenderio.js").setAdaptor(parseAdaptor(Parse)).set("prerenderToken", "2ymS1B3grxMTCzfud9D6"),
+    // parseAdaptor = require('./cloud/prerender-parse.js'),
+    // prerender = require("./cloud/prerenderio.js").setAdaptor(parseAdaptor(Parse)).set("prerenderToken", "2ymS1B3grxMTCzfud9D6"),
     connect_s4a = require('connect-s4a');
 
 var app = express();
