@@ -5,7 +5,7 @@ var http = require('http'),
     Parse = require('parse/node'),
     ParseCloud = require('parse-cloud-express'),
     parseAdaptor = require("./cloud/prerender-parse.js"),
-    rewrite = require('express-rewrite');
+    rewriter = require('express-rewrite');
 
 
 
@@ -19,7 +19,8 @@ app.use(require("./cloud/prerenderio.js").setAdaptor(parseAdaptor(Parse)).set("p
 
 app.set("view engine", "jade");
 
-app.use(rewrite('/*', '/#/$1'));
+app.use(rewriter)
+app.get('/:params', rewriter.rewrite('/$1'));
 
   // app.get('/*', function (req, res) {
   //     res.render('./index');
