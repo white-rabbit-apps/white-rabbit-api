@@ -20,6 +20,7 @@ app.use(require("./cloud/prerenderio.js").setAdaptor(parseAdaptor(Parse)).set("p
 app.set("view engine", "jade");
 
 app.use(rewrite(/^(.*)$/, '/#/$1'));
+app.use(rewrite('/js/*', '/public/assets/js/$1'));
 
   // app.get('/*', function (req, res) {
   //     res.render('./index');
