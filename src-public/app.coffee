@@ -164,6 +164,7 @@ app.run ($rootScope, $state, $location) ->
 
   $rootScope.serverDomain = 'http://www.whiterabbitapps.net'
   $rootScope.url = $location.url()
+  $rootScope.mainImage = 'http://files.parsetfss.com/76b6cc17-92eb-4048-be57-afbc6cb6e77d/tfss-64d0f007-06e1-4c7f-b2a2-6d558b87361f-file'
 
 
   $rootScope.currentUser = Parse.User.current()
