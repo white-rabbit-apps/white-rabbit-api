@@ -26,7 +26,7 @@ app.config (
     enabled: true,
     requireBase: false
   })
-  # $locationProvider.hashPrefix('!')
+  $locationProvider.hashPrefix('!')
 
   $stateProvider.state 'home',
     # url: '/:locale'
