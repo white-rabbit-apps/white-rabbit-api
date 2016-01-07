@@ -22,7 +22,7 @@ app.set("view engine", "jade");
 app.use(express.static(__dirname + '/public'));
 
 app.get('/*', function(request, response, next) {
-  response.sendfile(__dirname + '/public/index.html');
+  response.sendFile(__dirname + '/public/index.html');
 });
 
 // Catch all unknown routes.
