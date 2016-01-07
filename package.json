@@ -24,7 +24,8 @@
     "jade": "1.3.x",
     "lodash": "2.4.x",
     "prerender-node": "^2.1.0",
-    "run-sequence": "0.3.x"
+    "run-sequence": "0.3.x",
+    "connect-s4a": "*"
   },
   "engines": {
     "node": "0.12.2"

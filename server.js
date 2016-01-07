@@ -5,9 +5,8 @@ var http = require('http'),
     Parse = require('parse/node'),
     ParseCloud = require('parse-cloud-express'),
     parseAdaptor = require('./cloud/prerender-parse.js'),
-    prerender = require("./cloud/prerenderio.js").setAdaptor(parseAdaptor(Parse)).set("prerenderToken", "2ymS1B3grxMTCzfud9D6");
-
-
+    prerender = require("./cloud/prerenderio.js").setAdaptor(parseAdaptor(Parse)).set("prerenderToken", "2ymS1B3grxMTCzfud9D6"),
+    connect_s4a = require('connect-s4a');
 
 var app = express();
 
@@ -52,7 +51,9 @@ app.set("view engine", "jade");
 
 // Host static files from public/
 app.use(express.static(__dirname + '/public'));
-app.use(prerender);
+
+app.use(connect-s4a("d3c44980d364f87184334d863759dbe7"));
+// app.use(prerender);
 
 app.get('/*', function(request, response, next) {
   response.sendFile(__dirname + '/public/index.html');
