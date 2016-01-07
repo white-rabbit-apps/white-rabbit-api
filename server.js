@@ -11,9 +11,13 @@ var http = require('http'),
 
 var app = express();
 
-app.use(rewriter);
+// app.use(rewriter);
+//
+// app.get('/cat/:name', rewriter.rewrite('/#/cat/$1'));
 
-app.get('/cat/:name', rewriter.rewrite('/#/cat/$1'));
+app.get('*', function(request, response, next) {
+  response.sendfile(__dirname + '/index.html');
+});
 
 // Import your cloud code (which configures the routes)
 require('./cloud/main.js');
