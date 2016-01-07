@@ -156,13 +156,14 @@ app.directive('fileDropzone', () ->
         return false
   )
 
-app.run ($rootScope, $state) ->
+app.run ($rootScope, $state, $location) ->
   $rootScope.$state = $state
   $rootScope.hideNavigation = false
   $rootScope.bodyClass = 'with-nav'
   $rootScope.titlePrefix = ''
 
   $rootScope.serverDomain = 'http://www.whiterabbitapps.net'
+  $rootScope.url = $location.url()
 
 
   $rootScope.currentUser = Parse.User.current()
