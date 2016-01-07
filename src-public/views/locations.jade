@@ -11,7 +11,7 @@ select(id="type-select", name="type", ng-model="selectedType", ng-change="fetchL
     
     .info
       .name 
-        a(href="/#!/location/{{location.short_name}}")
+        a(href="/location/{{location.short_name}}")
           | {{location.name}}
       .address1 {{location.address}}
       .address2 {{location.city}}, {{location.state}} {{location.zip}}
