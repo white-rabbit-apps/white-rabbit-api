@@ -5,11 +5,15 @@ var http = require('http'),
     Parse = require('parse/node'),
     ParseCloud = require('parse-cloud-express'),
     parseAdaptor = require("./cloud/prerender-parse.js"),
-    rewrite = require('express-urlrewrite');
+    rewriter = require('express-rewrite');
 
 
 
 var app = express();
+
+app.use(rewriter);
+
+app.get('/cat/:name', rewriter.rewrite('/#/cat/$1'));
 
 // Import your cloud code (which configures the routes)
 require('./cloud/main.js');
@@ -19,7 +23,7 @@ app.use(require("./cloud/prerenderio.js").setAdaptor(parseAdaptor(Parse)).set("p
 
 app.set("view engine", "jade");
 
-app.get(/(?:^|[^#])\/cat\/(.*)$/, rewrite('\/#\/$2'));
+// app.get(/(?:^|[^#])\/cat\/(.*)$/, rewrite('\/#\/$2'));
 // app.get(/^\/cats\/(.*)$/, rewrite('/#/cat/$1'));
 // app.use(rewrite('/js/*', '/public/assets/js/$1'));
 
