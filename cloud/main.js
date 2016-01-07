@@ -1,9 +1,5 @@
 var Parse;
 
-require('cloud/app.js');
-
-require('cloud/validations.js');
-
 Parse = require('parse-cloud-express').Parse;
 
 Parse.Cloud.define("makeAdmin", function(request, response) {

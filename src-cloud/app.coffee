@@ -2,8 +2,8 @@
 # These two lines are required to initialize Express in Cloud Code.
 express = require("express")
 app = express()
-# parseAdaptor = require("cloud/prerender-parse.js")
-# app.use require("cloud/prerenderio.js").setAdaptor(parseAdaptor(Parse)).set("prerenderToken", "2ymS1B3grxMTCzfud9D6")
+parseAdaptor = require("./cloud/prerender-parse.js")
+app.use require("./cloud/prerenderio.js").setAdaptor(parseAdaptor(Parse)).set("prerenderToken", "2ymS1B3grxMTCzfud9D6")
 
 # Global app configuration section
 app.set "views", "cloud/views" # Specify the folder to find templates

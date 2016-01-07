@@ -1,7 +1,5 @@
 var Parse, emailRegEx, usernameRegex;
 
-require('cloud/app.js');
-
 Parse = require('parse-cloud-express').Parse;
 
 emailRegEx = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;

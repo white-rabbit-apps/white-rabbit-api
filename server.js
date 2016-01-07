@@ -3,7 +3,10 @@ var http = require('http'),
     express = require('express'),
     bodyParser = require('body-parser'),
     Parse = require('parse/node'),
-    ParseCloud = require('parse-cloud-express');
+    ParseCloud = require('parse-cloud-express'),
+    parseAdaptor = require("./cloud/prerender-parse.js");
+
+
 
 var app = express();
 
@@ -11,6 +14,8 @@ var app = express();
 require('./cloud/main.js');
 // Mount the webhooks app to a specific path (must match what is used in scripts/register-webhooks.js)
 app.use('/webhooks', ParseCloud.app);
+app.use(require("./cloud/prerenderio.js").setAdaptor(parseAdaptor(Parse)).set("prerenderToken", "2ymS1B3grxMTCzfud9D6"));
+
 
 // Host static files from public/
 app.use(express.static(__dirname + '/public'));
@@ -27,4 +32,3 @@ var server = http.createServer(app);
 server.listen(port, function() {
   console.log('Cloud Code Webhooks server running on port ' + port + '.');
 });
-

@@ -1,7 +1,5 @@
 var Parse;
 
-require('cloud/app.js');
-
 Parse = require('parse-cloud-express').Parse;
 
 Parse.Cloud.job("setEntriesPrivate", function(request, response) {
