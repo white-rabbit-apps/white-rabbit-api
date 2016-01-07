@@ -31,13 +31,25 @@ app.set("view engine", "jade");
   //     res.render('./index');
   // });
 
-app.get('/cat/*', function(request, response, next) {
-  response.sendfile(__dirname + '/public/index.html');
-});
-
-
 // Host static files from public/
 app.use(express.static(__dirname + '/public'));
+
+
+app.get('/*', function(request, response, next) {
+  response.sendfile(__dirname + '/public/index.html');
+});
+// app.get('/location/*', function(request, response, next) {
+//   response.sendfile(__dirname + '/public/index.html');
+// });
+// app.get('/shelter/*', function(request, response, next) {
+//   response.sendfile(__dirname + '/public/index.html');
+// });
+// app.get('/hashtag/*', function(request, response, next) {
+//   response.sendfile(__dirname + '/public/index.html');
+// });
+
+
+
 
 // Catch all unknown routes.
 app.all('/', function(request, response) {
