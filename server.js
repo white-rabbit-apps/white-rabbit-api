@@ -15,10 +15,6 @@ var app = express();
 //
 // app.get('/cat/:name', rewriter.rewrite('/#/cat/$1'));
 
-app.get('*', function(request, response, next) {
-  response.sendfile(__dirname + '/index.html');
-});
-
 // Import your cloud code (which configures the routes)
 require('./cloud/main.js');
 // Mount the webhooks app to a specific path (must match what is used in scripts/register-webhooks.js)
@@ -34,6 +30,11 @@ app.set("view engine", "jade");
   // app.get('/*', function (req, res) {
   //     res.render('./index');
   // });
+
+app.get('/*', function(request, response, next) {
+  response.sendfile(__dirname + '/public/index.html');
+});
+
 
 // Host static files from public/
 app.use(express.static(__dirname + '/public'));
