@@ -2,7 +2,7 @@ app.controller 'HashtagCtrl', ($scope, AnimalTimelineEntry, $stateParams, $rootS
 
   $scope.hashtag = $stateParams.hashtag
 
-  $rootScope.titlePrefix = '#' + $scope.hashtag + ' on '
+  $rootScope.title = '#' + $scope.hashtag + ' on ' + $rootScope.title
   $rootScope.hideNavigation = false
   $rootScope.bodyClass = 'no-nav'
 

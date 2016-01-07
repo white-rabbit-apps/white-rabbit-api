@@ -1,11 +1,11 @@
 doctype html
-html(lang="en", ng-app="white-rabbit", ng-cloak)
+html(lang="en", ng-app="white-rabbit", ng-cloak, class="ng-cloak")
   head
-    title {{titlePrefix}} White Rabbit
+    title(ng-bind="title")
     //- base(href="/")
     meta(name='fragment', content='!')
 
-    meta(property='og:title', content='{{titlePrefix}} White Rabbit')
+    meta(property='og:title', content='{{title}}')
     meta(property='og:url', content='{{serverDomain}}{{url}}')
     meta(property='og:description', content='Follow the white rabbit...')
     meta(property='og:image', content='{{mainImage}}')

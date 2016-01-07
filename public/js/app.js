@@ -142,7 +142,7 @@ app.run(function($rootScope, $state, $location) {
   $rootScope.$state = $state;
   $rootScope.hideNavigation = false;
   $rootScope.bodyClass = 'with-nav';
-  $rootScope.titlePrefix = '';
+  $rootScope.title = 'White Rabbit Apps';
   $rootScope.serverDomain = 'http://www.whiterabbitapps.net';
   $rootScope.url = $location.url();
   $rootScope.mainImage = 'http://files.parsetfss.com/76b6cc17-92eb-4048-be57-afbc6cb6e77d/tfss-64d0f007-06e1-4c7f-b2a2-6d558b87361f-file';
@@ -254,7 +254,7 @@ app.controller('AnimalCtrl', function($scope, Animal, AnimalTimelineEntry, $stat
       if ($scope.animal.deceasedDate) {
         $scope.isAlive = false;
       }
-      $rootScope.titlePrefix = $scope.animal.name + ' on ';
+      $rootScope.title = $scope.animal.name + ' on ' + $rootScope.title;
       $rootScope.mainImage = $scope.animal.profilePhoto.url;
       $scope.createNewEntry();
       return $scope.fetchEntries();
@@ -509,7 +509,7 @@ app.controller('BreedsCtrl', function($scope, Breed) {
 
 app.controller('HashtagCtrl', function($scope, AnimalTimelineEntry, $stateParams, $rootScope) {
   $scope.hashtag = $stateParams.hashtag;
-  $rootScope.titlePrefix = '#' + $scope.hashtag + ' on ';
+  $rootScope.title = '#' + $scope.hashtag + ' on ' + $rootScope.title;
   $rootScope.hideNavigation = false;
   $rootScope.bodyClass = 'no-nav';
   $scope.fetchEntries = function() {
@@ -559,7 +559,7 @@ app.controller('LocationCtrl', function($scope, $rootScope, $stateParams, Locati
     }).then(function(locations) {
       $scope.location = locations[0];
       console.log($scope.location);
-      $rootScope.titlePrefix = $scope.location.name + ' on ';
+      $rootScope.title = $scope.location.name + ' on ' + $rootScope.title;
       $scope.fetchAnimals();
       return $scope.fetchAlumni();
     });

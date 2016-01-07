@@ -14,7 +14,7 @@ app.controller 'LocationCtrl', ($scope, $rootScope, $stateParams, Location, Anim
       $scope.location = locations[0]
       console.log($scope.location)
 
-      $rootScope.titlePrefix = $scope.location.name + ' on '
+      $rootScope.title = $scope.location.name + ' on ' + $rootScope.title
 
       $scope.fetchAnimals()
       $scope.fetchAlumni()

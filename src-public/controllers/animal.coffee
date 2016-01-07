@@ -56,7 +56,7 @@ app.controller 'AnimalCtrl', ($scope, Animal, AnimalTimelineEntry, $stateParams,
       if $scope.animal.deceasedDate
         $scope.isAlive = false
 
-      $rootScope.titlePrefix = $scope.animal.name + ' on '
+      $rootScope.title = $scope.animal.name + ' on ' + $rootScope.title
       $rootScope.mainImage = $scope.animal.profilePhoto.url
       $scope.createNewEntry()
       $scope.fetchEntries()
