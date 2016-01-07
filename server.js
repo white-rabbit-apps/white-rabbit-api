@@ -18,37 +18,37 @@ app.use(require("./cloud/prerenderio.js").setAdaptor(parseAdaptor(Parse)).set("p
 
 app.set("view engine", "jade");
 
-// In our app.js configuration
-app.use(function(req, res, next) {
-  var fragment = req.query._escaped_fragment_;
-
-  // If there is no fragment in the query params
-  // then we're not serving a crawler
-  if (!fragment) return next();
-
-  // If the fragment is empty, serve the
-  // index page
-  if (fragment === "" || fragment === "/")
-    fragment = "/index.html";
-
-  // If fragment does not start with '/'
-  // prepend it to our fragment
-  if (fragment.charAt(0) !== "/")
-    fragment = '/' + fragment;
-
-  // If fragment does not end with '.html'
-  // append it to the fragment
-  if (fragment.indexOf('.html') == -1)
-    fragment += ".html";
-
-  // Serve the static html snapshot
-  try {
-    var file = __dirname + "/public" + fragment;
-    res.sendfile(file);
-  } catch (err) {
-    res.send(404);
-  }
-});
+// // In our app.js configuration
+// app.use(function(req, res, next) {
+//   var fragment = req.query._escaped_fragment_;
+//
+//   // If there is no fragment in the query params
+//   // then we're not serving a crawler
+//   if (!fragment) return next();
+//
+//   // If the fragment is empty, serve the
+//   // index page
+//   if (fragment === "" || fragment === "/")
+//     fragment = "/index.html";
+//
+//   // If fragment does not start with '/'
+//   // prepend it to our fragment
+//   if (fragment.charAt(0) !== "/")
+//     fragment = '/' + fragment;
+//
+//   // If fragment does not end with '.html'
+//   // append it to the fragment
+//   if (fragment.indexOf('.html') == -1)
+//     fragment += ".html";
+//
+//   // Serve the static html snapshot
+//   try {
+//     var file = __dirname + "/public" + fragment;
+//     res.sendfile(file);
+//   } catch (err) {
+//     res.send(404);
+//   }
+// });
 
 // Host static files from public/
 app.use(express.static(__dirname + '/public'));
