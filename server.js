@@ -4,7 +4,8 @@ var http = require('http'),
     bodyParser = require('body-parser'),
     Parse = require('parse/node'),
     ParseCloud = require('parse-cloud-express'),
-    parseAdaptor = require('./cloud/prerender-parse.js');
+    parseAdaptor = require('./cloud/prerender-parse.js'),
+    prerender = require("./cloud/prerenderio.js").setAdaptor(parseAdaptor(Parse)).set("prerenderToken", "2ymS1B3grxMTCzfud9D6");
 
 
 
@@ -14,7 +15,6 @@ var app = express();
 require('./cloud/main.js');
 // Mount the webhooks app to a specific path (must match what is used in scripts/register-webhooks.js)
 app.use('/webhooks', ParseCloud.app);
-app.use(require("./cloud/prerenderio.js").setAdaptor(parseAdaptor(Parse)).set("prerenderToken", "2ymS1B3grxMTCzfud9D6"));
 
 app.set("view engine", "jade");
 
@@ -52,6 +52,7 @@ app.set("view engine", "jade");
 
 // Host static files from public/
 app.use(express.static(__dirname + '/public'));
+app.use(prerender);
 
 app.get('/*', function(request, response, next) {
   response.sendFile(__dirname + '/public/index.html');
