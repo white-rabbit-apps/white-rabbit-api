@@ -18,7 +18,7 @@ app.use(require("./cloud/prerenderio.js").setAdaptor(parseAdaptor(Parse)).set("p
 
 
 app.get('/*', function(req, res) {
-  return res.render('index.html');
+  return res.render('index');
 });
 
 // Host static files from public/
