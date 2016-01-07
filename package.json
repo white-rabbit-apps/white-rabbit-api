@@ -4,6 +4,7 @@
   "description": "Follow the white rabbit...",
   "main": "server",
   "scripts": {
+    "production": "lineman clean build && npm i express@3 && node -e \"var e = require('express'), a = e(); a.use(e.static('dist/')); a.listen(process.env.PORT)\"",
     "postinstall": "node_modules/.bin/bower install | xargs echo && gulp build",
     "watch": "node_modules/.bin/gulp watch",
     "deploy-parse": "parse deploy"
@@ -22,7 +23,8 @@
     "jade": "1.3.x",
     "lodash": "2.4.x",
     "prerender-node": "^2.1.0",
-    "run-sequence": "0.3.x"
+    "run-sequence": "0.3.x",
+    "lineman": "*"
   },
   "engines": {
     "node": "0.12.2"
