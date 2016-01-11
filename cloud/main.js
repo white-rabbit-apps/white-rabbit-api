@@ -61,18 +61,40 @@ Parse.Cloud.afterSave("Animal", function(request, response) {
   }
 });
 
+Parse.Cloud.afterSave("Follow", function(request, response) {
+  var activity;
+  activity = new Parse.Object("Activity");
+  activity.set("action", "follow");
+  activity.set("actingUser", {
+    "__type": "Pointer",
+    "className": "User",
+    "objectId": request.object.get("follower").id
+  });
+  activity.set("animalActedOn", {
+    "__type": "Pointer",
+    "className": "Animal",
+    "objectId": request.object.get("following").id
+  });
+  console.log("saving activity");
+  return activity.save(null, {
+    success: function(result) {
+      console.log("activity saved: " + result);
+      return response.success();
+    }
+  });
+});
+
 Parse.Cloud.beforeSave("AnimalTimelineEntry", function(request, response) {
   if (!request.object.get("hasDocuments")) {
     request.object.set("hasDocuments", false);
   }
   if (!request.object.get("private")) {
     if (request.object.get("type") === "medical") {
-      request.object.set("private", true);
+      return request.object.set("private", true);
     } else {
-      request.object.set("private", false);
+      return request.object.set("private", false);
     }
   }
-  return response.success();
 });
 
 Parse.Cloud.afterDelete("Animal", function(request, response) {
