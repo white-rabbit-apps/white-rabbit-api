@@ -69,27 +69,30 @@ Parse.Cloud.afterSave "Animal", (request, response) ->
 
 
 Parse.Cloud.afterSave "Follow", (request, response) ->
-  activity = new Parse.Object("Activity")
-  activity.set("action", "follow")
+  console.log("follow saved")
+  if request.object.isNew()
+    console.log("new follow")
+    activity = new Parse.Object("Activity")
+    activity.set("action", "follow")
 
-  activity.set("actingUser", {
-    "__type": "Pointer",
-    "className": "User",
-    "objectId": request.object.get("follower").id
-  })
+    activity.set("actingUser", {
+      "__type": "Pointer",
+      "className": "User",
+      "objectId": request.object.get("follower").id
+    })
 
-  activity.set("animalActedOn", {
-    "__type": "Pointer",
-    "className": "Animal",
-    "objectId": request.object.get("following").id
-  })
+    activity.set("animalActedOn", {
+      "__type": "Pointer",
+      "className": "Animal",
+      "objectId": request.object.get("following").id
+    })
 
-  console.log("saving activity")
-  activity.save(null,
-    success: (result) ->
-      console.log("activity saved: " + result)
-      return response.success()
-  )
+    console.log("saving activity")
+    activity.save(null,
+      success: (result) ->
+        console.log("activity saved: " + result)
+        return response.success()
+    )
 
 
 Parse.Cloud.beforeSave "AnimalTimelineEntry", (request, response) ->
