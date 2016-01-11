@@ -66,6 +66,32 @@ Parse.Cloud.afterSave "Animal", (request, response) ->
             return response.success()
         )
 
+
+
+Parse.Cloud.afterSave "Follow", (request, response) ->
+  activity = new Parse.Object("Activity")
+  activity.set("action", "follow")
+
+  activity.set("actingUser", {
+      "__type": "Pointer",
+      "className": "User",
+      "objectId": request.object.get("follower").id
+  })
+
+  activity.set("animalActedOn", {
+      "__type": "Pointer",
+      "className": "Animal",
+      "objectId": request.object.get("following").id
+  })
+
+  console.log("saving entry")
+  activity.save(null,
+    success: (result) ->
+      console.log("activity saved: " + result)
+      return response.success()
+  )
+
+
 Parse.Cloud.beforeSave "AnimalTimelineEntry", (request, response) ->
   if (!request.object.get("hasDocuments"))
     request.object.set("hasDocuments", false)
@@ -74,6 +100,16 @@ Parse.Cloud.beforeSave "AnimalTimelineEntry", (request, response) ->
       request.object.set("private", true)
     else
       request.object.set("private", false)
+
+  Parse.Cloud.httpRequest
+    animal = request.object.get("animal")
+    user = animal.get("owner")
+    token = user.get('authData')['facebook']['access_token']
+
+    url: 'https://graph.facebook.com/v2.1/me?fields=id,gender,name&access_token=' + token
+    success: (httpResponse) ->
+      responseData = httpResponse.data
+      return
   return response.success()
 
 # Cascading deletes
