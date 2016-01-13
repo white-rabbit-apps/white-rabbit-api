@@ -13,7 +13,8 @@
     "lodash": "~2.4.1",
     "dropzone": "*",
     "font-awesome": "4.2.0",
-    "startbootstrap-sb-admin-2": "*"
+    "startbootstrap-sb-admin-2": "*",
+    "keen-js": "*"
   },
   "resolutions": {
     "angular": "1.3.x",
