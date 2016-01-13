@@ -176,7 +176,7 @@ app.run ($rootScope, $state, $location) ->
       window.open($(this).attr('href'), 'fbShareWindow', 'height=450, width=550, top=' + ($(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
       return false
     )
-
+    
     keenClient = new Keen(
       projectId: '5696d7a296773d0613e2abfe'
       writeKey: '238c8ba5674ad10606e769f23128ee11276aa2fcfc13704485edb8e68d4ec82c5a48ebe35b07fb535a36b66a967a48728aacad7f1e2c46768e6e1836ab8d7deadf8fe2b024dfd3116385ad05e2ad941b294d1cf4e61cce913aea0485f3cb4335')

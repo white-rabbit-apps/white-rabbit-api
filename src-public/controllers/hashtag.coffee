@@ -7,7 +7,6 @@ app.controller 'HashtagCtrl', ($scope, AnimalTimelineEntry, $stateParams, $rootS
   $rootScope.hideNavigation = false
   $rootScope.bodyClass = 'no-nav'
 
-
   $scope.fetchEntries = ->
     AnimalTimelineEntry.query(
       where:
