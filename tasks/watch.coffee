@@ -14,7 +14,6 @@ gulp.task 'watch', ->
   runSequence 'webserver', ->
     gulp.watch 'src-public/assets/**/*', ['assets']
     gulp.watch 'src-public/**/*.coffee', ['coffee-public']
-    gulp.watch 'src-cloud/**/*.coffee', ['coffee-cloud']
     gulp.watch 'src-public/index.jade', ['jade-index']
     gulp.watch 'src-public/**/*.jade', ['jade']
     gulp.watch 'src-public/styles/*.less', ['less']
