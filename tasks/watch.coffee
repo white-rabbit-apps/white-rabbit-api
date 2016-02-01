@@ -5,8 +5,8 @@ runSequence = require 'run-sequence'
 gulp.task 'webserver', ['build'], ->
   gulp.src 'public'
   .pipe webserver
-      livereload: true
-      fallback: 'index.html'
+      # livereload: false
+      # fallback: 'index.html'
       host: '127.0.0.1'
       port: 8008
 

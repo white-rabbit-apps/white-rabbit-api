@@ -4,16 +4,30 @@ var http = require('http'),
     bodyParser = require('body-parser'),
     Parse = require('parse/node'),
     ParseCloud = require('parse-cloud-express'),
+    ParseServer = require('parse-server').ParseServer,
     // parseAdaptor = require('./cloud/prerender-parse.js'),
     // prerender = require("./cloud/prerenderio.js").setAdaptor(parseAdaptor(Parse)).set("prerenderToken", "2ymS1B3grxMTCzfud9D6"),
     connect_s4a = require('connect-s4a');
+
+
+if (!process.env.DATABASE_URI) {
+  console.log('DATABASE_URI not specified, falling back to localhost.');
+}
+
+var api = new ParseServer({
+  databaseURI: process.env.DATABASE_URI || 'mongodb://localhost:27017/dev',
+  cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
+  appId: 'myAppId',
+  masterKey: 'myMasterKey'
+});
+
 
 var app = express();
 
 // Import your cloud code (which configures the routes)
 // require('./cloud/main.js');
 // Mount the webhooks app to a specific path (must match what is used in scripts/register-webhooks.js)
-app.use('/webhooks', ParseCloud.app);
+// app.use('/webhooks', ParseCloud.app);
 
 app.set("view engine", "jade");
 
@@ -27,10 +41,13 @@ app.get('/*', function(request, response, next) {
   response.sendFile(__dirname + '/public/index.html');
 });
 
+var mountPath = process.env.PARSE_MOUNT || '/api';
+app.use(mountPath, api);
+
 // Catch all unknown routes.
-app.all('/', function(request, response) {
-  response.status(404).send('Page not found.');
-});
+// app.all('/', function(request, response) {
+//   response.status(404).send('Page not found.');
+// });
 
 /*
  * Launch the HTTP server
