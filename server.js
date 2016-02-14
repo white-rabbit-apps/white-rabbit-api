@@ -18,8 +18,8 @@ var api = new ParseServer({
   databaseURI: process.env.DATABASE_URI || 'mongodb://localhost:27017/dev',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
   appId: 'myAppId',
-  masterKey: 'myMasterKey',
-  fileKey: 'http://files.parsetfss.com/76b6cc17-92eb-4048-be57-afbc6cb6e77d/'
+  masterKey: 'OAfKo4xeECdDiUHFXHgctp8HZv7teJT0fUkqMnwQ',
+  fileKey: '76b6cc17-92eb-4048-be57-afbc6cb6e77d'
 });
 
 
