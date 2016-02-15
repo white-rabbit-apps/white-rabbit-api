@@ -79,26 +79,26 @@ Parse.Cloud.beforeSave("Animal", function(request, response) {
   if (!request.object.get("gender")) {
     return response.error("Gender can't be blank.");
   }
-  if (request.object.get("username")) {
-    request.object.set("username", request.object.get("username").toLowerCase());
-    query = new Parse.Query("Animal");
-    query.equalTo('username', request.object.get('username'));
-    query.notEqualTo('id', request.object.objectId);
-    return query.first({
-      success: function(object) {
-        if (object) {
-          return response.error('A cat with that username already exists.');
-        } else {
-          return response.success();
-        }
-      },
-      error: function(error) {
-        return response.error('Could not validate uniqueness for that username.');
-      }
-    });
-  } else {
-    return response.success();
-  }
+  // if (request.object.get("username")) {
+  //   request.object.set("username", request.object.get("username").toLowerCase());
+  //   query = new Parse.Query("Animal");
+  //   query.equalTo('username', request.object.get('username'));
+  //   query.notEqualTo('id', request.object.objectId);
+  //   return query.first({
+  //     success: function(object) {
+  //       if (object) {
+  //         return response.error('A cat with that username already exists.');
+  //       } else {
+  //         return response.success();
+  //       }
+  //     },
+  //     error: function(error) {
+  //       return response.error('Could not validate uniqueness for that username.');
+  //     }
+  //   });
+  // } else {
+  //   return response.success();
+  // }
 });
 
 Parse.Cloud.beforeSave("AnimalTimelineEntry", function(request, response) {
