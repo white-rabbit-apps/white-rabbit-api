@@ -1,4 +1,4 @@
-require './cloud/app.js'
+require __dirname + '/cloud/app.js'
 
 emailRegEx = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 usernameRegex = /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/

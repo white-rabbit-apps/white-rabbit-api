@@ -1,7 +1,7 @@
-require './cloud/app.js'
-require './cloud/validations.js'
-require './cloud/deletes.js'
-require './cloud/activity.js'
+require __dirname + '/cloud/app.js'
+require __dirname + '/cloud/validations.js'
+require __dirname + '/cloud/deletes.js'
+require __dirname + '/cloud/activity.js'
 
 sendgrid = require("sendgrid")
 sendgrid.initialize("michaelbina", "m8E-gWK-tL6-zvu");

@@ -1,4 +1,4 @@
-require './cloud/app.js'
+require __dirname + '/cloud/app.js'
 
 # Parse.Cloud.afterSave Parse.Installation, (request, response) ->
 #   console.log("new installation: " + JSON.stringify(request))
