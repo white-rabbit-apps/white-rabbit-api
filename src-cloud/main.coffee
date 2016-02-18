@@ -6,7 +6,6 @@ require __dirname + '/activity.js'
 # sendgrid = require("sendgrid")
 # sendgrid.initialize("michaelbina", "m8E-gWK-tL6-zvu");
 
-
 Parse.Cloud.define 'shareToFacebook', (request, response) ->
   Parse.Cloud.useMasterKey()
   userObjectId = request.params.userObjectId
@@ -89,6 +88,7 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
 
 
 Parse.Cloud.afterSave "Animal", (request, response) ->
+  console.log("afterSave: " + request.object.id)
   if request.object.get("birthDate")
     query = new Parse.Query("AnimalTimelineEntry")
     query.equalTo("animal", {

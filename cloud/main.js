@@ -80,6 +80,7 @@ Parse.Cloud.afterSave("AnimalTimelineEntry", function(request, response) {
 
 Parse.Cloud.afterSave("Animal", function(request, response) {
   var query;
+  console.log("afterSave: " + request.object.id);
   if (request.object.get("birthDate")) {
     query = new Parse.Query("AnimalTimelineEntry");
     query.equalTo("animal", {
