@@ -23,12 +23,17 @@ var api = new ParseServer({
   restAPIKEY: process.env.RESTAPI_KEY || 'SkDTdS8SBGzO9BkRHR3H8kwxCLJSvKsAe1jeOTnW',
   fileKey: process.env.FILE_KEY || '76b6cc17-92eb-4048-be57-afbc6cb6e77d',
   filesAdapter: new S3Adapter(
-    (process.env.AWS_ACCESS_KEY || 'AKIAJRSLUSACFE5OR26Q'),
-    (process.env.AWS_SECRET_ACCESS_KEY || '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'),
-    {bucket: (process.env.AWS_BUCKET_NAME || 'whiterabbitapps'), bucketPrefix: "", directAccess: true}
+    'AKIAJRSLUSACFE5OR26Q',
+    'TPksNHH+V7kApV1W66LYbIA2Lc4LKNl6ghZP+JO1',
+    {bucket: 'whiterabbitapps', bucketPrefix: "", directAccess: true}
   )
 });
 
+// filesAdapter: new S3Adapter(
+//   process.env.AWS_ACCESS_KEY,
+//   process.env.AWS_SECRET_ACCESS_KEY,
+//   {bucket: process.env.AWS_BUCKET_NAME, bucketPrefix: "", directAccess: true}
+// )
 // pushAdapter: new SNSAdapter(
 //   process.env.AWS_ACCESS_KEY,
 //   process.env.AWS_SECRET_ACCESS_KEY,
