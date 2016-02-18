@@ -25,7 +25,8 @@
     "lodash": "2.4.x",
     "prerender-node": "^2.1.0",
     "run-sequence": "0.3.x",
-    "connect-s4a": "*"
+    "connect-s4a": "*",
+    "kerberos": "*"
   },
   "engines": {
     "node": "5.4.1"
