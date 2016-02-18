@@ -72,6 +72,7 @@ Parse.Cloud.beforeSave "Animal", (request, response) ->
 
 
   if request.object.get("username")
+    Parse.Cloud.useMasterKey()
     request.object.set("username", request.object.get("username").toLowerCase())
     query = new Parse.Query("Animal")
     query.equalTo 'username', request.object.get('username')
