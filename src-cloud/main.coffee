@@ -125,7 +125,7 @@ Parse.Cloud.afterSave "Animal", (request, response) ->
         console.log("saving entry")
         entry.save(null,
           success: (result) ->
-            console.log("saved: " + result)
+            console.log("saved: " + result.id)
             return response.success()
           error: (error) ->
             return response.error(error.message)
