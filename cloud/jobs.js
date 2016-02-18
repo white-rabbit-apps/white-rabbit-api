@@ -1,4 +1,4 @@
-require(__dirname + '/app.js');
+require(__dirname + '/../server.js');
 
 Parse.Cloud.job("setEntriesPrivate", function(request, response) {
   var query;

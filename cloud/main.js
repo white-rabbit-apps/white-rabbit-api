@@ -118,6 +118,9 @@ Parse.Cloud.afterSave("Animal", function(request, response) {
           success: function(result) {
             console.log("saved: " + result);
             return response.success();
+          },
+          error: function(error) {
+            return response.error(error.message);
           }
         });
       },

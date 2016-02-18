@@ -1,6 +1,6 @@
 var generateActivityString;
 
-require(__dirname + '/app.js');
+require(__dirname + '/../server.js');
 
 generateActivityString = function(action, info) {
   var activityString;
