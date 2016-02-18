@@ -1,7 +1,5 @@
 var generateActivityString;
 
-require(__dirname + '/../server.js');
-
 generateActivityString = function(action, info) {
   var activityString;
   activityString = "Made a new " + action;

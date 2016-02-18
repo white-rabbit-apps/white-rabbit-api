@@ -1,4 +1,5 @@
-require __dirname + '/app.js'
+# require __dirname + '/app.js'
+# require __dirname + '/../server.js'
 require __dirname + '/validations.js'
 require __dirname + '/deletes.js'
 require __dirname + '/activity.js'

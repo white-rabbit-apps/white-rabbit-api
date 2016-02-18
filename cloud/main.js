@@ -1,5 +1,3 @@
-require(__dirname + '/app.js');
-
 require(__dirname + '/validations.js');
 
 require(__dirname + '/deletes.js');

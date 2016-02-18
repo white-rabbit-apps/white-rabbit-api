@@ -1,5 +1,3 @@
-require(__dirname + '/../server.js');
-
 Parse.Cloud.afterDelete(Parse.User, function(request, response) {
   var query;
   query = new Parse.Query("Activity");

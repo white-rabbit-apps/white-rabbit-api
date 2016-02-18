@@ -1,5 +1,5 @@
 # require __dirname + '/app.js'
-require __dirname + '/../server.js'
+# require __dirname + '/../server.js'
 
 Parse.Cloud.job "setEntriesPrivate", (request, response) ->
   console.log('setting entries private')

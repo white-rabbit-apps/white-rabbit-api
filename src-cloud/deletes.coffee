@@ -1,5 +1,5 @@
 # require __dirname + '/app.js'
-require __dirname + '/../server.js'
+# require __dirname + '/../server.js'
 
 # Cascading deletes for User
 Parse.Cloud.afterDelete Parse.User, (request, response) ->
