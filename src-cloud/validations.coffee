@@ -70,6 +70,7 @@ Parse.Cloud.beforeSave "Animal", (request, response) ->
   unless request.object.get("gender")
   		return response.error("Gender can't be blank.")
 
+  return response.success()
 
   # if request.object.get("username")
   #   Parse.Cloud.useMasterKey()

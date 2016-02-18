@@ -78,6 +78,7 @@ Parse.Cloud.beforeSave("Animal", function(request, response) {
   if (!request.object.get("gender")) {
     return response.error("Gender can't be blank.");
   }
+  return response.success();
 });
 
 Parse.Cloud.beforeSave("AnimalTimelineEntry", function(request, response) {
