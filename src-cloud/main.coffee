@@ -88,8 +88,10 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
 
 
 Parse.Cloud.afterSave "Animal", (request, response) ->
+  Parse.Cloud.useMasterKey()
   console.log("afterSave: " + request.object.id)
   if request.object.get("birthDate")
+    console.log("has birthday")
     query = new Parse.Query("AnimalTimelineEntry")
     query.equalTo("animal", {
         "__type": "Pointer",
