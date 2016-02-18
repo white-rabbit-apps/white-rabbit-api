@@ -1,5 +1,3 @@
-var sendgrid;
-
 require(__dirname + '/app.js');
 
 require(__dirname + '/validations.js');
@@ -7,10 +5,6 @@ require(__dirname + '/validations.js');
 require(__dirname + '/deletes.js');
 
 require(__dirname + '/activity.js');
-
-sendgrid = require("sendgrid");
-
-sendgrid.initialize("michaelbina", "m8E-gWK-tL6-zvu");
 
 Parse.Cloud.define('shareToFacebook', function(request, response) {
   var entryText, user, userObjectId;
@@ -57,18 +51,7 @@ Parse.Cloud.define('shareToTwitter', function(request, response) {
 });
 
 Parse.Cloud.afterSave("AnimalTransfer", function(request, response) {
-  console.log('attempting email for animal transfer');
-  return sendgrid.sendEmail({
-    to: ['michaelbina@icloud.com'],
-    from: 'support@whiterabbitapps.net',
-    subject: 'You\'ve been invited to take over',
-    text: 'Congratulations on your new family member!',
-    replyto: 'support@whiterabbitapps.net'
-  }).then((function(httpResponse) {
-    return console.log(httpResponse);
-  }), function(httpResponse) {
-    return console.error(httpResponse);
-  });
+  return console.log('attempting email for animal transfer');
 });
 
 Parse.Cloud.afterSave("AnimalTimelineEntry", function(request, response) {

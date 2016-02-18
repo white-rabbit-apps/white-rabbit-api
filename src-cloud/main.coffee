@@ -3,8 +3,8 @@ require __dirname + '/validations.js'
 require __dirname + '/deletes.js'
 require __dirname + '/activity.js'
 
-sendgrid = require("sendgrid")
-sendgrid.initialize("michaelbina", "m8E-gWK-tL6-zvu");
+# sendgrid = require("sendgrid")
+# sendgrid.initialize("michaelbina", "m8E-gWK-tL6-zvu");
 
 
 Parse.Cloud.define 'shareToFacebook', (request, response) ->
@@ -49,15 +49,15 @@ Parse.Cloud.define 'shareToTwitter', (request, response) ->
 
 Parse.Cloud.afterSave "AnimalTransfer", (request, response) ->
   console.log 'attempting email for animal transfer'
-  sendgrid.sendEmail(
-    to: [ 'michaelbina@icloud.com' ]
-    from: 'support@whiterabbitapps.net'
-    subject: 'You\'ve been invited to take over'
-    text: 'Congratulations on your new family member!'
-    replyto: 'support@whiterabbitapps.net').then ((httpResponse) ->
-    console.log httpResponse
-  ), (httpResponse) ->
-    console.error httpResponse
+  # sendgrid.sendEmail(
+  #   to: [ 'michaelbina@icloud.com' ]
+  #   from: 'support@whiterabbitapps.net'
+  #   subject: 'You\'ve been invited to take over'
+  #   text: 'Congratulations on your new family member!'
+  #   replyto: 'support@whiterabbitapps.net').then ((httpResponse) ->
+  #   console.log httpResponse
+  # ), (httpResponse) ->
+  #   console.error httpResponse
 
 
 Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
