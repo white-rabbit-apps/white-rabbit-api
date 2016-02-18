@@ -31,7 +31,7 @@ var api = new ParseServer({
   push: {
     ios: {
       pfx: __dirname + '/certs/Certificates.p12',
-      bundleId: 'net.whiterabbitapps.WhiteRabbit'
+      bundleId: 'net.whiterabbitapps.WhiteRabbit',
       production: true
     }
   }
