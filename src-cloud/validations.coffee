@@ -83,7 +83,7 @@ Parse.Cloud.beforeSave "Animal", (request, response) ->
         else
           return response.success()
       error: (error) ->
-        return response.error error
+        return response.error error.message
         # return response.error 'Could not validate uniqueness for that username.'
   else
     return response.success()
