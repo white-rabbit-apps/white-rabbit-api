@@ -90,6 +90,7 @@ Parse.Cloud.afterSave("Animal", function(request, response) {
     });
     query.equalTo("type", "birth");
     return query.find({
+      useMasterKey: true,
       success: function(results) {
         var entry, result, _i, _len;
         console.log("results: " + results);

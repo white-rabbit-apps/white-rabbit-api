@@ -101,6 +101,7 @@ Parse.Cloud.afterSave "Animal", (request, response) ->
     })
     query.equalTo("type", "birth")
     query.find
+      useMasterKey: true
       success: (results) ->
         console.log("results: " + results)
         console.log("request: " + request.object.get("birthDate").toISOString())
