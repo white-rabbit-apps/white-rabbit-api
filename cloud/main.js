@@ -1,16 +1,16 @@
 var sendgrid;
 
-// require(__dirname + '/app.js');
+require('cloud/app.js');
 
-require(__dirname + '/validations.js');
+require('cloud/validations.js');
 
-require(__dirname + '/deletes.js');
+require('cloud/deletes.js');
 
-require(__dirname + '/activity.js');
+require('cloud/activity.js');
 
-// sendgrid = require("sendgrid");
-//
-// sendgrid.initialize("michaelbina", "m8E-gWK-tL6-zvu");
+sendgrid = require("sendgrid");
+
+sendgrid.initialize("michaelbina", "m8E-gWK-tL6-zvu");
 
 Parse.Cloud.define('shareToFacebook', function(request, response) {
   var entryText, user, userObjectId;

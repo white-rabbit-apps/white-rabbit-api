@@ -1,4 +1,4 @@
-// require(__dirname + '/app.js');
+require('cloud/app.js');
 
 Parse.Cloud.afterDelete(Parse.User, function(request, response) {
   var query;

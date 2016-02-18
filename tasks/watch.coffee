@@ -5,15 +5,19 @@ runSequence = require 'run-sequence'
 gulp.task 'webserver', ['build'], ->
   gulp.src 'public'
   .pipe webserver
-      # livereload: false
-      # fallback: 'index.html'
+      livereload: true
+      fallback: 'index.html'
       host: '127.0.0.1'
       port: 8008
+
+gulp.task 'coffee', ['build'], ->
+  gulp.src 'public'
 
 gulp.task 'watch', ->
   runSequence 'webserver', ->
     gulp.watch 'src-public/assets/**/*', ['assets']
     gulp.watch 'src-public/**/*.coffee', ['coffee-public']
+    gulp.watch 'src-cloud/**/*.coffee', ['coffee-cloud']
     gulp.watch 'src-public/index.jade', ['jade-index']
     gulp.watch 'src-public/**/*.jade', ['jade']
     gulp.watch 'src-public/styles/*.less', ['less']

@@ -1,6 +1,6 @@
 var emailRegEx, usernameRegex;
 
-// require(__dirname + '/app.js');
+require('cloud/app.js');
 
 emailRegEx = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
@@ -93,7 +93,7 @@ Parse.Cloud.beforeSave("Animal", function(request, response) {
         }
       },
       error: function(error) {
-        return response.error('Could not validate uniqueness for that username.');
+        return response.error(error);
       }
     });
   } else {
