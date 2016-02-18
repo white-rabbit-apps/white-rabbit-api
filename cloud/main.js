@@ -1,12 +1,12 @@
 var sendgrid;
 
-require('cloud/app.js');
+require('./cloud/app.js');
 
-require('cloud/validations.js');
+require('./cloud/validations.js');
 
-require('cloud/deletes.js');
+require('./cloud/deletes.js');
 
-require('cloud/activity.js');
+require('./cloud/activity.js');
 
 sendgrid = require("sendgrid");
 

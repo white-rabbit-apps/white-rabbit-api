@@ -1,4 +1,4 @@
-require('cloud/app.js');
+require('./cloud/app.js');
 
 Parse.Cloud.job("setEntriesPrivate", function(request, response) {
   var query;

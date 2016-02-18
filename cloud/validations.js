@@ -1,6 +1,6 @@
 var emailRegEx, usernameRegex;
 
-require('cloud/app.js');
+require('./cloud/app.js');
 
 emailRegEx = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 

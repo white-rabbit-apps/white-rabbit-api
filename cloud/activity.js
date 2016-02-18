@@ -1,6 +1,6 @@
 var generateActivityString;
 
-require('cloud/app.js');
+require('./cloud/app.js');
 
 generateActivityString = function(action, info) {
   var activityString;

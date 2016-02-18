@@ -1,4 +1,4 @@
-require 'cloud/app.js'
+require './cloud/app.js'
 
 # Cascading deletes for User
 Parse.Cloud.afterDelete Parse.User, (request, response) ->
