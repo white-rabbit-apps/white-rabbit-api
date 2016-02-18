@@ -6,6 +6,7 @@ var http = require('http'),
     ParseCloud = require('parse-cloud-express'),
     ParseServer = require('parse-server').ParseServer,
     S3Adapter = require('parse-server').S3Adapter,
+    SNSAdapter = require('parse-server').SNSAdapter,
     // parseAdaptor = require('./cloud/prerender-parse.js'),
     // prerender = require("./cloud/prerenderio.js").setAdaptor(parseAdaptor(Parse)).set("prerenderToken", "2ymS1B3grxMTCzfud9D6"),
     connect_s4a = require('connect-s4a');
