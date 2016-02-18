@@ -5,10 +5,10 @@ var http = require('http'),
     Parse = require('parse/node'),
     ParseCloud = require('parse-cloud-express'),
     ParseServer = require('parse-server').ParseServer,
+    S3Adapter = require('parse-server').S3Adapter,
     // parseAdaptor = require('./cloud/prerender-parse.js'),
     // prerender = require("./cloud/prerenderio.js").setAdaptor(parseAdaptor(Parse)).set("prerenderToken", "2ymS1B3grxMTCzfud9D6"),
     connect_s4a = require('connect-s4a');
-
 
 if (!process.env.DATABASE_URI) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
@@ -17,11 +17,23 @@ if (!process.env.DATABASE_URI) {
 var api = new ParseServer({
   databaseURI: process.env.DATABASE_URI || 'mongodb://localhost:27017/dev',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
-  appId: 'myAppId',
-  masterKey: 'OAfKo4xeECdDiUHFXHgctp8HZv7teJT0fUkqMnwQ',
-  fileKey: '76b6cc17-92eb-4048-be57-afbc6cb6e77d'
+  appId: process.env.APP_ID || 'whiterabbitapps',
+  masterKey: process.env.MASTER_KEY || 'OAfKo4xeECdDiUHFXHgctp8HZv7teJT0fUkqMnwQ',
+  clientKey: process.env.CLIENT_KEY || 'Yxdst3hz76abMoAwG7FLh0NwDmPvYHFDUPao9WJJ',
+  restAPIKEY: process.env.RESTAPI_KEY || 'SkDTdS8SBGzO9BkRHR3H8kwxCLJSvKsAe1jeOTnW',
+  fileKey: process.env.FILE_KEY || '76b6cc17-92eb-4048-be57-afbc6cb6e77d',
+  filesAdapter: new S3Adapter(
+    (process.env.AWS_ACCESS_KEY || 'AKIAJRSLUSACFE5OR26Q'),
+    (process.env.AWS_SECRET_ACCESS_KEY || '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'),
+    {bucket: (process.env.AWS_BUCKET_NAME || 'whiterabbitapps'), bucketPrefix: "", directAccess: true}
+  )
 });
 
+// pushAdapter: new SNSAdapter(
+//   process.env.AWS_ACCESS_KEY,
+//   process.env.AWS_SECRET_ACCESS_KEY,
+//   {region: "us-east-1"}
+// )
 
 var app = express();
 
