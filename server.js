@@ -18,8 +18,8 @@ if (!process.env.DATABASE_URI) {
 var api = new ParseServer({
   databaseURI: process.env.DATABASE_URI || 'mongodb://localhost:27017/dev',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
-  appId: process.env.APP_ID || 'whiterabbitapps',
-  masterKey: process.env.MASTER_KEY || 'OAfKo4xeECdDiUHFXHgctp8HZv7teJT0fUkqMnwQ',
+  appId: process.env.PARSE_APP_ID || 'whiterabbitapps',
+  masterKey: process.env.PARSE_MASTER_KEY || 'OAfKo4xeECdDiUHFXHgctp8HZv7teJT0fUkqMnwQ',
   clientKey: process.env.CLIENT_KEY || 'Yxdst3hz76abMoAwG7FLh0NwDmPvYHFDUPao9WJJ',
   restAPIKEY: process.env.RESTAPI_KEY || 'SkDTdS8SBGzO9BkRHR3H8kwxCLJSvKsAe1jeOTnW',
   fileKey: process.env.FILE_KEY || '76b6cc17-92eb-4048-be57-afbc6cb6e77d',
