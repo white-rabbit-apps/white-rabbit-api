@@ -28,11 +28,13 @@ var api = new ParseServer({
     process.env.AWS_SECRET_ACCESS_KEY,
     {bucket: 'whiterabbitapps', bucketPrefix: "", directAccess: true}
   ),
-  pushAdapter: new SNSAdapter(
-    process.env.AWS_ACCESS_KEY,
-    process.env.AWS_SECRET_ACCESS_KEY,
-    {region: "us-east-1"}
-  )
+  push: {
+    ios: {
+      pfx: __dirname + '/certs/Certificates.p12',
+      bundleId: 'net.whiterabbitapps.WhiteRabbit'
+      production: true
+    }
+  }
 });
 
 // filesAdapter: new S3Adapter(
