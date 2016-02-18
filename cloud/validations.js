@@ -93,7 +93,7 @@ Parse.Cloud.beforeSave("Animal", function(request, response) {
         }
       },
       error: function(error) {
-        return response.error(error);
+        return response.error('Could not validate uniqueness for that username.');
       }
     });
   } else {
