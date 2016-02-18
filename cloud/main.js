@@ -114,6 +114,7 @@ Parse.Cloud.afterSave("Animal", function(request, response) {
         });
         console.log("saving entry");
         return entry.save(null, {
+          useMasterKey: true,
           success: function(result) {
             console.log("saved: " + result.id);
             return response.success();
