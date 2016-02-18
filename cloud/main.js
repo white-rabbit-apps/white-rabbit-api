@@ -1,12 +1,12 @@
 var sendgrid;
 
-require(__dirname + '/cloud/app.js');
+require(__dirname + '/app.js');
 
-require(__dirname + '/cloud/validations.js');
+require(__dirname + '/validations.js');
 
-require(__dirname + '/cloud/deletes.js');
+require(__dirname + '/deletes.js');
 
-require(__dirname + '/cloud/activity.js');
+require(__dirname + '/activity.js');
 
 sendgrid = require("sendgrid");
 
