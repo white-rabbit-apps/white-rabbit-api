@@ -60,7 +60,7 @@ app.set("view engine", "jade");
 // Host static files from public/
 app.use(express.static(__dirname + '/public'));
 
-app.use(connect_s4a("d3c44980d364f87184334d863759dbe7"));
+// app.use(connect_s4a("d3c44980d364f87184334d863759dbe7"));
 // app.use(prerender);
 
 app.get('/*', function(request, response, next) {
