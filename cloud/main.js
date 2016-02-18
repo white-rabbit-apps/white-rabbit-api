@@ -120,6 +120,9 @@ Parse.Cloud.afterSave("Animal", function(request, response) {
             return response.success();
           }
         });
+      },
+      error: function(error) {
+        return response.error(error.message);
       }
     });
   }
