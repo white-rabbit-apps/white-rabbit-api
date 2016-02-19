@@ -73,23 +73,24 @@ Parse.Cloud.beforeSave "Animal", (request, response) ->
 
   return response.success()
 
-  # if request.object.get("username")
-  #   Parse.Cloud.useMasterKey()
-  #   request.object.set("username", request.object.get("username").toLowerCase())
-  #   query = new Parse.Query("Animal")
-  #   query.equalTo 'username', request.object.get('username')
-  #   query.notEqualTo 'id', request.object.objectId
-  #   query.first
-  #     success: (object) ->
-  #       if object
-  #         return response.error 'A cat with that username already exists.'
-  #       else
-  #         return response.success()
-  #     error: (error) ->
-  #       return response.error error.message
-  #       # return response.error 'Could not validate uniqueness for that username.'
-  # else
-  #   return response.success()
+  if request.object.get("username")
+    Parse.Cloud.useMasterKey()
+    request.object.set("username", request.object.get("username").toLowerCase())
+    query = new Parse.Query("Animal")
+    query.equalTo 'username', request.object.get('username')
+    query.notEqualTo 'id', request.object.objectId
+    query.first
+      useMasterKey: true
+      success: (object) ->
+        if object
+          return response.error 'A cat with that username already exists.'
+        else
+          return response.success()
+      error: (error) ->
+        return response.error error.message
+        # return response.error 'Could not validate uniqueness for that username.'
+  else
+    return response.success()
 
 
 Parse.Cloud.beforeSave "AnimalTimelineEntry", (request, response) ->

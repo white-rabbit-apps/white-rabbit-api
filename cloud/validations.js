@@ -54,6 +54,7 @@ Parse.Cloud.beforeSave(Parse.User, function(request, response) {
 });
 
 Parse.Cloud.beforeSave("Animal", function(request, response) {
+  var query;
   console.log("validating animal object");
   if (!request.object.get("name")) {
     return response.error("Name can't be blank.");
@@ -77,6 +78,28 @@ Parse.Cloud.beforeSave("Animal", function(request, response) {
     return response.error("Gender can't be blank.");
   }
   return response.success();
+  if (request.object.get("username")) {
+    Parse.Cloud.useMasterKey();
+    request.object.set("username", request.object.get("username").toLowerCase());
+    query = new Parse.Query("Animal");
+    query.equalTo('username', request.object.get('username'));
+    query.notEqualTo('id', request.object.objectId);
+    return query.first({
+      useMasterKey: true,
+      success: function(object) {
+        if (object) {
+          return response.error('A cat with that username already exists.');
+        } else {
+          return response.success();
+        }
+      },
+      error: function(error) {
+        return response.error(error.message);
+      }
+    });
+  } else {
+    return response.success();
+  }
 });
 
 Parse.Cloud.beforeSave("AnimalTimelineEntry", function(request, response) {
