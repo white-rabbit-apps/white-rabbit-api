@@ -9119,12 +9119,8 @@ div.spacer {
   height: 1px;
 }
 form {
-  height: 50px;
-  left: 50%;
-  margin-left: -200px;
   margin-top: 20px;
   position: relative;
-  width: 400px;
 }
 form input[type="email"] {
   height: 50px;
