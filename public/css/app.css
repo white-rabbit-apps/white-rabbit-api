@@ -9048,11 +9048,11 @@ body.no-nav .location .location-header .info .name {
 .breeds .entry label {
   color: white;
   font-weight: bold;
-  width: 140px;
+  width: 180px;
   float: left;
 }
 .breeds .entry input {
-  width: 300px;
+  width: 400px;
   margin-top: -15px;
 }
 .user img.profile {

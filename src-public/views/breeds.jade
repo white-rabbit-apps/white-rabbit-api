@@ -90,22 +90,22 @@ h1 Breeds ({{breeds.length}})
           input.form-control.vocalization(ng-model="breed.vocalization", placeholder="Vocalization")
         .entry
           label Lap Cat
-          input.form-control.lapCat(ng-model="breed.lapCat", placeholder="True/False")
+          input.form-control.lapCat(ng-model="breed.lapCat", type="checkbox")
         .entry
           label Hypoallergenic
-          input.form-control.hypoallergenic(ng-model="breed.hypoallergenic", placeholder="True/False")
+          input.form-control.hypoallergenic(ng-model="breed.hypoallergenic", type="checkbox")
         .entry
           label Min Life Expectancy
-          input.form-control.minLifeExpectancy(ng-model="breed.minLifeExpectancy", placeholder="Min Life Expectancy (Yrs)")
+          input.form-control.minLifeExpectancy(ng-model="breed.minLifeExpectancy", type="number")
         .entry
           label Max Life Expectancy
-          input.form-control.maxLifeExpectancy(ng-model="breed.maxLifeExpectancy", placeholder="Max Life Expectancy (Yrs)")
+          input.form-control.maxLifeExpectancy(ng-model="breed.maxLifeExpectancy", type="number")
         .entry
           label Min Weight
-          input.form-control.minWeightLbs(ng-model="breed.minWeightLbs", placeholder="Min Weight (Lbs)")
+          input.form-control.minWeightLbs(ng-model="breed.minWeightLbs", type="number")
         .entry
           label Max Weight
-          input.form-control.maxWeightLbs(ng-model="breed.maxWeightLbs", placeholder="Max Weight (Lbs)")
+          input.form-control.maxWeightLbs(ng-model="breed.maxWeightLbs", type="number")
         .entry
           label Wikipedia URL
           input.form-control.wikipediaUrl(ng-model="breed.wikipediaUrl", placeholder="Url")
