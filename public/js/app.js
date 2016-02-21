@@ -53,6 +53,10 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider, Parse
     url: '/admin/breeds',
     controller: 'BreedsCtrl',
     templateUrl: 'breeds.html'
+  }).state('products', {
+    url: '/admin/products',
+    controller: 'ProductsCtrl',
+    templateUrl: 'products.html'
   });
   $urlRouterProvider.otherwise('/');
   ParseProvider.initialize("IWr9xzTirLbjXH80mbTCtT9lWB73ggQe3PhA6nPg", "SkDTdS8SBGzO9BkRHR3H8kwxCLJSvKsAe1jeOTnW");
@@ -691,6 +695,65 @@ app.controller('LocationsCtrl', function($scope, Location, Upload) {
   return $scope.newLocation = new Location;
 });
 
+app.controller('ProductsCtrl', function($scope, Product) {
+  $scope.addProduct = function() {
+    $scope.newProduct.save().then(function(product) {
+      return $scope.fetchProducts();
+    });
+    return $scope.newProduct = new Product;
+  };
+  $scope.removeProduct = function(product) {
+    if (confirm("Are you sure?  All data will be lost.")) {
+      return product.destroy().then(function() {
+        return _.remove($scope.products, function(product) {
+          return product.objectId === null;
+        });
+      });
+    }
+  };
+  $scope.editingProduct = function(product) {
+    return product.editing = true;
+  };
+  $scope.editProduct = function(product) {
+    var file, imageBase64, name;
+    if ((product.image != null) && (product.image.file != null)) {
+      name = product.image.filename || 'image.jpg';
+      imageBase64 = product.image.file.replace(/^data:image\/(png|jpeg);base64,/, "");
+      file = new Parse.File(name, {
+        base64: imageBase64
+      }, "image/jpeg");
+      product.saving = true;
+      file.save().then(function(file) {
+        console.log("image uploaded: " + file);
+        product.image = file;
+        return product.save().then(function(object) {
+          console.log("saved product");
+          product.saving = false;
+          return product.editing = false;
+        }, function(error) {
+          return console.log("error saving product");
+        });
+      });
+    } else {
+      product.save();
+      product.editing = false;
+    }
+    product.save();
+    return product.editing = false;
+  };
+  $scope.cancelEditing = function(product) {
+    product.title = product._cache.title;
+    return product.editing = false;
+  };
+  $scope.fetchProducts = function() {
+    return Product.query().then(function(products) {
+      return $scope.products = products;
+    });
+  };
+  $scope.fetchProducts();
+  return $scope.newProduct = new Product;
+});
+
 app.controller('TraitCtrl', function($scope, Trait) {
   $scope.addTrait = function() {
     $scope.newTrait.save().then(function(trait) {
@@ -865,6 +928,25 @@ app.factory('Location', function(Parse) {
     Location.configure("Location", "type", "name", "short_name", "email", "address", "city", "state", "zip", "geo", "phone", "website", "fbUrl", "twitterUrl", "instagramUrl", "youtubeUrl", "fbUrl", "yelpUrl", "logo");
 
     return Location;
+
+  })(Parse.Model);
+});
+
+var __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+app.factory('Product', function(Parse) {
+  var Product;
+  return Product = (function(_super) {
+    __extends(Product, _super);
+
+    function Product() {
+      return Product.__super__.constructor.apply(this, arguments);
+    }
+
+    Product.configure("Product", "name", "price", "description", "mainPhoto", "amazonUrl", "manufacturerName", "manufacturerUrl", "supplierPartName", "supplierUrl");
+
+    return Product;
 
   })(Parse.Model);
 });

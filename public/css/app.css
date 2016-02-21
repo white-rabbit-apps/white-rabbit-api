@@ -9027,31 +9027,41 @@ body.no-nav .location .location-header .info .name {
 #users {
   color: white;
 }
-.breeds .breed {
+.breeds .breed,
+.products .breed,
+.breeds .product,
+.products .product {
   margin: 15px;
 }
-.breeds .breed img.image {
+.breeds .breed img.image,
+.products .breed img.image,
+.breeds .product img.image,
+.products .product img.image {
   width: 150px;
   background-color: white;
   padding: 0px;
   float: left;
 }
-.breeds .name {
+.breeds .name,
+.products .name {
   font-size: 20px;
   font-weight: bold;
 }
-.breeds .entry {
+.breeds .entry,
+.products .entry {
   display: block;
   overflow: auto;
   margin-left: 18px;
 }
-.breeds .entry label {
+.breeds .entry label,
+.products .entry label {
   color: white;
   font-weight: bold;
   width: 180px;
   float: left;
 }
-.breeds .entry input {
+.breeds .entry input,
+.products .entry input {
   width: 400px;
   margin-top: -15px;
 }
