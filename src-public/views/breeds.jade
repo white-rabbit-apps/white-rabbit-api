@@ -32,6 +32,12 @@ h1 Breeds ({{breeds.length}})
           label Vocalization
           input.form-control.vocalization(ng-model="breed.vocalization", ng-dblclick="editingBreed(breed)", readonly)
         .entry
+          label Lap Cat
+          input.form-control.lapCat(ng-model="breed.lapCat", ng-dblclick="editingBreed(breed)", readonly)
+        .entry
+          label Hypoallergenic
+          input.form-control.hypoallergenic(ng-model="breed.hypoallergenic", ng-dblclick="editingBreed(breed)", readonly)
+        .entry
           label Min Life Expectancy
           input.form-control.minLifeExpectancy(ng-model="breed.minLifeExpectancy", ng-dblclick="editingBreed(breed)", readonly)
         .entry
@@ -77,6 +83,12 @@ h1 Breeds ({{breeds.length}})
         .entry
           label Vocalization
           input.form-control.vocalization(ng-model="breed.vocalization", placeholder="Vocalization")
+        .entry
+          label Lap Cat
+          input.form-control.lapCat(ng-model="breed.lapCat", placeholder="True/False")
+        .entry
+          label Hypoallergenic
+          input.form-control.hypoallergenic(ng-model="breed.hypoallergenic", placeholder="True/False")
         .entry
           label Min Life Expectancy
           input.form-control.minLifeExpectancy(ng-model="breed.minLifeExpectancy", placeholder="Min Life Expectancy (Yrs)")
