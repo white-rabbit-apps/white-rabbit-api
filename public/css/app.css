@@ -9040,6 +9040,21 @@ body.no-nav .location .location-header .info .name {
   font-size: 20px;
   font-weight: bold;
 }
+.breeds .entry {
+  display: block;
+  overflow: auto;
+  margin-left: 18px;
+}
+.breeds .entry label {
+  color: white;
+  font-weight: bold;
+  width: 140px;
+  float: left;
+}
+.breeds .entry input {
+  width: 300px;
+  margin-top: -15px;
+}
 .user img.profile {
   width: 50px;
   border-radius: 50%;
@@ -9121,6 +9136,9 @@ div.spacer {
 form {
   margin-top: 20px;
   position: relative;
+}
+.signup {
+  margin-left: -4px;
 }
 form input[type="email"] {
   height: 50px;

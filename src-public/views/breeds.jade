@@ -7,18 +7,42 @@ h1 Breeds ({{breeds.length}})
         span.input-group-addon {{ breed.random }}
           img.image(ng-src="{{breed.image.file || breed.image.url || '/img/avatar_blank.png'}}")
         input.form-control.name(ng-model="breed.name", ng-dblclick="editingBreed(breed)", readonly)
-        input.form-control.origin(ng-model="breed.originCountry", ng-dblclick="editingBreed(breed)", readonly)
-        input.form-control.type(ng-model="breed.type", ng-dblclick="editingBreed(breed)", readonly)
-        input.form-control.coat(ng-model="breed.coat", ng-dblclick="editingBreed(breed)", readonly)
-        input.form-control.groomingFrequency(ng-model="breed.groomingFrequency", ng-dblclick="editingBreed(breed)", readonly)
-        input.form-control.sheddingFrequency(ng-model="breed.sheddingFrequency", ng-dblclick="editingBreed(breed)", readonly)
-        input.form-control.attentionNeed(ng-model="breed.attentionNeed", ng-dblclick="editingBreed(breed)", readonly)
-        input.form-control.activity(ng-model="breed.activity", ng-dblclick="editingBreed(breed)", readonly)
-        input.form-control.vocalization(ng-model="breed.vocalization", ng-dblclick="editingBreed(breed)", readonly)
-        input.form-control.minLifeExpectancy(ng-model="breed.minLifeExpectancy", ng-dblclick="editingBreed(breed)", readonly)
-        input.form-control.maxLifeExpectancy(ng-model="breed.maxLifeExpectancy", ng-dblclick="editingBreed(breed)", readonly)
-        input.form-control.minWeightLbs(ng-model="breed.minWeightLbs", ng-dblclick="editingBreed(breed)", readonly)
-        input.form-control.maxWeightLbs(ng-model="breed.maxWeightLbs", ng-dblclick="editingBreed(breed)", readonly)
+        .entry
+          label Country of Origin
+          input.form-control.origin(ng-model="breed.originCountry", ng-dblclick="editingBreed(breed)", readonly)
+        .entry
+          label Origin Type
+          input.form-control.type(ng-model="breed.type", ng-dblclick="editingBreed(breed)", readonly)
+        .entry
+          label Coat
+          input.form-control.coat(ng-model="breed.coat", ng-dblclick="editingBreed(breed)", readonly)
+        .entry
+          label Grooming Needs
+          input.form-control.groomingFrequency(ng-model="breed.groomingFrequency", ng-dblclick="editingBreed(breed)", readonly)
+        .entry
+          label Shedding Frequency
+          input.form-control.sheddingFrequency(ng-model="breed.sheddingFrequency", ng-dblclick="editingBreed(breed)", readonly)
+        .entry
+          label Attention Needed
+          input.form-control.attentionNeed(ng-model="breed.attentionNeed", ng-dblclick="editingBreed(breed)", readonly)
+        .entry
+          label Activity
+          input.form-control.activity(ng-model="breed.activity", ng-dblclick="editingBreed(breed)", readonly)
+        .entry
+          label Vocalization
+          input.form-control.vocalization(ng-model="breed.vocalization", ng-dblclick="editingBreed(breed)", readonly)
+        .entry
+          label Min Life Expectancy
+          input.form-control.minLifeExpectancy(ng-model="breed.minLifeExpectancy", ng-dblclick="editingBreed(breed)", readonly)
+        .entry
+          label Max Life Expectancy
+          input.form-control.maxLifeExpectancy(ng-model="breed.maxLifeExpectancy", ng-dblclick="editingBreed(breed)", readonly)
+        .entry
+          label Min Weight
+          input.form-control.minWeightLbs(ng-model="breed.minWeightLbs", ng-dblclick="editingBreed(breed)", readonly)
+        .entry
+          label Max Weight
+          input.form-control.maxWeightLbs(ng-model="breed.maxWeightLbs", ng-dblclick="editingBreed(breed)", readonly)
         textarea.form-control.description(ng-model="breed.description", ng-dblclick="editingBreed(breed)", readonly)
         span.input-group-btn(style="width: 70px;")
           .button.edit(ng-click="editingBreed(breed)")
@@ -29,18 +53,43 @@ h1 Breeds ({{breeds.length}})
           div.image(file-dropzone='[image/png, image/jpeg, image/gif]', file='breed.image.file', file-name='breed.image.filename', data-max-file-size='3', style='width:150px;height:150px;')
             img.image(ng-src="{{breed.image.file || breed.image.url || '/img/avatar_blank.png'}}")
         input.form-control(ng-model="breed.name")
-        input.form-control(ng-model="breed.originCountry", placeholder="Country of Origin")
-        input.form-control.type(ng-model="breed.type", placeholder="Type")
-        input.form-control.coat(ng-model="breed.coat", placeholder="Coat")
-        input.form-control.groomingFrequency(ng-model="breed.groomingFrequency", placeholder="Grooming Frequency")
-        input.form-control.sheddingFrequency(ng-model="breed.sheddingFrequency", placeholder="Shedding Frequency")
-        input.form-control.attentionNeed(ng-model="breed.attentionNeed", placeholder="Attention Needed")
-        input.form-control.activity(ng-model="breed.activity", placeholder="Activity")
-        input.form-control.vocalization(ng-model="breed.vocalization", placeholder="Vocalization")
-        input.form-control.minLifeExpectancy(ng-model="breed.minLifeExpectancy", placeholder="Min Life Expectancy (Yrs)")
-        input.form-control.maxLifeExpectancy(ng-model="breed.maxLifeExpectancy", placeholder="Max Life Expectancy (Yrs)")
-        input.form-control.minWeightLbs(ng-model="breed.minWeightLbs", placeholder="Min Weight (Lbs)")
-        input.form-control.maxWeightLbs(ng-model="breed.maxWeightLbs", placeholder="Max Weight (Lbs)")
+        .entry
+          label Country of Origin
+          input.form-control(ng-model="breed.originCountry", placeholder="Country of Origin")
+        .entry
+          label Origin Type
+          input.form-control.type(ng-model="breed.type", placeholder="Type")
+        .entry
+          label Coat
+          input.form-control.coat(ng-model="breed.coat", placeholder="Coat")
+        .entry
+          label Grooming Needs
+          input.form-control.groomingFrequency(ng-model="breed.groomingFrequency", placeholder="Grooming Frequency")
+        .entry
+          label Shedding Frequency
+          input.form-control.sheddingFrequency(ng-model="breed.sheddingFrequency", placeholder="Shedding Frequency")
+        .entry
+          label Attention Needed
+          input.form-control.attentionNeed(ng-model="breed.attentionNeed", placeholder="Attention Needed")
+        .entry
+          label Activity
+          input.form-control.activity(ng-model="breed.activity", placeholder="Activity")
+        .entry
+          label Vocalization
+          input.form-control.vocalization(ng-model="breed.vocalization", placeholder="Vocalization")
+        .entry
+          label Min Life Expectancy
+          input.form-control.minLifeExpectancy(ng-model="breed.minLifeExpectancy", placeholder="Min Life Expectancy (Yrs)")
+        .entry
+          label Max Life Expectancy
+          input.form-control.maxLifeExpectancy(ng-model="breed.maxLifeExpectancy", placeholder="Max Life Expectancy (Yrs)")
+        .entry
+          label Min Weight
+          input.form-control.minWeightLbs(ng-model="breed.minWeightLbs", placeholder="Min Weight (Lbs)")
+        .entry
+          label Max Weight
+          input.form-control.maxWeightLbs(ng-model="breed.maxWeightLbs", placeholder="Max Weight (Lbs)")
+
         textarea.form-control.description(ng-model="breed.description", placeholder="Description")
         span.input-group-btn(style="width: 70px;")
           .button.save(ng-click="editBreed(breed)")
