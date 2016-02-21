@@ -9073,6 +9073,7 @@ h3 {
   color: white !important;
   border: none !important;
   height: 50px !important;
+  float: none !important;
 }
 .form-control .label {
   color: black;

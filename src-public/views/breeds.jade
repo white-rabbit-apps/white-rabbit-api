@@ -49,6 +49,11 @@ h1 Breeds ({{breeds.length}})
         .entry
           label Max Weight
           input.form-control.maxWeightLbs(ng-model="breed.maxWeightLbs", ng-dblclick="editingBreed(breed)", readonly)
+        .entry
+          label Wikipedia URL
+          input.form-control.hypoallergenic(ng-model="breed.wikipediaUrl", ng-dblclick="editingBreed(breed)", readonly)
+
+
         textarea.form-control.description(ng-model="breed.description", ng-dblclick="editingBreed(breed)", readonly)
         span.input-group-btn(style="width: 70px;")
           .button.edit(ng-click="editingBreed(breed)")
@@ -101,6 +106,11 @@ h1 Breeds ({{breeds.length}})
         .entry
           label Max Weight
           input.form-control.maxWeightLbs(ng-model="breed.maxWeightLbs", placeholder="Max Weight (Lbs)")
+        .entry
+          label Wikipedia URL
+          input.form-control.wikipediaUrl(ng-model="breed.wikipediaUrl", placeholder="Url")
+
+
 
         textarea.form-control.description(ng-model="breed.description", placeholder="Description")
         span.input-group-btn(style="width: 70px;")
