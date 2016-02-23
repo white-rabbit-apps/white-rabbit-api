@@ -63,9 +63,9 @@ app.use(express.static(__dirname + '/public'));
 app.use(connect_s4a("d3c44980d364f87184334d863759dbe7"));
 // app.use(prerender);
 
-app.get('/*', function(request, response, next) {
-  response.sendFile(__dirname + '/public/index.html');
-});
+// app.get('/*', function(request, response, next) {
+//   response.sendFile(__dirname + '/public/index.html');
+// });
 
 var mountPath = process.env.PARSE_MOUNT || '/api';
 app.use(mountPath, api);
