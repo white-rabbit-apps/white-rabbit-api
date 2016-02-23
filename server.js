@@ -64,7 +64,7 @@ app.use(connect_s4a("d3c44980d364f87184334d863759dbe7"));
 // app.use(prerender);
 
 app.get('/*', function(request, response, next) {
-  if (req.url === process.env.PARSE_MOUNT || req.url === '/api') return next();
+  if (request.url === process.env.PARSE_MOUNT || request.url === '/api') return next();
   response.sendFile(__dirname + '/public/index.html');
 });
 
