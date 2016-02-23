@@ -22,8 +22,7 @@ var api = new ParseServer({
   masterKey: process.env.PARSE_MASTER_KEY || 'OAfKo4xeECdDiUHFXHgctp8HZv7teJT0fUkqMnwQ',
   clientKey: process.env.CLIENT_KEY || 'Yxdst3hz76abMoAwG7FLh0NwDmPvYHFDUPao9WJJ',
   restAPIKEY: process.env.RESTAPI_KEY || 'SkDTdS8SBGzO9BkRHR3H8kwxCLJSvKsAe1jeOTnW',
-  fileKey: process.env.FILE_KEY || '76b6cc17-92eb-4048-be57-afbc6cb6e77d'
-  ,
+  fileKey: process.env.FILE_KEY || '76b6cc17-92eb-4048-be57-afbc6cb6e77d',
   filesAdapter: new S3Adapter(
     process.env.AWS_ACCESS_KEY,
     process.env.AWS_SECRET_ACCESS_KEY,
