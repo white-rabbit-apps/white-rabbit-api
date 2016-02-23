@@ -64,8 +64,13 @@ app.use(connect_s4a("d3c44980d364f87184334d863759dbe7"));
 // app.use(prerender);
 
 app.get('/*', function(request, response, next) {
-  if (request.url === process.env.PARSE_MOUNT || request.url === '/api') return next();
+  if (request.url === '/api/*') return next();
   response.sendFile(__dirname + '/public/index.html');
+});
+
+app.all('/api/*', function(req, res, next){
+    console.log('General Validations');
+    next();
 });
 
 var mountPath = process.env.PARSE_MOUNT || '/api';
