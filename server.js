@@ -64,14 +64,14 @@ app.use(connect_s4a("d3c44980d364f87184334d863759dbe7"));
 // app.use(prerender);
 
 app.get('/*', function(request, response, next) {
-  if (request.url === '/api/*') return next();
+  if (request.url.includes('/api/')) return next();
   response.sendFile(__dirname + '/public/index.html');
 });
 
-app.all('/api/*', function(req, res, next){
-    console.log('General Validations');
-    next();
-});
+// app.all('/api/*', function(req, res, next){
+//     console.log('General Validations');
+//     next();
+// });
 
 var mountPath = process.env.PARSE_MOUNT || '/api';
 app.use(mountPath, api);
