@@ -127,6 +127,19 @@ Parse.Cloud.afterDelete "AnimalTimelineEntry", (request, response) ->
         console.log("destroying document")
         result.destroy()
 
+  query = new Parse.Query("Activity")
+  query.equalTo("entryActedOn", {
+      "__type": "Pointer",
+      "className": "AnimalTimelineEntry",
+      "objectId": request.object.id
+  })
+  query.find
+    success: (results) ->
+      for result in results
+        console.log("destroying activity")
+        result.destroy()
+
+
 Parse.Cloud.afterDelete "Document", (request, response) ->
   query = new Parse.Query("DocumentPage")
   query.equalTo("document", {

@@ -146,13 +146,31 @@ Parse.Cloud.afterDelete("AnimalTimelineEntry", function(request, response) {
     "className": "AnimalTimelineEntry",
     "objectId": request.object.id
   });
-  return query.find({
+  query.find({
     success: function(results) {
       var result, _i, _len, _results;
       _results = [];
       for (_i = 0, _len = results.length; _i < _len; _i++) {
         result = results[_i];
         console.log("destroying document");
+        _results.push(result.destroy());
+      }
+      return _results;
+    }
+  });
+  query = new Parse.Query("Activity");
+  query.equalTo("entryActedOn", {
+    "__type": "Pointer",
+    "className": "AnimalTimelineEntry",
+    "objectId": request.object.id
+  });
+  return query.find({
+    success: function(results) {
+      var result, _i, _len, _results;
+      _results = [];
+      for (_i = 0, _len = results.length; _i < _len; _i++) {
+        result = results[_i];
+        console.log("destroying activity");
         _results.push(result.destroy());
       }
       return _results;
