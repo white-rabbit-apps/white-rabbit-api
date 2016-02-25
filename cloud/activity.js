@@ -160,7 +160,7 @@ Parse.Cloud.afterSave("Like", function(request, response) {
               });
               activity.set("forUser", {
                 "__type": "Pointer",
-                "className": "User",
+                "className": "_User",
                 "objectId": ownerId
               });
               console.log("saving activity");

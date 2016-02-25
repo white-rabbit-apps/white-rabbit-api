@@ -183,7 +183,7 @@ Parse.Cloud.afterSave "Like", (request, response) ->
 
               activity.set("forUser", {
                 "__type": "Pointer",
-                "className": "User",
+                "className": "_User",
                 "objectId": ownerId
               })
 
