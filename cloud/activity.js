@@ -34,7 +34,7 @@ Parse.Cloud.afterSave("Activity", function(request, response) {
     where: pushQuery,
     data: {
       alert: generateActivityString(action, info),
-      sound: 'meow1.caf'
+      sound: 'hiss1.caf'
     }
   }, {
     useMasterKey: true,
