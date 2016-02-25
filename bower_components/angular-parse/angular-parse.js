@@ -55,7 +55,7 @@
   module.factory('ParseUtils', function($http, $window) {
     var Parse;
     return Parse = {
-      BaseUrl: "https://api.parse.com/1",
+      BaseUrl: "http://www.whiterabbitapps.net/api",
       _request: function(method, path, data, params) {
         var headers, id, klass, _ref;
         if (angular.isArray(path)) {
