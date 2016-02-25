@@ -282,9 +282,7 @@ app.controller('AnimalCtrl', function($scope, Animal, AnimalTimelineEntry, $stat
           className: 'Animal',
           objectId: $scope.animal.objectId
         }
-      },
-      include: 'shelter',
-      orderBy: 'date DESC'
+      }
     }).then(function(entries) {
       if ($scope.isAlive) {
         return $scope.entries = entries.reverse();
