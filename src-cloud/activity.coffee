@@ -72,6 +72,7 @@ Parse.Cloud.afterSave "Follow", (request, response) ->
   query.include("foster")
   console.log("finding animal: " + request.object.get("following").id)
   query.find
+    useMasterKey: true
     success: (results) ->
       console.log("found: " + results)
       if results.length > 0

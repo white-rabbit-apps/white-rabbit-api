@@ -56,6 +56,7 @@ Parse.Cloud.afterSave("Follow", function(request, response) {
   query.include("foster");
   console.log("finding animal: " + request.object.get("following").id);
   return query.find({
+    useMasterKey: true,
     success: function(results) {
       var activity, animal, ownerId, userId, userQuery;
       console.log("found: " + results);
