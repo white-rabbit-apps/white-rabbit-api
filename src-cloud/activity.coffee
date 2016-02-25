@@ -92,11 +92,11 @@ Parse.Cloud.afterSave "Follow", (request, response) ->
         userId = request.object.get("follower").id
         activity.set("actingUser", {
           "__type": "Pointer",
-          "className": "User",
+          "className": "_User",
           "objectId": userId
         })
 
-        userQuery = new Parse.Query("User")
+        userQuery = new Parse.Query("_User")
         userQuery.get userId,
           useMasterKey: true
           success: (user) ->
@@ -120,7 +120,7 @@ Parse.Cloud.afterSave "Follow", (request, response) ->
 
                 activity.set("forUser", {
                   "__type": "Pointer",
-                  "className": "User",
+                  "className": "_User",
                   "objectId": ownerId
                 })
 
@@ -164,11 +164,11 @@ Parse.Cloud.afterSave "Like", (request, response) ->
           userId = request.object.get("actingUser").id
           activity.set("actingUser", {
             "__type": "Pointer",
-            "className": "User",
+            "className": "_User",
             "objectId": userId
           })
 
-          userQuery = new Parse.Query("User")
+          userQuery = new Parse.Query("_User")
           userQuery.get userId,
             useMasterKey: true
             success: (user) ->
@@ -247,7 +247,7 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
 
             activity.set("forUser", {
               "__type": "Pointer",
-              "className": "User",
+              "className": "_User",
               "objectId": ownerId
             })
 
