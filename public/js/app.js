@@ -532,9 +532,7 @@ app.controller('HashtagCtrl', function($scope, AnimalTimelineEntry, $stateParams
           "$regex": '\\Q\#' + $scope.hashtag + '\\E',
           "$options": "i"
         }
-      },
-      include: 'shelter',
-      orderBy: 'createdAt DESC'
+      }
     }).then(function(entries) {
       return $scope.entries = entries.reverse();
     });

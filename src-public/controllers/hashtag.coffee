@@ -13,8 +13,8 @@ app.controller 'HashtagCtrl', ($scope, AnimalTimelineEntry, $stateParams, $rootS
         text:
           "$regex": '\\Q\#' + $scope.hashtag + '\\E'
           "$options": "i"
-      include: 'shelter'
-      orderBy: 'createdAt DESC'
+      # include: 'shelter'
+      # orderBy: 'createdAt DESC'
     )
     .then (entries) ->
       $scope.entries = entries.reverse()
