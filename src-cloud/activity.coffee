@@ -53,6 +53,7 @@ Parse.Cloud.afterSave "Activity", (request, response) ->
       alert: generateActivityString(action, info)
       sound: 'meow1.caf'
   },
+    useMasterKey: true
     success: ->
       console.log("notification sent!")
       # return response.success()
@@ -96,6 +97,7 @@ Parse.Cloud.afterSave "Follow", (request, response) ->
 
         userQuery = new Parse.Query("User")
         userQuery.get userId,
+          useMasterKey: true
           success: (user) ->
 
             activity.set("actingUserName", user.get('username'))
@@ -109,6 +111,7 @@ Parse.Cloud.afterSave "Follow", (request, response) ->
 
             animalQuery = new Parse.Query("Animal")
             animalQuery.get animalId,
+              useMasterKey: true
               success: (animal) ->
                 console.log("CCCC animal: " + JSON.stringify(animal))
 
@@ -122,6 +125,7 @@ Parse.Cloud.afterSave "Follow", (request, response) ->
 
                 console.log("saving activity")
                 activity.save(null,
+                  useMasterKey: true
                   success: (result) ->
                     console.log("activity saved: " + result)
                     # return response.success()
@@ -137,6 +141,7 @@ Parse.Cloud.afterSave "Like", (request, response) ->
   query.include("animal")
   console.log("finding entry: " + request.object.get("entry").id)
   query.find
+    useMasterKey: true
     success: (results) ->
       console.log("found: " + JSON.stringify(results))
       if results.length > 0
@@ -164,6 +169,7 @@ Parse.Cloud.afterSave "Like", (request, response) ->
 
           userQuery = new Parse.Query("User")
           userQuery.get userId,
+            useMasterKey: true
             success: (user) ->
 
               activity.set("actingUserName", user.get('username'))
@@ -182,6 +188,7 @@ Parse.Cloud.afterSave "Like", (request, response) ->
 
               console.log("saving activity")
               activity.save(null,
+                useMasterKey: true
                 success: (result) ->
                   console.log("activity saved: " + result)
                   # return response.success()
@@ -197,6 +204,7 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
   query.include("createdBy")
   query.include("animal")
   query.find
+    useMasterKey: true
     success: (results) ->
       console.log("found: " + results)
       if results.length > 0
@@ -223,6 +231,7 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
 
         animalQuery = new Parse.Query("Animal")
         animalQuery.get animalId,
+          useMasterKey: true
           success: (animal) ->
             activity.set("actingAnimalName", animal.get('username'))
 
@@ -243,6 +252,7 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
 
             console.log("saving activity")
             activity.save(null,
+              useMasterKey: true
               success: (result) ->
                 console.log("activity saved: " + result)
                 # return response.success()

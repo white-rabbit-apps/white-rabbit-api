@@ -37,6 +37,7 @@ Parse.Cloud.afterSave("Activity", function(request, response) {
       sound: 'meow1.caf'
     }
   }, {
+    useMasterKey: true,
     success: function() {
       return console.log("notification sent!");
     },
@@ -77,6 +78,7 @@ Parse.Cloud.afterSave("Follow", function(request, response) {
         });
         userQuery = new Parse.Query("User");
         return userQuery.get(userId, {
+          useMasterKey: true,
           success: function(user) {
             var animalId, animalQuery;
             activity.set("actingUserName", user.get('username'));
@@ -88,6 +90,7 @@ Parse.Cloud.afterSave("Follow", function(request, response) {
             });
             animalQuery = new Parse.Query("Animal");
             return animalQuery.get(animalId, {
+              useMasterKey: true,
               success: function(animal) {
                 console.log("CCCC animal: " + JSON.stringify(animal));
                 activity.set("animalActedOnName", animal.get('username'));
@@ -98,6 +101,7 @@ Parse.Cloud.afterSave("Follow", function(request, response) {
                 });
                 console.log("saving activity");
                 return activity.save(null, {
+                  useMasterKey: true,
                   success: function(result) {
                     return console.log("activity saved: " + result);
                   }
@@ -120,6 +124,7 @@ Parse.Cloud.afterSave("Like", function(request, response) {
   query.include("animal");
   console.log("finding entry: " + request.object.get("entry").id);
   return query.find({
+    useMasterKey: true,
     success: function(results) {
       var activity, animal, entry, ownerId, userId, userQuery;
       console.log("found: " + JSON.stringify(results));
@@ -144,6 +149,7 @@ Parse.Cloud.afterSave("Like", function(request, response) {
           });
           userQuery = new Parse.Query("User");
           return userQuery.get(userId, {
+            useMasterKey: true,
             success: function(user) {
               activity.set("actingUserName", user.get('username'));
               activity.set("entryActedOn", {
@@ -158,6 +164,7 @@ Parse.Cloud.afterSave("Like", function(request, response) {
               });
               console.log("saving activity");
               return activity.save(null, {
+                useMasterKey: true,
                 success: function(result) {
                   return console.log("activity saved: " + result);
                 }
@@ -178,6 +185,7 @@ Parse.Cloud.afterSave("Comment", function(request, response) {
   query.include("createdBy");
   query.include("animal");
   return query.find({
+    useMasterKey: true,
     success: function(results) {
       var activity, animalId, animalQuery, entry, ownerId;
       console.log("found: " + results);
@@ -199,6 +207,7 @@ Parse.Cloud.afterSave("Comment", function(request, response) {
         });
         animalQuery = new Parse.Query("Animal");
         return animalQuery.get(animalId, {
+          useMasterKey: true,
           success: function(animal) {
             activity.set("actingAnimalName", animal.get('username'));
             activity.set("entryActedOn", {
@@ -215,6 +224,7 @@ Parse.Cloud.afterSave("Comment", function(request, response) {
             });
             console.log("saving activity");
             return activity.save(null, {
+              useMasterKey: true,
               success: function(result) {
                 return console.log("activity saved: " + result);
               }
