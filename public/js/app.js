@@ -59,7 +59,6 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider, Parse
     templateUrl: 'products.html'
   });
   $urlRouterProvider.otherwise('/');
-  ParseProvider.initialize("IWr9xzTirLbjXH80mbTCtT9lWB73ggQe3PhA6nPg", "SkDTdS8SBGzO9BkRHR3H8kwxCLJSvKsAe1jeOTnW");
   Parse.initialize("IWr9xzTirLbjXH80mbTCtT9lWB73ggQe3PhA6nPg", "8iUoJovKQkhCcpOaMPZ3r9Ii3thLsuvLfHViXLrK");
   return Parse.serverURL = "http://www.whiterabbitapps.net/api";
 });
