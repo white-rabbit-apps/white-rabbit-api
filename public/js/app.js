@@ -209,165 +209,6 @@ app.run(function($rootScope, $state, $location) {
   };
 });
 
-var __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-app.factory('Animal', function(Parse) {
-  var Animal;
-  return Animal = (function(_super) {
-    __extends(Animal, _super);
-
-    function Animal() {
-      return Animal.__super__.constructor.apply(this, arguments);
-    }
-
-    Animal.configure("Animal", "owner", "shelter", "name", "breed", "adoptable", "originalSourceLink", "birthDate", "gender", "profilePhoto", "coverPhoto", "username", "instagramUsername", "youtubeUsername", "twitterUsername");
-
-    Animal.prototype.age = function() {
-      var age, ageDate, ageDifMs, birthDate, deceasedDate, months;
-      console.log("getting age");
-      if (!this.birthDate) {
-        return "Age Unknown";
-      }
-      if (this.deceasedDate) {
-        birthDate = new Date(this.birthDate.iso);
-        deceasedDate = new Date(this.deceasedDate.iso);
-        return birthDate.getUTCFullYear() + " - " + deceasedDate.getUTCFullYear();
-      }
-      ageDifMs = Date.now() - new Date(this.birthDate.iso).getTime();
-      ageDate = new Date(ageDifMs);
-      age = Math.abs(ageDate.getUTCFullYear() - 1970);
-      if (age <= 1) {
-        months = Math.abs(ageDate.getUTCMonth());
-        if (months === 0) {
-          months = 12;
-        }
-        age = months + " months old";
-      } else {
-        age = age + " years old";
-      }
-      return age;
-    };
-
-    return Animal;
-
-  })(Parse.Model);
-});
-
-var __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-app.factory('AnimalTimelineEntry', function(Parse) {
-  var AnimalTimelineEntry;
-  return AnimalTimelineEntry = (function(_super) {
-    __extends(AnimalTimelineEntry, _super);
-
-    function AnimalTimelineEntry() {
-      return AnimalTimelineEntry.__super__.constructor.apply(this, arguments);
-    }
-
-    AnimalTimelineEntry.configure("AnimalTimelineEntry", "animal", "date", "kind", "image", "text", "type");
-
-    return AnimalTimelineEntry;
-
-  })(Parse.Model);
-});
-
-var __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-app.factory('Breed', function(Parse) {
-  var Breed;
-  return Breed = (function(_super) {
-    __extends(Breed, _super);
-
-    function Breed() {
-      return Breed.__super__.constructor.apply(this, arguments);
-    }
-
-    Breed.configure("Breed", "name", "image", "description", "originCountry", "type", "coat", "groomingFrequency", "sheddingFrequency", "attentionNeed", "activity", "vocalization", "minLifeExpectancy", "maxLifeExpectancy", "minWeightLbs", "maxWeightLbs");
-
-    return Breed;
-
-  })(Parse.Model);
-});
-
-var __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-app.factory('Location', function(Parse) {
-  var Location;
-  return Location = (function(_super) {
-    __extends(Location, _super);
-
-    function Location() {
-      return Location.__super__.constructor.apply(this, arguments);
-    }
-
-    Location.configure("Location", "type", "name", "short_name", "email", "address", "city", "state", "zip", "geo", "phone", "website", "fbUrl", "twitterUrl", "instagramUrl", "youtubeUrl", "fbUrl", "yelpUrl", "logo");
-
-    return Location;
-
-  })(Parse.Model);
-});
-
-var __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-app.factory('Product', function(Parse) {
-  var Product;
-  return Product = (function(_super) {
-    __extends(Product, _super);
-
-    function Product() {
-      return Product.__super__.constructor.apply(this, arguments);
-    }
-
-    Product.configure("Product", "name", "active", "price", "description", "mainPhoto", "amazonUrl", "manufacturerName", "manufacturerUrl", "supplierPartName", "supplierUrl");
-
-    return Product;
-
-  })(Parse.Model);
-});
-
-var __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-app.factory('Trait', function(Parse) {
-  var Trait;
-  return Trait = (function(_super) {
-    __extends(Trait, _super);
-
-    function Trait() {
-      return Trait.__super__.constructor.apply(this, arguments);
-    }
-
-    Trait.configure("Trait", "name");
-
-    return Trait;
-
-  })(Parse.Model);
-});
-
-var __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-app.factory('User', function(Parse) {
-  var User;
-  return User = (function(_super) {
-    __extends(User, _super);
-
-    function User() {
-      return User.__super__.constructor.apply(this, arguments);
-    }
-
-    User.configure("User", "firstName", "lastName", "email", "username", "profilePhoto", "admin", "shelter");
-
-    return User;
-
-  })(Parse.User);
-});
-
 app.controller('AnimalCtrl', function($scope, Animal, AnimalTimelineEntry, $stateParams, $rootScope) {
   $scope.isAlive = true;
   $scope.username = $stateParams.username;
@@ -987,4 +828,163 @@ app.controller('UsersCtrl', function($scope, User) {
   };
   $scope.fetchUsers();
   return $scope.newUser = new User;
+});
+
+var __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+app.factory('Animal', function(Parse) {
+  var Animal;
+  return Animal = (function(_super) {
+    __extends(Animal, _super);
+
+    function Animal() {
+      return Animal.__super__.constructor.apply(this, arguments);
+    }
+
+    Animal.configure("Animal", "owner", "shelter", "name", "breed", "adoptable", "originalSourceLink", "birthDate", "gender", "profilePhoto", "coverPhoto", "username", "instagramUsername", "youtubeUsername", "twitterUsername");
+
+    Animal.prototype.age = function() {
+      var age, ageDate, ageDifMs, birthDate, deceasedDate, months;
+      console.log("getting age");
+      if (!this.birthDate) {
+        return "Age Unknown";
+      }
+      if (this.deceasedDate) {
+        birthDate = new Date(this.birthDate.iso);
+        deceasedDate = new Date(this.deceasedDate.iso);
+        return birthDate.getUTCFullYear() + " - " + deceasedDate.getUTCFullYear();
+      }
+      ageDifMs = Date.now() - new Date(this.birthDate.iso).getTime();
+      ageDate = new Date(ageDifMs);
+      age = Math.abs(ageDate.getUTCFullYear() - 1970);
+      if (age <= 1) {
+        months = Math.abs(ageDate.getUTCMonth());
+        if (months === 0) {
+          months = 12;
+        }
+        age = months + " months old";
+      } else {
+        age = age + " years old";
+      }
+      return age;
+    };
+
+    return Animal;
+
+  })(Parse.Model);
+});
+
+var __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+app.factory('AnimalTimelineEntry', function(Parse) {
+  var AnimalTimelineEntry;
+  return AnimalTimelineEntry = (function(_super) {
+    __extends(AnimalTimelineEntry, _super);
+
+    function AnimalTimelineEntry() {
+      return AnimalTimelineEntry.__super__.constructor.apply(this, arguments);
+    }
+
+    AnimalTimelineEntry.configure("AnimalTimelineEntry", "animal", "date", "kind", "image", "text", "type");
+
+    return AnimalTimelineEntry;
+
+  })(Parse.Model);
+});
+
+var __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+app.factory('Breed', function(Parse) {
+  var Breed;
+  return Breed = (function(_super) {
+    __extends(Breed, _super);
+
+    function Breed() {
+      return Breed.__super__.constructor.apply(this, arguments);
+    }
+
+    Breed.configure("Breed", "name", "image", "description", "originCountry", "type", "coat", "groomingFrequency", "sheddingFrequency", "attentionNeed", "activity", "vocalization", "minLifeExpectancy", "maxLifeExpectancy", "minWeightLbs", "maxWeightLbs");
+
+    return Breed;
+
+  })(Parse.Model);
+});
+
+var __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+app.factory('Location', function(Parse) {
+  var Location;
+  return Location = (function(_super) {
+    __extends(Location, _super);
+
+    function Location() {
+      return Location.__super__.constructor.apply(this, arguments);
+    }
+
+    Location.configure("Location", "type", "name", "short_name", "email", "address", "city", "state", "zip", "geo", "phone", "website", "fbUrl", "twitterUrl", "instagramUrl", "youtubeUrl", "fbUrl", "yelpUrl", "logo");
+
+    return Location;
+
+  })(Parse.Model);
+});
+
+var __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+app.factory('Product', function(Parse) {
+  var Product;
+  return Product = (function(_super) {
+    __extends(Product, _super);
+
+    function Product() {
+      return Product.__super__.constructor.apply(this, arguments);
+    }
+
+    Product.configure("Product", "name", "active", "price", "description", "mainPhoto", "amazonUrl", "manufacturerName", "manufacturerUrl", "supplierPartName", "supplierUrl");
+
+    return Product;
+
+  })(Parse.Model);
+});
+
+var __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+app.factory('Trait', function(Parse) {
+  var Trait;
+  return Trait = (function(_super) {
+    __extends(Trait, _super);
+
+    function Trait() {
+      return Trait.__super__.constructor.apply(this, arguments);
+    }
+
+    Trait.configure("Trait", "name");
+
+    return Trait;
+
+  })(Parse.Model);
+});
+
+var __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+app.factory('User', function(Parse) {
+  var User;
+  return User = (function(_super) {
+    __extends(User, _super);
+
+    function User() {
+      return User.__super__.constructor.apply(this, arguments);
+    }
+
+    User.configure("User", "firstName", "lastName", "email", "username", "profilePhoto", "admin", "shelter");
+
+    return User;
+
+  })(Parse.User);
 });
