@@ -107,7 +107,9 @@ Parse.Cloud.afterSave "Animal", (request, response) ->
 
         for result in results
           console.log("destroying entry")
-          result.destroy()
+          result.destroy(
+            useMasterKey: true
+          )
 
         entry = new Parse.Object("AnimalTimelineEntry")
         entry.set("type", "birth")
