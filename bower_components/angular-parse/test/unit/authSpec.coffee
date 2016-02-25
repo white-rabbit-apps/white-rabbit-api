@@ -22,7 +22,7 @@ describe 'auth', ->
 
       signedHeaders = (headers) ->
         headers["X-Parse-Application-Id"] == 'appId' and
-        headers["X-Parse-REST-API-KEY"] == "apiKey"
+        headers["X-Parse-Client-Key"] == "apiKey"
 
   afterEach ->
     backend.verifyNoOutstandingRequest()

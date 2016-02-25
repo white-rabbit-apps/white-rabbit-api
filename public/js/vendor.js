@@ -353,7 +353,7 @@ angular.module("ui.bootstrap",["ui.bootstrap.tpls","ui.bootstrap.transition","ui
         }
         headers = {
           "X-Parse-Application-Id": CONFIG.applicationId,
-          "X-Parse-REST-API-KEY": CONFIG.apiKey,
+          "X-Parse-Client-Key": CONFIG.apiKey,
           "Content-Type": "application/json"
         };
         if ($window.localStorage.key('PARSE_SESSION_TOKEN')) {

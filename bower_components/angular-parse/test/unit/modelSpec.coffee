@@ -33,7 +33,7 @@ describe 'Model', ->
 
       signedHeaders = (headers) ->
         headers["X-Parse-Application-Id"] == 'appId' and
-        headers["X-Parse-REST-API-KEY"] == "apiKey"
+        headers["X-Parse-Client-Key"] == "apiKey"
 
       class Car extends Parse.Model
         @configure 'Car', 'make', 'model', 'year', 'parts'

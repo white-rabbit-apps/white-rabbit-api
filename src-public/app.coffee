@@ -85,7 +85,8 @@ app.config (
 
   ParseProvider.initialize(
     "IWr9xzTirLbjXH80mbTCtT9lWB73ggQe3PhA6nPg", # Application ID
-    "SkDTdS8SBGzO9BkRHR3H8kwxCLJSvKsAe1jeOTnW"  # REST API Key
+    "Yxdst3hz76abMoAwG7FLh0NwDmPvYHFDUPao9WJJ"
+#    "SkDTdS8SBGzO9BkRHR3H8kwxCLJSvKsAe1jeOTnW"  # REST API Key
   )
 
   Parse.initialize("IWr9xzTirLbjXH80mbTCtT9lWB73ggQe3PhA6nPg", "8iUoJovKQkhCcpOaMPZ3r9Ii3thLsuvLfHViXLrK")
