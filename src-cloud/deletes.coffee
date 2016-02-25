@@ -7,10 +7,12 @@ Parse.Cloud.afterDelete Parse.User, (request, response) ->
   query.equalTo("actingUser", request.object)
   console.log("finding activities to destroy")
   query.find
+    useMasterKey: true
     success: (results) ->
       for result in results
         console.log("destroying activity")
-        result.destroy()
+        result.destroy
+          useMasterKey: true
 
 # Cascading deletes Follow
 Parse.Cloud.afterDelete "Follow", (request, response) ->
@@ -20,10 +22,12 @@ Parse.Cloud.afterDelete "Follow", (request, response) ->
   query.equalTo("action", "follow")
   console.log("finding activities to destroy")
   query.find
+    useMasterKey: true
     success: (results) ->
       for result in results
         console.log("destroying activity")
-        result.destroy()
+        result.destroy
+          useMasterKey: true
 
 # Cascading deletes
 Parse.Cloud.afterDelete "Comment", (request, response) ->
@@ -33,10 +37,12 @@ Parse.Cloud.afterDelete "Comment", (request, response) ->
   query.equalTo("action", "comment")
   console.log("finding activities to destroy")
   query.find
+    useMasterKey: true
     success: (results) ->
       for result in results
         console.log("destroying activity")
-        result.destroy()
+        result.destroy
+          useMasterKey: true
 
 
 
@@ -67,10 +73,12 @@ Parse.Cloud.afterDelete "Like", (request, response) ->
   query.equalTo("action", "like")
   console.log("finding activities to destroy")
   query.find
+    useMasterKey: true
     success: (results) ->
       for result in results
         console.log("destroying activity")
-        result.destroy()
+        result.destroy
+          useMasterKey: true
 
 
 Parse.Cloud.afterDelete "Animal", (request, response) ->
@@ -82,10 +90,12 @@ Parse.Cloud.afterDelete "Animal", (request, response) ->
       "objectId": request.object.id
   })
   query.find
+    useMasterKey: true
     success: (results) ->
       for result in results
         console.log("destroying entry")
-        result.destroy()
+        result.destroy
+          useMasterKey: true
 
   # destroy all related follows
   query = new Parse.Query("Follow")
@@ -95,10 +105,12 @@ Parse.Cloud.afterDelete "Animal", (request, response) ->
       "objectId": request.object.id
   })
   query.find
+    useMasterKey: true
     success: (results) ->
       for result in results
         console.log("destroying follow")
-        result.destroy()
+        result.destroy
+          useMasterKey: true
 
   # destroy all related comments
   query = new Parse.Query("Comment")
@@ -108,10 +120,12 @@ Parse.Cloud.afterDelete "Animal", (request, response) ->
       "objectId": request.object.id
   })
   query.find
+    useMasterKey: true
     success: (results) ->
       for result in results
         console.log("destroying comment")
-        result.destroy()
+        result.destroy
+          useMasterKey: true
 
 
 Parse.Cloud.afterDelete "AnimalTimelineEntry", (request, response) ->
@@ -122,10 +136,12 @@ Parse.Cloud.afterDelete "AnimalTimelineEntry", (request, response) ->
       "objectId": request.object.id
   })
   query.find
+    useMasterKey: true
     success: (results) ->
       for result in results
         console.log("destroying document")
-        result.destroy()
+        result.destroy
+          useMasterKey: true
 
   query = new Parse.Query("Activity")
   query.equalTo("entryActedOn", {
@@ -134,10 +150,13 @@ Parse.Cloud.afterDelete "AnimalTimelineEntry", (request, response) ->
       "objectId": request.object.id
   })
   query.find
+    useMasterKey: true
     success: (results) ->
       for result in results
         console.log("destroying activity")
-        result.destroy()
+        result.destroy
+          useMasterKey: true
+
 
 
 Parse.Cloud.afterDelete "Document", (request, response) ->
@@ -148,7 +167,9 @@ Parse.Cloud.afterDelete "Document", (request, response) ->
       "objectId": request.object.id
   })
   query.find
+    useMasterKey: true
     success: (results) ->
       for result in results
         console.log("destroying page")
-        result.destroy()
+        result.destroy
+          useMasterKey: true
