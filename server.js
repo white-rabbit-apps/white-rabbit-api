@@ -15,6 +15,7 @@ if (!process.env.DATABASE_URI) {
 }
 
 var api = new ParseServer({
+  serverURL: 'http://www.whiterabbitapps.net/api/',
   databaseURI: process.env.DATABASE_URI || 'mongodb://localhost:27017/dev',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
   appId: process.env.PARSE_APP_ID || 'IWr9xzTirLbjXH80mbTCtT9lWB73ggQe3PhA6nPg',
