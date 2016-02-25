@@ -87,8 +87,8 @@ app.config (
     "IWr9xzTirLbjXH80mbTCtT9lWB73ggQe3PhA6nPg", # Application ID
     "SkDTdS8SBGzO9BkRHR3H8kwxCLJSvKsAe1jeOTnW"  # REST API Key
   )
-  Parse.initialize("IWr9xzTirLbjXH80mbTCtT9lWB73ggQe3PhA6nPg", "8iUoJovKQkhCcpOaMPZ3r9Ii3thLsuvLfHViXLrK")
   Parse.serverURL = 'http://www.whiterabbitapps.net/api'
+  Parse.initialize("IWr9xzTirLbjXH80mbTCtT9lWB73ggQe3PhA6nPg", "8iUoJovKQkhCcpOaMPZ3r9Ii3thLsuvLfHViXLrK")
 
 app.filter 'unsafe', ($sce) ->
   $sce.trustAsHtml
