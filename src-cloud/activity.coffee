@@ -160,6 +160,7 @@ Parse.Cloud.afterSave "Like", (request, response) ->
         if ownerId != request.object.get("actingUser").id
           activity = new Parse.Object("Activity")
           activity.set("action", "like")
+          activity.set("likeAction", request.object.get("action"))
 
           userId = request.object.get("actingUser").id
           activity.set("actingUser", {
