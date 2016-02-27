@@ -59,11 +59,24 @@ Parse.Cloud.afterSave "Activity", (request, response) ->
     'commentMadeText': request.object.get('commentMadeText')
     'likeAction': request.object.get('likeAction')
 
+  soundFilename = 'meow1.caf'
+  switch info['likeAction']
+    when "meow"
+      soundFilename = 'meow1.caf'
+    when "purr"
+      soundFilename = 'purr1.caf'
+    when "hiss"
+      soundFilename = 'hiss1.caf'
+    when "bump"
+      soundFilename = 'bump1.caf'
+    when "lick"
+      soundFilename = 'lick1.caf'
+
   Parse.Push.send {
     where: pushQuery
     data:
       alert: generateActivityString(action, info)
-      sound: 'meow1.caf'
+      sound: soundFilename
   },
     useMasterKey: true
     success: ->

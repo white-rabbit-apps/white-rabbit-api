@@ -33,7 +33,7 @@ generateActivityString = function(action, info) {
 };
 
 Parse.Cloud.afterSave("Activity", function(request, response) {
-  var action, info, pushQuery, targetUser;
+  var action, info, pushQuery, soundFilename, targetUser;
   console.log("new activity");
   targetUser = new Parse.User();
   targetUser.id = request.object.get("forUser").id;
@@ -47,11 +47,28 @@ Parse.Cloud.afterSave("Activity", function(request, response) {
     'commentMadeText': request.object.get('commentMadeText'),
     'likeAction': request.object.get('likeAction')
   };
+  soundFilename = 'meow1.caf';
+  switch (info['likeAction']) {
+    case "meow":
+      soundFilename = 'meow1.caf';
+      break;
+    case "purr":
+      soundFilename = 'purr1.caf';
+      break;
+    case "hiss":
+      soundFilename = 'hiss1.caf';
+      break;
+    case "bump":
+      soundFilename = 'bump1.caf';
+      break;
+    case "lick":
+      soundFilename = 'lick1.caf';
+  }
   return Parse.Push.send({
     where: pushQuery,
     data: {
       alert: generateActivityString(action, info),
-      sound: 'meow1.caf'
+      sound: soundFilename
     }
   }, {
     useMasterKey: true,
