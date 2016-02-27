@@ -354,6 +354,7 @@ angular.module("ui.bootstrap",["ui.bootstrap.tpls","ui.bootstrap.transition","ui
         headers = {
           "X-Parse-Application-Id": CONFIG.applicationId,
           "X-Parse-Client-Key": CONFIG.apiKey,
+          // "X-Parse-REST-API-KEY": CONFIG.apiKey,
           "Content-Type": "application/json"
         };
         if ($window.localStorage.key('PARSE_SESSION_TOKEN')) {
@@ -946,7 +947,7 @@ angular.module('angulartics.google.analytics', ['angulartics'])
   // to wrap these inside angulartics.waitForVendorApi
 
   $analyticsProvider.settings.trackRelativePath = true;
-
+  
   // Set the default settings for this module
   $analyticsProvider.settings.ga = {
     // array of additional account names (only works for analyticsjs)
@@ -977,8 +978,8 @@ angular.module('angulartics.google.analytics', ['angulartics'])
   $analyticsProvider.registerEventTrack(function (action, properties) {
 
     // do nothing if there is no category (it's required by GA)
-    if (!properties || !properties.category) {
-		return;
+    if (!properties || !properties.category) { 
+		return; 
 	}
     // GA requires that eventValue be an integer, see:
     // https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#eventValue

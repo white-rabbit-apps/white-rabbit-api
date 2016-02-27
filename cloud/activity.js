@@ -8,7 +8,23 @@ generateActivityString = function(action, info) {
       activityString = "" + info['actingUserName'] + " started following " + info['animalActedOnName'];
       break;
     case "like":
-      activityString = "" + info['actingUserName'] + " loved your photo";
+      activityString = "" + info['actingUserName'] + " liked your photo";
+      switch (info['likeAction']) {
+        case "meow":
+          activityString = "" + info['actingUserName'] + " meowed at your photo";
+          break;
+        case "purr":
+          activityString = "" + info['actingUserName'] + " purred at your photo";
+          break;
+        case "lick":
+          activityString = "" + info['actingUserName'] + " licked your photo";
+          break;
+        case "bump":
+          activityString = "" + info['actingUserName'] + " head bumped your photo";
+          break;
+        case "hiss":
+          activityString = "" + info['actingUserName'] + " hissed at your photo";
+      }
       break;
     case "comment":
       activityString = "" + info['actingAnimalName'] + " commented on your photo: " + info['commentMadeText'];
@@ -28,7 +44,8 @@ Parse.Cloud.afterSave("Activity", function(request, response) {
     'actingUserName': request.object.get('actingUserName'),
     'actingAnimalName': request.object.get('actingAnimalName'),
     'animalActedOnName': request.object.get('animalActedOnName'),
-    'commentMadeText': request.object.get('commentMadeText')
+    'commentMadeText': request.object.get('commentMadeText'),
+    'likeAction': request.object.get('likeAction')
   };
   return Parse.Push.send({
     where: pushQuery,

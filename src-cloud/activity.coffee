@@ -22,7 +22,18 @@ generateActivityString = (action, info) ->
     when "follow"
       activityString = "#{info['actingUserName']} started following #{info['animalActedOnName']}"
     when "like"
-      activityString = "#{info['actingUserName']} loved your photo"
+      activityString = "#{info['actingUserName']} liked your photo"
+      switch info['likeAction']
+        when "meow"
+          activityString = "#{info['actingUserName']} meowed at your photo"
+        when "purr"
+          activityString = "#{info['actingUserName']} purred at your photo"
+        when "lick"
+          activityString = "#{info['actingUserName']} licked your photo"
+        when "bump"
+          activityString = "#{info['actingUserName']} head bumped your photo"
+        when "hiss"
+          activityString = "#{info['actingUserName']} hissed at your photo"
     when "comment"
       activityString = "#{info['actingAnimalName']} commented on your photo: #{info['commentMadeText']}"
 
@@ -46,6 +57,7 @@ Parse.Cloud.afterSave "Activity", (request, response) ->
     'actingAnimalName': request.object.get('actingAnimalName')
     'animalActedOnName': request.object.get('animalActedOnName')
     'commentMadeText': request.object.get('commentMadeText')
+    'likeAction': request.object.get('likeAction')
 
   Parse.Push.send {
     where: pushQuery
