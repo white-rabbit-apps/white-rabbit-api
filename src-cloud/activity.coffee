@@ -109,7 +109,7 @@ Parse.Cloud.afterSave "Follow", (request, response) ->
         else if animal.get("foster")
           owners = [animal.get("foster")]
 
-        console.log("ownerId: " + ownerId)
+        console.log("owners: " + owners)
 
         for owner in owners
 
@@ -148,7 +148,7 @@ Parse.Cloud.afterSave "Follow", (request, response) ->
                   activity.set("forUser", {
                     "__type": "Pointer",
                     "className": "_User",
-                    "objectId": owner['objectId']
+                    "objectId": owner.id
                   })
 
                   console.log("saving activity")
