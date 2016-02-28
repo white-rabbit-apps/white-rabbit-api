@@ -93,7 +93,7 @@ Parse.Cloud.afterSave "Follow", (request, response) ->
 
   query = new Parse.Query("Animal")
   query.equalTo("objectId", request.object.get("following").id)
-  query.include("owner")
+  query.include("owners")
   query.include("foster")
   console.log("finding animal: " + request.object.get("following").id)
   query.find
@@ -103,59 +103,61 @@ Parse.Cloud.afterSave "Follow", (request, response) ->
       if results.length > 0
         animal = results[0]
 
-        ownerId = ""
-        if animal.get("owner")
-          ownerId = animal.get("owner").id
+        owners = []
+        if animal.get("owners")
+          owners = animal.get("owners")
         else if animal.get("foster")
-          ownerId = animal.get("foster").id
+          owners = [animal.get("foster")]
 
         console.log("ownerId: " + ownerId)
 
-        activity = new Parse.Object("Activity")
-        activity.set("action", "follow")
+        for owner in owners
 
-        userId = request.object.get("follower").id
-        activity.set("actingUser", {
-          "__type": "Pointer",
-          "className": "_User",
-          "objectId": userId
-        })
+          activity = new Parse.Object("Activity")
+          activity.set("action", "follow")
 
-        userQuery = new Parse.Query("_User")
-        userQuery.get userId,
-          useMasterKey: true
-          success: (user) ->
+          userId = request.object.get("follower").id
+          activity.set("actingUser", {
+            "__type": "Pointer",
+            "className": "_User",
+            "objectId": userId
+          })
 
-            activity.set("actingUserName", user.get('username'))
+          userQuery = new Parse.Query("_User")
+          userQuery.get userId,
+            useMasterKey: true
+            success: (user) ->
 
-            animalId = request.object.get("following").id
-            activity.set("animalActedOn", {
-              "__type": "Pointer",
-              "className": "Animal",
-              "objectId": animalId
-            })
+              activity.set("actingUserName", user.get('username'))
 
-            animalQuery = new Parse.Query("Animal")
-            animalQuery.get animalId,
-              useMasterKey: true
-              success: (animal) ->
-                console.log("CCCC animal: " + JSON.stringify(animal))
+              animalId = request.object.get("following").id
+              activity.set("animalActedOn", {
+                "__type": "Pointer",
+                "className": "Animal",
+                "objectId": animalId
+              })
 
-                activity.set("animalActedOnName", animal.get('username'))
+              animalQuery = new Parse.Query("Animal")
+              animalQuery.get animalId,
+                useMasterKey: true
+                success: (animal) ->
+                  console.log("CCCC animal: " + JSON.stringify(animal))
 
-                activity.set("forUser", {
-                  "__type": "Pointer",
-                  "className": "_User",
-                  "objectId": ownerId
-                })
+                  activity.set("animalActedOnName", animal.get('username'))
 
-                console.log("saving activity")
-                activity.save(null,
-                  useMasterKey: true
-                  success: (result) ->
-                    console.log("activity saved: " + result)
-                    # return response.success()
-                )
+                  activity.set("forUser", {
+                    "__type": "Pointer",
+                    "className": "_User",
+                    "objectId": owner['objectId']
+                  })
+
+                  console.log("saving activity")
+                  activity.save(null,
+                    useMasterKey: true
+                    success: (result) ->
+                      console.log("activity saved: " + result)
+                      # return response.success()
+                  )
 
 
 Parse.Cloud.afterSave "Like", (request, response) ->

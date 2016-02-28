@@ -86,65 +86,70 @@ Parse.Cloud.afterSave("Follow", function(request, response) {
   console.log("new follow");
   query = new Parse.Query("Animal");
   query.equalTo("objectId", request.object.get("following").id);
-  query.include("owner");
+  query.include("owners");
   query.include("foster");
   console.log("finding animal: " + request.object.get("following").id);
   return query.find({
     useMasterKey: true,
     success: function(results) {
-      var activity, animal, ownerId, userId, userQuery;
+      var activity, animal, owner, owners, userId, userQuery, _i, _len, _results;
       console.log("found: " + results);
       if (results.length > 0) {
         animal = results[0];
-        ownerId = "";
-        if (animal.get("owner")) {
-          ownerId = animal.get("owner").id;
+        owners = [];
+        if (animal.get("owners")) {
+          owners = animal.get("owners");
         } else if (animal.get("foster")) {
-          ownerId = animal.get("foster").id;
+          owners = [animal.get("foster")];
         }
         console.log("ownerId: " + ownerId);
-        activity = new Parse.Object("Activity");
-        activity.set("action", "follow");
-        userId = request.object.get("follower").id;
-        activity.set("actingUser", {
-          "__type": "Pointer",
-          "className": "_User",
-          "objectId": userId
-        });
-        userQuery = new Parse.Query("_User");
-        return userQuery.get(userId, {
-          useMasterKey: true,
-          success: function(user) {
-            var animalId, animalQuery;
-            activity.set("actingUserName", user.get('username'));
-            animalId = request.object.get("following").id;
-            activity.set("animalActedOn", {
-              "__type": "Pointer",
-              "className": "Animal",
-              "objectId": animalId
-            });
-            animalQuery = new Parse.Query("Animal");
-            return animalQuery.get(animalId, {
-              useMasterKey: true,
-              success: function(animal) {
-                console.log("CCCC animal: " + JSON.stringify(animal));
-                activity.set("animalActedOnName", animal.get('username'));
-                activity.set("forUser", {
-                  "__type": "Pointer",
-                  "className": "_User",
-                  "objectId": ownerId
-                });
-                console.log("saving activity");
-                return activity.save(null, {
-                  useMasterKey: true,
-                  success: function(result) {
-                    return console.log("activity saved: " + result);
-                  }
-                });
-              }
-            });
-          }
-        });
+        _results = [];
+        for (_i = 0, _len = owners.length; _i < _len; _i++) {
+          owner = owners[_i];
+          activity = new Parse.Object("Activity");
+          activity.set("action", "follow");
+          userId = request.object.get("follower").id;
+          activity.set("actingUser", {
+            "__type": "Pointer",
+            "className": "_User",
+            "objectId": userId
+          });
+          userQuery = new Parse.Query("_User");
+          _results.push(userQuery.get(userId, {
+            useMasterKey: true,
+            success: function(user) {
+              var animalId, animalQuery;
+              activity.set("actingUserName", user.get('username'));
+              animalId = request.object.get("following").id;
+              activity.set("animalActedOn", {
+                "__type": "Pointer",
+                "className": "Animal",
+                "objectId": animalId
+              });
+              animalQuery = new Parse.Query("Animal");
+              return animalQuery.get(animalId, {
+                useMasterKey: true,
+                success: function(animal) {
+                  console.log("CCCC animal: " + JSON.stringify(animal));
+                  activity.set("animalActedOnName", animal.get('username'));
+                  activity.set("forUser", {
+                    "__type": "Pointer",
+                    "className": "_User",
+                    "objectId": owner['objectId']
+                  });
+                  console.log("saving activity");
+                  return activity.save(null, {
+                    useMasterKey: true,
+                    success: function(result) {
+                      return console.log("activity saved: " + result);
+                    }
+                  });
+                }
+              });
+            }
+          }));
+        }
+        return _results;
       }
     }
   });
