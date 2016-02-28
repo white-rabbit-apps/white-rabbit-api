@@ -176,52 +176,55 @@ Parse.Cloud.afterSave "Like", (request, response) ->
         entry = results[0]
         animal = entry.get("animal")
 
-        ownerId = ""
-        if animal.get("owner")
-          ownerId = animal.get("owner").id
+        owners = []
+        if animal.get("owners")
+          owners = animal.get("owners")
         else if animal.get("foster")
-          ownerId = animal.get("foster").id
+          owners = [animal.get("foster")]
 
-        console.log("ownerId: " + ownerId)
+        console.log("owners: " + owners)
 
-        if ownerId != request.object.get("actingUser").id
-          activity = new Parse.Object("Activity")
-          activity.set("action", "like")
-          activity.set("likeAction", request.object.get("action"))
+        for owner in owners
+          ownerId = owner.id
 
-          userId = request.object.get("actingUser").id
-          activity.set("actingUser", {
-            "__type": "Pointer",
-            "className": "_User",
-            "objectId": userId
-          })
+          if ownerId != request.object.get("actingUser").id
+            activity = new Parse.Object("Activity")
+            activity.set("action", "like")
+            activity.set("likeAction", request.object.get("action"))
 
-          userQuery = new Parse.Query("_User")
-          userQuery.get userId,
-            useMasterKey: true
-            success: (user) ->
+            userId = request.object.get("actingUser").id
+            activity.set("actingUser", {
+              "__type": "Pointer",
+              "className": "_User",
+              "objectId": userId
+            })
 
-              activity.set("actingUserName", user.get('username'))
+            userQuery = new Parse.Query("_User")
+            userQuery.get userId,
+              useMasterKey: true
+              success: (user) ->
 
-              activity.set("entryActedOn", {
-                "__type": "Pointer",
-                "className": "AnimalTimelineEntry",
-                "objectId": request.object.get("entry").id
-              })
+                activity.set("actingUserName", user.get('username'))
 
-              activity.set("forUser", {
-                "__type": "Pointer",
-                "className": "_User",
-                "objectId": ownerId
-              })
+                activity.set("entryActedOn", {
+                  "__type": "Pointer",
+                  "className": "AnimalTimelineEntry",
+                  "objectId": request.object.get("entry").id
+                })
 
-              console.log("saving activity")
-              activity.save(null,
-                useMasterKey: true
-                success: (result) ->
-                  console.log("activity saved: " + result)
-                  # return response.success()
-              )
+                activity.set("forUser", {
+                  "__type": "Pointer",
+                  "className": "_User",
+                  "objectId": ownerId
+                })
+
+                console.log("saving activity")
+                activity.save(null,
+                  useMasterKey: true
+                  success: (result) ->
+                    console.log("activity saved: " + result)
+                    # return response.success()
+                )
 
 
 
