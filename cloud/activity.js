@@ -106,6 +106,7 @@ Parse.Cloud.afterSave("Follow", function(request, response) {
         _results = [];
         for (_i = 0, _len = owners.length; _i < _len; _i++) {
           owner = owners[_i];
+          console.log("creating activity for owner: " + owner.id);
           activity = new Parse.Object("Activity");
           activity.set("action", "follow");
           userId = request.object.get("follower").id;
@@ -182,6 +183,7 @@ Parse.Cloud.afterSave("Like", function(request, response) {
         for (_i = 0, _len = owners.length; _i < _len; _i++) {
           owner = owners[_i];
           ownerId = owner.id;
+          console.log("creating activity for owner: " + ownerId);
           if (ownerId !== request.object.get("actingUser").id) {
             activity = new Parse.Object("Activity");
             activity.set("action", "like");

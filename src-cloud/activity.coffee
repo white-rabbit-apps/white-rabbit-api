@@ -113,6 +113,8 @@ Parse.Cloud.afterSave "Follow", (request, response) ->
 
         for owner in owners
 
+          console.log("creating activity for owner: " + owner.id)
+
           activity = new Parse.Object("Activity")
           activity.set("action", "follow")
 
@@ -186,6 +188,8 @@ Parse.Cloud.afterSave "Like", (request, response) ->
 
         for owner in owners
           ownerId = owner.id
+
+          console.log("creating activity for owner: " + ownerId)
 
           if ownerId != request.object.get("actingUser").id
             activity = new Parse.Object("Activity")
