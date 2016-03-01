@@ -72,6 +72,7 @@ Parse.Cloud.beforeSave "Animal", (request, response) ->
   		return response.error("Gender can't be blank.")
 
   if request.object.get("username")
+    console.log("checking username uniqueness")
     request.object.set("username", request.object.get("username").toLowerCase())
     query = new Parse.Query("Animal")
     query.equalTo 'username', request.object.get('username')
@@ -79,9 +80,12 @@ Parse.Cloud.beforeSave "Animal", (request, response) ->
     query.first
       useMasterKey: true
       success: (object) ->
+        console.log("return from username uniqueness check")
         if object
+          console.log("username is not unique")
           return response.error 'A cat with that username already exists.'
         else
+          console.log("username is unique")
           return response.success()
       error: (error) ->
         return response.error error.message
