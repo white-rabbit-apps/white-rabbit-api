@@ -68,15 +68,46 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
 
   if(request.object.get("shareToFacebook"))
     console.log("sharing to Facebook for: " + request.object.get("createdBy").id)
-    Parse.Cloud.run('shareToFacebook',
-      useMasterKey: true
-      sessionToken: request.user.getSessionToken()
-      userObjectId: request.object.get("createdBy").id
-      entryText: request.object.get("text")
+    # Parse.Cloud.run('shareToFacebook',
+    #   useMasterKey: true
+    #   sessionToken: request.user.getSessionToken()
+    #   userObjectId: request.object.get("createdBy").id
+    #   entryText: request.object.get("text")
+    # ).then ((result) ->
+    #   console.log 'result :' + JSON.stringify(result)
+    # ), (error) ->
+    #   # error
+    userObjectId = request.object.get("createdBy").id
+    entryText = request.object.get("text")
+    user = new Parse.Query(Parse.User)
+    user.get(userObjectId).then((user) ->
+      console.log 'UserID: ' + user.id
+      if Parse.FacebookUtils.isLinked(user)
+        console.log 'token:' + user.get('authData').facebook.access_token
+
+        Parse.Cloud.httpRequest(
+          useMasterKey: true
+          method: 'POST'
+          params:
+            message: entryText + "\n\nCheck out Phoebe on White Rabbit Apps"
+            link: "http://www.whiterabbitapps.net/cat/phoebe_the_bug"
+            access_token: user.get('authData').facebook.access_token
+          url: 'https://graph.facebook.com/me/feed').then ((result) ->
+          Parse.Promise.as 'Post'
+        ), (httpRequest) ->
+          Parse.Promise.error httpRequest
+      else
+        return Parse.Promise.error('user not linked to fb account')
+      return
     ).then ((result) ->
-      console.log 'result :' + JSON.stringify(result)
+      console.log "result from post: " + JSON.stringify(result)
+      return response.success 'Post'
     ), (error) ->
-      # error
+      console.log error
+      console.error error
+      return response.error("Error posting")
+    return
+
 
   if(request.object.get("shareToTwitter"))
     console.log("sharing to Twitter for: " + request.object.get("createdBy").id)
