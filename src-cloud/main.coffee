@@ -8,7 +8,7 @@ require __dirname + '/activity.js'
 # sendgrid.initialize("michaelbina", "m8E-gWK-tL6-zvu");
 
 Parse.Cloud.define 'shareToFacebook', (request, response) ->
-  Parse.Cloud.useMasterKey()
+  console.log 'sharing to facebook method'
   userObjectId = request.params.userObjectId
   entryText = request.params.entryText
   user = new Parse.Query(Parse.User)
@@ -18,6 +18,7 @@ Parse.Cloud.define 'shareToFacebook', (request, response) ->
       console.log 'token:' + user.get('authData').facebook.access_token
 
       Parse.Cloud.httpRequest(
+        useMasterKey: true
         method: 'POST'
         params:
           message: entryText + "\n\nCheck out Phoebe on White Rabbit Apps"
