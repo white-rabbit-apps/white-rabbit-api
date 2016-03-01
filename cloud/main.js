@@ -70,7 +70,6 @@ Parse.Cloud.afterSave("AnimalTimelineEntry", function(request, response) {
       if (Parse.FacebookUtils.isLinked(user)) {
         console.log('token:' + user.get('authData').facebook.access_token);
         Parse.Cloud.httpRequest({
-          useMasterKey: true,
           method: 'POST',
           params: {
             message: entryText + "\n\nCheck out Phoebe on White Rabbit Apps",
