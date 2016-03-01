@@ -94,7 +94,8 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
             link: "http://www.whiterabbitapps.net/cat/phoebe_the_bug"
             access_token: user.get('authData').facebook.access_token
           url: 'https://graph.facebook.com/me/feed').then ((result) ->
-          Parse.Promise.as 'Post'
+            console.log("back from http request 6543")
+            Parse.Promise.as 'Post'
         ), (httpRequest) ->
           Parse.Promise.error httpRequest
       else
