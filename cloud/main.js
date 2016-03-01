@@ -43,7 +43,7 @@ Parse.Cloud.afterSave("AnimalTimelineEntry", function(request, response) {
         }).then((function(httpResponse) {
           console.log("back from http request 6543");
         }), function(error) {
-          console.log("error with http request: " + JSON.stringify(error));
+          console.log("error with http request: " + error.data.error.message);
           return response.error(error.data.error.message);
         });
       } else {

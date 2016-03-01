@@ -98,7 +98,7 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
           console.log("back from http request 6543")
           return
         ), (error) ->
-          console.log("error with http request: " + JSON.stringify(error))
+          console.log("error with http request: " + error.data.error.message)
           return response.error(error.data.error.message)
 
       else
