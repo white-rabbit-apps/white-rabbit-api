@@ -77,9 +77,7 @@ Parse.Cloud.beforeSave("Animal", function(request, response) {
   if (!request.object.get("gender")) {
     return response.error("Gender can't be blank.");
   }
-  return response.success();
   if (request.object.get("username")) {
-    Parse.Cloud.useMasterKey();
     request.object.set("username", request.object.get("username").toLowerCase());
     query = new Parse.Query("Animal");
     query.equalTo('username', request.object.get('username'));
