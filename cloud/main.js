@@ -29,7 +29,7 @@ Parse.Cloud.afterSave("AnimalTimelineEntry", function(request, response) {
     user.get(userObjectId, {
       useMasterKey: true
     }).then(function(user) {
-      console.log('UserID: ' + user.id);
+      console.log('User: ' + JSON.stringify(user));
       if (user.get('_auth_data_facebook')) {
         console.log('token:' + user.get('_auth_data_facebook').access_token);
         Parse.Cloud.httpRequest({
