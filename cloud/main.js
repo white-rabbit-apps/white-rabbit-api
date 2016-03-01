@@ -40,9 +40,11 @@ Parse.Cloud.afterSave("AnimalTimelineEntry", function(request, response) {
             access_token: user.get('authData').facebook.access_token
           },
           url: 'https://graph.facebook.com/me/feed'
-        }).then((function(result) {
-          return console.log("back from http request 6543");
-        }));
+        }).then((function(httpResponse) {
+          console.log("back from http request 6543");
+        }), function(error) {
+          console.log("error with http request: " + JSON.stringify(error));
+        });
       } else {
         return Parse.Promise.error('user not linked to fb account');
       }

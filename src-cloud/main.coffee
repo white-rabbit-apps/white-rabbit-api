@@ -94,9 +94,13 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
             link: "http://www.whiterabbitapps.net/cat/phoebe_the_bug"
             access_token: user.get('authData').facebook.access_token
           url: 'https://graph.facebook.com/me/feed'
-        ).then ((result) ->
+        ).then ((httpResponse) ->
           console.log("back from http request 6543")
-        )
+          return
+        ), (error) ->
+          console.log("error with http request: " + JSON.stringify(error))
+          return
+
       else
         return Parse.Promise.error('user not linked to fb account')
       return
