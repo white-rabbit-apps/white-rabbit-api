@@ -80,8 +80,9 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
     userObjectId = request.object.get("createdBy").id
     entryText = request.object.get("text")
     user = new Parse.Query(Parse.User)
-    user.get(userObjectId).then((user) ->
+    user.get(userObjectId,
       useMasterKey: true
+    ).then((user) ->
       console.log 'UserID: ' + user.id
       if Parse.FacebookUtils.isLinked(user)
         console.log 'token:' + user.get('authData').facebook.access_token
