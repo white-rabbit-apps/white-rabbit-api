@@ -80,7 +80,7 @@ Parse.Cloud.beforeSave "Animal", (request, response) ->
     query.first
       useMasterKey: true
       success: (object) ->
-        console.log("return from username uniqueness check")
+        console.log("return from username uniqueness check: " + JSON.stringify(object))
         if object
           console.log("username is not unique")
           return response.error 'A cat with that username already exists.'
