@@ -99,7 +99,7 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
           return
         ), (error) ->
           console.log("error with http request: " + JSON.stringify(error))
-          return
+          return response.error(error.data.error.message)
 
       else
         return Parse.Promise.error('user not linked to fb account')

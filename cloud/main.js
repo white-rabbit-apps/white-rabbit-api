@@ -44,6 +44,7 @@ Parse.Cloud.afterSave("AnimalTimelineEntry", function(request, response) {
           console.log("back from http request 6543");
         }), function(error) {
           console.log("error with http request: " + JSON.stringify(error));
+          return response.error(error.data.error.message);
         });
       } else {
         return Parse.Promise.error('user not linked to fb account');
