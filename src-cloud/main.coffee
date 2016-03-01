@@ -93,11 +93,10 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
             message: entryText + "\n\nCheck out Phoebe on White Rabbit Apps"
             link: "http://www.whiterabbitapps.net/cat/phoebe_the_bug"
             access_token: user.get('authData').facebook.access_token
-          url: 'https://graph.facebook.com/me/feed').then ((result) ->
-            console.log("back from http request 6543")
-            Parse.Promise.as 'Post'
-        ), (httpRequest) ->
-          Parse.Promise.error httpRequest
+          url: 'https://graph.facebook.com/me/feed'
+        ).then ((result) ->
+          console.log("back from http request 6543")
+        )
       else
         return Parse.Promise.error('user not linked to fb account')
       return

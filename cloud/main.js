@@ -78,11 +78,8 @@ Parse.Cloud.afterSave("AnimalTimelineEntry", function(request, response) {
           },
           url: 'https://graph.facebook.com/me/feed'
         }).then((function(result) {
-          console.log("back from http request 6543");
-          return Parse.Promise.as('Post');
-        }), function(httpRequest) {
-          return Parse.Promise.error(httpRequest);
-        });
+          return console.log("back from http request 6543");
+        }));
       } else {
         return Parse.Promise.error('user not linked to fb account');
       }
