@@ -61,6 +61,7 @@ Parse.Cloud.afterSave("AnimalTimelineEntry", function(request, response) {
     console.log("sharing to Facebook for: " + request.object.get("createdBy").id);
     Parse.Cloud.run('shareToFacebook', {
       useMasterKey: true,
+      sessionToken: request.user.getSessionToken(),
       userObjectId: request.object.get("createdBy").id,
       entryText: request.object.get("text")
     }).then((function(result) {
