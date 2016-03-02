@@ -17,7 +17,7 @@ Parse.Cloud.afterSave("AnimalTransfer", function(request, response) {
 });
 
 Parse.Cloud.afterSave("AnimalTimelineEntry", function(request, response) {
-  var entryText, user, userObjectId;
+  var entryText, userObjectId, userQuery;
   console.log("timeline entry created: " + JSON.stringify(request));
   console.log("shareToFacebook: " + request.object.get("shareToFacebook"));
   console.log("shareToTwitter: " + request.object.get("shareToTwitter"));
@@ -25,8 +25,8 @@ Parse.Cloud.afterSave("AnimalTimelineEntry", function(request, response) {
     console.log("sharing to Facebook for: " + request.object.get("createdBy").id);
     userObjectId = request.object.get("createdBy").id;
     entryText = request.object.get("text");
-    user = new Parse.Query(Parse.User);
-    user.get(userObjectId, {
+    userQuery = new Parse.Query(Parse.User);
+    userQuery.get(userObjectId, {
       useMasterKey: true
     }).then(function(user) {
       console.log('User: ' + JSON.stringify(user));

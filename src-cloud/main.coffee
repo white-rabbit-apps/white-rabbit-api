@@ -79,8 +79,9 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
     #   # error
     userObjectId = request.object.get("createdBy").id
     entryText = request.object.get("text")
-    user = new Parse.Query(Parse.User)
-    user.get(userObjectId,
+    
+    userQuery = new Parse.Query(Parse.User)
+    userQuery.get(userObjectId,
       useMasterKey: true
     ).then((user) ->
       console.log 'User: ' + JSON.stringify(user)

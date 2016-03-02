@@ -34,7 +34,8 @@ Parse.Cloud.afterDelete "Comment", (request, response) ->
   query = new Parse.Query("Activity")
   query.equalTo("actingAnimal", request.object.get("animal"))
   query.equalTo("entryActedOn", request.object.get("entry"))
-  query.equalTo("action", "comment")
+  query.equalTo("entryActedOn", request.object.get("entry"))
+  query.equalTo("commentMade", request.object)
   console.log("finding activities to destroy")
   query.find
     useMasterKey: true
