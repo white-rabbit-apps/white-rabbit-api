@@ -45,7 +45,30 @@ Parse.Cloud.beforeSave Parse.User, (request, response) ->
     request.object.set("admin", false)
     request.object.save()
 
-  return response.success()
+  if request.object.get("username")
+    console.log("checking username uniqueness")
+    request.object.set("username", request.object.get("username").toLowerCase())
+    query = new Parse.Query("_User")
+    query.equalTo 'username', request.object.get('username')
+    if request.object.id
+      query.notEqualTo 'objectId', request.object.id
+    query.first
+      useMasterKey: true
+      success: (object) ->
+        console.log("return from username uniqueness check: " + JSON.stringify(object))
+        if object
+          console.log("username is not unique")
+          return response.error 'A user with that username already exists.'
+        else
+          console.log("username is unique")
+          return response.success()
+      error: (error) ->
+        return response.error error.message
+        # return response.error 'Could not validate uniqueness for that username.'
+  else
+    return response.success()
+
+
 
 
 ######
@@ -86,7 +109,21 @@ Parse.Cloud.beforeSave "Animal", (request, response) ->
           console.log("username is not unique")
           return response.error 'A cat with that username already exists.'
         else
-          console.log("username is unique")
+          console.log("username is unique for animals")
+          query = new Parse.Query("_User")
+          query.equalTo 'username', request.object.get('username')
+          query.first
+            useMasterKey: true
+            success: (object) ->
+              console.log("return from username uniqueness check: " + JSON.stringify(object))
+              if object
+                console.log("username is not unique")
+                return response.error 'A user with that username already exists.'
+              else
+                console.log("username is unique")
+                return response.success()
+            error: (error) ->
+              return response.error error.message
           return response.success()
       error: (error) ->
         return response.error error.message
