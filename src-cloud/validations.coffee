@@ -76,7 +76,8 @@ Parse.Cloud.beforeSave "Animal", (request, response) ->
     request.object.set("username", request.object.get("username").toLowerCase())
     query = new Parse.Query("Animal")
     query.equalTo 'username', request.object.get('username')
-    query.notEqualTo 'objectId', request.object.id
+    if request.object.id
+      query.notEqualTo 'objectId', request.object.id
     query.first
       useMasterKey: true
       success: (object) ->
