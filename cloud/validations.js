@@ -123,7 +123,7 @@ Parse.Cloud.beforeSave("Animal", function(request, response) {
           console.log("username is unique for animals");
           query = new Parse.Query("_User");
           query.equalTo('username', request.object.get('username'));
-          query.first({
+          return query.first({
             useMasterKey: true,
             success: function(object) {
               console.log("return from user username uniqueness check: " + JSON.stringify(object));
@@ -139,7 +139,6 @@ Parse.Cloud.beforeSave("Animal", function(request, response) {
               return response.error(error.message);
             }
           });
-          return response.success();
         }
       },
       error: function(error) {

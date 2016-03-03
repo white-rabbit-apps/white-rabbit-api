@@ -110,6 +110,7 @@ Parse.Cloud.beforeSave "Animal", (request, response) ->
           return response.error 'A cat with that username already exists.'
         else
           console.log("username is unique for animals")
+
           query = new Parse.Query("_User")
           query.equalTo 'username', request.object.get('username')
           query.first
@@ -124,7 +125,6 @@ Parse.Cloud.beforeSave "Animal", (request, response) ->
                 return response.success()
             error: (error) ->
               return response.error error.message
-          return response.success()
       error: (error) ->
         return response.error error.message
         # return response.error 'Could not validate uniqueness for that username.'
