@@ -82,7 +82,7 @@ Parse.Cloud.beforeSave("Animal", function(request, response) {
     request.object.set("username", request.object.get("username").toLowerCase());
     query = new Parse.Query("Animal");
     query.equalTo('username', request.object.get('username'));
-    query.notEqualTo('id', request.object.id);
+    query.notEqualTo('_id', request.object.id);
     return query.first({
       useMasterKey: true,
       success: function(object) {
