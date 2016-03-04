@@ -64,7 +64,7 @@ Parse.Cloud.beforeSave Parse.User, (request, response) ->
             useMasterKey: true
             success: (object) ->
               if object
-                return response.error 'A user with that username already exists.'
+                return response.error 'A cat with that username already exists.'
               else
                 return response.success()
             error: (error) ->
@@ -113,22 +113,16 @@ Parse.Cloud.beforeSave "Animal", (request, response) ->
       success: (object) ->
         console.log("return from username uniqueness check: " + JSON.stringify(object))
         if object
-          console.log("username is not unique")
           return response.error 'A cat with that username already exists.'
         else
-          console.log("username is unique for animals")
-
           query = new Parse.Query("_User")
           query.equalTo 'username', request.object.get('username')
           query.first
             useMasterKey: true
             success: (object) ->
-              console.log("return from user username uniqueness check: " + JSON.stringify(object))
               if object
-                console.log("user username is not unique")
                 return response.error 'A user with that username already exists.'
               else
-                console.log("user username is unique")
                 return response.success()
             error: (error) ->
               return response.error error.message

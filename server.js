@@ -71,6 +71,33 @@ app.get('/*', function(request, response, next) {
   response.sendFile(__dirname + '/public/index.html');
 });
 
+
+app.get('/admin/*', function(req, res) {
+	var un = 'bosskitteh';
+	var pw = '#inurwebz#';
+    if(un == undefined && pw == undefined) { res.end(); return; }
+    if(!req.headers['authorization']){
+        res.writeHead(401, {'WWW-Authenticate': 'Basic realm="Secure Area"', 'Content-Type': 'text/plain'});
+        res.end("You must have credentials for this page");
+        return;
+    }
+    var header=req.headers['authorization']||'',        // get the header
+        token = header.split(/\s+/).pop()||'',            // and the encoded auth token
+        auth = new Buffer(token, 'base64').toString(),    // convert from base64
+        parts = auth.split(/:/),                          // split on colon
+        username = parts[0],
+        password = parts[1];
+    if(username != un || password != pw){
+        res.writeHead(401, {'WWW-Authenticate': 'Basic realm="Secure Area"', 'Content-Type': 'text/plain'});
+		res.end("Incorrect username or password");
+    }
+    else {
+    	res.statusCode = 200;
+    	responsesController.index(req, res);
+    }
+});
+
+
 // app.all('/api/*', function(req, res, next){
 //     console.log('General Validations');
 //     next();

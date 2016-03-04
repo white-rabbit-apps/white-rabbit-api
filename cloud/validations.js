@@ -71,7 +71,7 @@ Parse.Cloud.beforeSave(Parse.User, function(request, response) {
             useMasterKey: true,
             success: function(object) {
               if (object) {
-                return response.error('A user with that username already exists.');
+                return response.error('A cat with that username already exists.');
               } else {
                 return response.success();
               }
@@ -128,21 +128,16 @@ Parse.Cloud.beforeSave("Animal", function(request, response) {
       success: function(object) {
         console.log("return from username uniqueness check: " + JSON.stringify(object));
         if (object) {
-          console.log("username is not unique");
           return response.error('A cat with that username already exists.');
         } else {
-          console.log("username is unique for animals");
           query = new Parse.Query("_User");
           query.equalTo('username', request.object.get('username'));
           return query.first({
             useMasterKey: true,
             success: function(object) {
-              console.log("return from user username uniqueness check: " + JSON.stringify(object));
               if (object) {
-                console.log("user username is not unique");
                 return response.error('A user with that username already exists.');
               } else {
-                console.log("user username is unique");
                 return response.success();
               }
             },
