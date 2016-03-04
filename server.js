@@ -28,6 +28,12 @@ var api = new ParseServer({
     process.env.AWS_SECRET_ACCESS_KEY,
     {bucket: 'whiterabbitapps', bucketPrefix: "", directAccess: true}
   ),
+  filesAdapter: new S3Adapter(
+    process.env.AWS_ACCESS_KEY,
+    process.env.AWS_SECRET_ACCESS_KEY,
+    'whiterabbitapps',
+    {directAccess: true}
+  ),
   push: {
     ios: {
       pfx: __dirname + '/certs/Certificates.p12',
@@ -38,14 +44,6 @@ var api = new ParseServer({
 });
 
 // facebookAppIds : '417687371726647',
-
-// filesAdapter: new S3Adapter(
-//   process.env.AWS_ACCESS_KEY,
-//   process.env.AWS_SECRET_ACCESS_KEY,
-//   'whiterabbitapps',
-//   {directAccess: true}
-// ),
-
 
 // filesAdapter: new S3Adapter(
 //   process.env.AWS_ACCESS_KEY,
