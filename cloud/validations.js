@@ -155,15 +155,3 @@ Parse.Cloud.beforeSave("Animal", function(request, response) {
     return response.success();
   }
 });
-
-Parse.Cloud.beforeSave("AnimalTimelineEntry", function(request, response) {
-  console.log("validating entry object");
-  if (!request.object.get("hasDocuments")) {
-    request.object.set("hasDocuments", false);
-  }
-  if (request.object.isNew()) {
-    request.object.set("likeCount", 0);
-    request.object.save();
-  }
-  return response.success();
-});

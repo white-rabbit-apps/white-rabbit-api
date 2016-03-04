@@ -131,16 +131,3 @@ Parse.Cloud.beforeSave "Animal", (request, response) ->
         # return response.error 'Could not validate uniqueness for that username.'
   else
     return response.success()
-
-
-Parse.Cloud.beforeSave "AnimalTimelineEntry", (request, response) ->
-  console.log("validating entry object")
-
-  if (!request.object.get("hasDocuments"))
-    request.object.set("hasDocuments", false)
-
-  if request.object.isNew()
-    request.object.set("likeCount", 0)
-    request.object.save()
-
-  return response.success()
