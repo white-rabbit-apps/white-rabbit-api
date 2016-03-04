@@ -41,7 +41,7 @@ Parse.Cloud.afterSave("AnimalTimelineEntry", function(request, response) {
             link: "http://www.whiterabbitapps.net/cat/phoebe_the_bug"
           }
         }).then((function(httpResponse) {
-          console.log("back from http request 6543");
+          return console.log("back from http request 6543");
         }), function(error) {
           console.log("error with http request: " + error.data.error.message);
           return response.error(error.data.error.message);
@@ -61,13 +61,14 @@ Parse.Cloud.afterSave("AnimalTimelineEntry", function(request, response) {
   }
   if (request.object.get("shareToTwitter")) {
     console.log("sharing to Twitter for: " + request.object.get("createdBy").id);
-    return Parse.Cloud.run('shareToTwitter', {
+    Parse.Cloud.run('shareToTwitter', {
       userObjectId: request.object.get("createdBy").id,
       entryText: request.object.get("text")
     }).then((function(result) {
       console.log('result :' + JSON.stringify(result));
     }), function(error) {});
   }
+  return response.success();
 });
 
 Parse.Cloud.afterSave("Animal", function(request, response) {

@@ -98,7 +98,6 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
             link: "http://www.whiterabbitapps.net/cat/phoebe_the_bug"
         ).then ((httpResponse) ->
           console.log("back from http request 6543")
-          return
         ), (error) ->
           console.log("error with http request: " + error.data.error.message)
           return response.error(error.data.error.message)
@@ -127,6 +126,8 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
     ), (error) ->
       # error
       return
+      
+  return response.success()
 
 
 Parse.Cloud.afterSave "Animal", (request, response) ->
