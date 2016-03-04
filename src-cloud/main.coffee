@@ -126,7 +126,7 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
     ), (error) ->
       # error
       return
-      
+
   return response.success()
 
 
@@ -141,6 +141,7 @@ Parse.Cloud.afterSave "Animal", (request, response) ->
         "objectId": request.object.id
     })
     query.equalTo("type", "birth")
+    query.limit(100000)
     query.find
       useMasterKey: true
       success: (results) ->
