@@ -162,48 +162,50 @@ Parse.Cloud.afterDelete("Animal", function(request, response) {
 
 Parse.Cloud.afterDelete("AnimalTimelineEntry", function(request, response) {
   var query;
-  query = new Parse.Query("Document");
-  query.equalTo("entry", {
-    "__type": "Pointer",
-    "className": "AnimalTimelineEntry",
-    "objectId": request.object.id
-  });
-  query.find({
-    useMasterKey: true,
-    success: function(results) {
-      var result, _i, _len, _results;
-      _results = [];
-      for (_i = 0, _len = results.length; _i < _len; _i++) {
-        result = results[_i];
-        console.log("destroying document");
-        _results.push(result.destroy({
-          useMasterKey: true
-        }));
+  if (request.object.get("type") !== "birth") {
+    query = new Parse.Query("Document");
+    query.equalTo("entry", {
+      "__type": "Pointer",
+      "className": "AnimalTimelineEntry",
+      "objectId": request.object.id
+    });
+    query.find({
+      useMasterKey: true,
+      success: function(results) {
+        var result, _i, _len, _results;
+        _results = [];
+        for (_i = 0, _len = results.length; _i < _len; _i++) {
+          result = results[_i];
+          console.log("destroying document");
+          _results.push(result.destroy({
+            useMasterKey: true
+          }));
+        }
+        return _results;
       }
-      return _results;
-    }
-  });
-  query = new Parse.Query("Activity");
-  query.equalTo("entryActedOn", {
-    "__type": "Pointer",
-    "className": "AnimalTimelineEntry",
-    "objectId": request.object.id
-  });
-  return query.find({
-    useMasterKey: true,
-    success: function(results) {
-      var result, _i, _len, _results;
-      _results = [];
-      for (_i = 0, _len = results.length; _i < _len; _i++) {
-        result = results[_i];
-        console.log("destroying activity");
-        _results.push(result.destroy({
-          useMasterKey: true
-        }));
+    });
+    query = new Parse.Query("Activity");
+    query.equalTo("entryActedOn", {
+      "__type": "Pointer",
+      "className": "AnimalTimelineEntry",
+      "objectId": request.object.id
+    });
+    return query.find({
+      useMasterKey: true,
+      success: function(results) {
+        var result, _i, _len, _results;
+        _results = [];
+        for (_i = 0, _len = results.length; _i < _len; _i++) {
+          result = results[_i];
+          console.log("destroying activity");
+          _results.push(result.destroy({
+            useMasterKey: true
+          }));
+        }
+        return _results;
       }
-      return _results;
-    }
-  });
+    });
+  }
 });
 
 Parse.Cloud.afterDelete("Document", function(request, response) {

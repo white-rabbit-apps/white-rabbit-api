@@ -130,33 +130,34 @@ Parse.Cloud.afterDelete "Animal", (request, response) ->
 
 
 Parse.Cloud.afterDelete "AnimalTimelineEntry", (request, response) ->
-  query = new Parse.Query("Document")
-  query.equalTo("entry", {
-      "__type": "Pointer",
-      "className": "AnimalTimelineEntry",
-      "objectId": request.object.id
-  })
-  query.find
-    useMasterKey: true
-    success: (results) ->
-      for result in results
-        console.log("destroying document")
-        result.destroy
-          useMasterKey: true
+  if request.object.get("type") != "birth"
+    query = new Parse.Query("Document")
+    query.equalTo("entry", {
+        "__type": "Pointer",
+        "className": "AnimalTimelineEntry",
+        "objectId": request.object.id
+    })
+    query.find
+      useMasterKey: true
+      success: (results) ->
+        for result in results
+          console.log("destroying document")
+          result.destroy
+            useMasterKey: true
 
-  query = new Parse.Query("Activity")
-  query.equalTo("entryActedOn", {
-      "__type": "Pointer",
-      "className": "AnimalTimelineEntry",
-      "objectId": request.object.id
-  })
-  query.find
-    useMasterKey: true
-    success: (results) ->
-      for result in results
-        console.log("destroying activity")
-        result.destroy
-          useMasterKey: true
+    query = new Parse.Query("Activity")
+    query.equalTo("entryActedOn", {
+        "__type": "Pointer",
+        "className": "AnimalTimelineEntry",
+        "objectId": request.object.id
+    })
+    query.find
+      useMasterKey: true
+      success: (results) ->
+        for result in results
+          console.log("destroying activity")
+          result.destroy
+            useMasterKey: true
 
 
 
