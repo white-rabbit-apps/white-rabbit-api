@@ -83,7 +83,7 @@ Parse.Cloud.afterSave("Animal", function(request, response) {
       "objectId": request.object.id
     });
     query.equalTo("type", "birth");
-    query.limit(100000);
+    query.limit(1000);
     return query.find({
       useMasterKey: true,
       success: function(results) {
