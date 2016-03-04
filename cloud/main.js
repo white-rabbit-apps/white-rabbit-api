@@ -85,39 +85,18 @@ Parse.Cloud.afterSave("Animal", function(request, response) {
     return query.find({
       useMasterKey: true,
       success: function(results) {
-        var entry, result, _i, _len;
+        var result, _i, _len, _results;
         console.log("results: " + results);
         console.log("request: " + request.object.get("birthDate").toISOString());
+        _results = [];
         for (_i = 0, _len = results.length; _i < _len; _i++) {
           result = results[_i];
           console.log("destroying entry");
-          result.destroy({
+          _results.push(result.destroy({
             useMasterKey: true
-          });
+          }));
         }
-        entry = new Parse.Object("AnimalTimelineEntry");
-        entry.set("type", "birth");
-        entry.set("animal", {
-          "__type": "Pointer",
-          "className": "Animal",
-          "objectId": request.object.id
-        });
-        entry.set("text", "Born");
-        entry.set("date", {
-          "__type": "Date",
-          "iso": request.object.get("birthDate").toISOString()
-        });
-        console.log("saving entry");
-        return entry.save(null, {
-          useMasterKey: true,
-          success: function(result) {
-            console.log("saved: " + result.id);
-            return response.success();
-          },
-          error: function(error) {
-            return response.error(error.message);
-          }
-        });
+        return _results;
       },
       error: function(error) {
         return response.error(error.message);
