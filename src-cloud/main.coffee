@@ -141,7 +141,6 @@ Parse.Cloud.afterSave "Animal", (request, response) ->
         "objectId": request.object.id
     })
     query.equalTo("type", "birth")
-    query.limit(1000)
     query.find
       useMasterKey: true
       success: (results) ->
@@ -153,26 +152,26 @@ Parse.Cloud.afterSave "Animal", (request, response) ->
           result.destroy
             useMasterKey: true
 
-        # entry = new Parse.Object("AnimalTimelineEntry")
-        # entry.set("type", "birth")
-        # entry.set("animal", {
-        #     "__type": "Pointer",
-        #     "className": "Animal",
-        #     "objectId": request.object.id
-        # })
-        # entry.set("text", "Born")
-        # entry.set("date", {
-        #     "__type": "Date",
-        #     "iso": request.object.get("birthDate").toISOString()
-        # })
-        # console.log("saving entry")
-        # entry.save(null,
-        #   useMasterKey: true
-        #   success: (result) ->
-        #     console.log("saved: " + result.id)
-        #     return response.success()
-        #   error: (error) ->
-        #     return response.error(error.message)
-        # )
+        entry = new Parse.Object("AnimalTimelineEntry")
+        entry.set("type", "birth")
+        entry.set("animal", {
+            "__type": "Pointer",
+            "className": "Animal",
+            "objectId": request.object.id
+        })
+        entry.set("text", "Born")
+        entry.set("date", {
+            "__type": "Date",
+            "iso": request.object.get("birthDate").toISOString()
+        })
+        console.log("saving entry")
+        entry.save(null,
+          useMasterKey: true
+          success: (result) ->
+            console.log("saved: " + result.id)
+            return response.success()
+          error: (error) ->
+            return response.error(error.message)
+        )
       error: (error) ->
         return response.error(error.message)
