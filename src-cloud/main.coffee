@@ -8,18 +8,22 @@ require __dirname + '/activity.js'
 http = require('http')
 fs = require('fs')
 request = require('request')
+base64 = require('node-base64-image')
 
-download = (url, dest, cb) ->
+download = (url, cb) ->
   console.log("downloading url: " + url)
-  request
-    .get(url)
-    .on('response', (response) ->
-      console.log("download response: " + JSON.stringify(response))
-      console.log(response.statusCode)
-      console.log(response.headers['content-type'])
-      cb(null, response)
-    )
-    .pipe(request.put(dest))
+  options = {"string": true}
+  base64.base64encoder url, options, cb
+
+  # request
+  #   .get(url)
+  #   .on('response', (response) ->
+  #     console.log("download response: " + JSON.stringify(response))
+  #     console.log(response.statusCode)
+  #     console.log(response.headers['content-type'])
+  #     cb(null, response)
+  #   )
+  #   .pipe(request.put(dest))
 
   # file = fs.createWriteStream(dest)
   # request = http.get(url, (response) ->
@@ -85,7 +89,7 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
                 media_url = media["images"]["standard_resolution"]["url"]
                 console.log 'media: ' + media_url
 
-                download(media_url, 'image.jpg', (error, image) ->
+                download(media_url, (error, image) ->
                   console.log("back from download: " + image)
                   if !error
                     timelineEntry = new Parse.Object("AnimalTimelineEntry")

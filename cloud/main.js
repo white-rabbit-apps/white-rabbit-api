@@ -1,4 +1,4 @@
-var download, fs, http, ig, request;
+var base64, download, fs, http, ig, request;
 
 require(__dirname + '/validations.js');
 
@@ -12,14 +12,15 @@ fs = require('fs');
 
 request = require('request');
 
-download = function(url, dest, cb) {
+base64 = require('node-base64-image');
+
+download = function(url, cb) {
+  var options;
   console.log("downloading url: " + url);
-  return request.get(url).on('response', function(response) {
-    console.log("download response: " + JSON.stringify(response));
-    console.log(response.statusCode);
-    console.log(response.headers['content-type']);
-    return cb(null, response);
-  }).pipe(request.put(dest));
+  options = {
+    "string": true
+  };
+  return base64.base64encoder(url, options, cb);
 };
 
 ig = require('instagram-node').instagram();
@@ -74,7 +75,7 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
                 media_caption = media["caption"]["text"];
                 media_url = media["images"]["standard_resolution"]["url"];
                 console.log('media: ' + media_url);
-                _results.push(download(media_url, 'image.jpg', function(error, image) {
+                _results.push(download(media_url, function(error, image) {
                   var timelineEntry;
                   console.log("back from download: " + image);
                   if (!error) {
