@@ -48,7 +48,7 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
           user = u
 
       console.log 'user: ' + JSON.stringify(user)
-      ig.user_media_recent(user["id"], {"count": 3}, (err, medias, pagination, remaining, limit) ->
+      ig.user_media_recent(user["id"], (err, medias, pagination, remaining, limit) ->
         console.log 'finished searching media: ' + JSON.stringify(medias)
 
         query = new Parse.Query("Animal")
