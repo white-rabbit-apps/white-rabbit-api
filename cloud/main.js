@@ -110,21 +110,25 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
 Parse.Cloud.beforeSave("AnimalTimelineEntry", function(request, response) {
   var timelineEntryQuery;
   console.log("creating timeline entry: " + JSON.stringify(request));
-  timelineEntryQuery = new Parse.Query("AnimalTimelineEntry");
-  timelineEntryQuery.equalTo("instagramId", request.object.get("instagramId"));
-  timelineEntryQuery.equalTo("animal", request.object.get("animal"));
-  return timelineEntryQuery.find({
-    useMasterKey: true,
-    success: function(results) {
-      if (results.length === 0) {
-        console.log("found no timeline entries");
-        return response.success();
-      } else {
-        console.log("already have a timeline entry for that photo");
-        return response.error("Already have a timeline entry for that instagram photo");
+  if (request.object.get("instagramId")) {
+    timelineEntryQuery = new Parse.Query("AnimalTimelineEntry");
+    timelineEntryQuery.equalTo("instagramId", request.object.get("instagramId"));
+    timelineEntryQuery.equalTo("animal", request.object.get("animal"));
+    return timelineEntryQuery.find({
+      useMasterKey: true,
+      success: function(results) {
+        if (results.length === 0) {
+          console.log("found no timeline entries");
+          return response.success();
+        } else {
+          console.log("already have a timeline entry for that photo");
+          return response.error("Already have a timeline entry for that instagram photo");
+        }
       }
-    }
-  });
+    });
+  } else {
+    return response.success();
+  }
 });
 
 Parse.Cloud.define('shareToTwitter', function(request, response) {
