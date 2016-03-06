@@ -13,6 +13,7 @@ fs = require('fs');
 request = require('request');
 
 download = function(url, dest, cb) {
+  console.log("downloading url: " + url);
   return request.get(url).on('response', function(response) {
     console.log("download response: " + JSON.stringify(response));
     console.log(response.statusCode);
@@ -72,7 +73,7 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
                 media_caption = media["caption"]["text"];
                 media_url = media["images"]["standard_resolution"]["url"];
                 console.log('media: ' + media_url);
-                _results.push(download(media_url, image, function(error) {
+                _results.push(download(media_url, 'image.jpg', function(error) {
                   var timelineEntry;
                   if (!error) {
                     timelineEntry = new Parse.Object("AnimalTimelineEntry");
