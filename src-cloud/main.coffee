@@ -103,26 +103,28 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
                 media_url = media["images"]["standard_resolution"]["url"]
                 console.log 'media: ' + media_url
 
-                download(media_url, 'image.jpg', (error, image) ->
-                  console.log("back from download: " + error)
-                  if !error
-                    timelineEntry = new Parse.Object("AnimalTimelineEntry")
-                    timelineEntry.set("instagramId", media_id)
-                    timelineEntry.set("text", media_caption)
-                    timelineEntry.set("type", "image")
-                    timelineEntry.set("image", image)
-                    timelineEntry.set("animal", animal)
+                timelineEntry = new Parse.Object("AnimalTimelineEntry")
+                timelineEntry.set("instagramId", media_id)
+                timelineEntry.set("text", media_caption)
+                timelineEntry.set("type", "image")
+                timelineEntry.set("imageUrl", media_url)
+                timelineEntry.set("animal", animal)
 
-                    timelineEntry.save(null,
-                      useMasterKey: true
-                      success: (result) ->
-                        console.log("timeline entry saved: " + JSON.stringify(result))
-                      error: (error) ->
-                        console.log("error: " + JSON.stringify(error))
-                    )
-                  else
-                    console.log "error downloading file " + JSON.stringify(error)
+                timelineEntry.save(null,
+                  useMasterKey: true
+                  success: (result) ->
+                    console.log("timeline entry saved: " + JSON.stringify(result))
+                  error: (error) ->
+                    console.log("error: " + JSON.stringify(error))
                 )
+
+
+                # download(media_url, 'image.jpg', (error, image) ->
+                #   console.log("back from download: " + error)
+                #   if !error
+                #   else
+                #     console.log "error downloading file " + JSON.stringify(error)
+                # )
       )
 
       return response.success()

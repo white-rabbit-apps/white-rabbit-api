@@ -68,7 +68,7 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
         return query.find({
           useMasterKey: true,
           success: function(results) {
-            var animal, media, media_caption, media_id, media_url, _j, _len1, _results;
+            var animal, media, media_caption, media_id, media_url, timelineEntry, _j, _len1, _results;
             console.log("found animals: " + results);
             if (results.length > 0) {
               animal = results[0];
@@ -80,27 +80,19 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
                 media_caption = media["caption"]["text"];
                 media_url = media["images"]["standard_resolution"]["url"];
                 console.log('media: ' + media_url);
-                _results.push(download(media_url, 'image.jpg', function(error, image) {
-                  var timelineEntry;
-                  console.log("back from download: " + error);
-                  if (!error) {
-                    timelineEntry = new Parse.Object("AnimalTimelineEntry");
-                    timelineEntry.set("instagramId", media_id);
-                    timelineEntry.set("text", media_caption);
-                    timelineEntry.set("type", "image");
-                    timelineEntry.set("image", image);
-                    timelineEntry.set("animal", animal);
-                    return timelineEntry.save(null, {
-                      useMasterKey: true,
-                      success: function(result) {
-                        return console.log("timeline entry saved: " + JSON.stringify(result));
-                      },
-                      error: function(error) {
-                        return console.log("error: " + JSON.stringify(error));
-                      }
-                    });
-                  } else {
-                    return console.log("error downloading file " + JSON.stringify(error));
+                timelineEntry = new Parse.Object("AnimalTimelineEntry");
+                timelineEntry.set("instagramId", media_id);
+                timelineEntry.set("text", media_caption);
+                timelineEntry.set("type", "image");
+                timelineEntry.set("imageUrl", media_url);
+                timelineEntry.set("animal", animal);
+                _results.push(timelineEntry.save(null, {
+                  useMasterKey: true,
+                  success: function(result) {
+                    return console.log("timeline entry saved: " + JSON.stringify(result));
+                  },
+                  error: function(error) {
+                    return console.log("error: " + JSON.stringify(error));
                   }
                 }));
               }
