@@ -54,7 +54,7 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
       }
       console.log('user: ' + JSON.stringify(user));
       return ig.user_media_recent(user["id"], {
-        "count": 3
+        "count": 10
       }, function(err, medias, pagination, remaining, limit) {
         var query;
         if (err) {
