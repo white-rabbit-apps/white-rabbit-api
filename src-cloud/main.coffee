@@ -128,8 +128,6 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
                 #     console.log "error downloading file " + JSON.stringify(error)
                 # )
       )
-
-      return response.success()
   )
 
 

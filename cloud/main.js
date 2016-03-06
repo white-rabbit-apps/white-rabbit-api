@@ -53,7 +53,7 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
         }
       }
       console.log('user: ' + JSON.stringify(user));
-      ig.user_media_recent(user["id"], {
+      return ig.user_media_recent(user["id"], {
         "count": 3
       }, function(err, medias, pagination, remaining, limit) {
         var query;
@@ -103,7 +103,6 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
           }
         });
       });
-      return response.success();
     }
   });
 });
