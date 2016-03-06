@@ -18,14 +18,18 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
   console.log('importing instagram photos');
   animalObjectId = request.params.animalObjectId;
   instagramUsername = request.params.instagramUsername;
-  return ig.user_search(instagramUsername, function(err, users, remaining, limit) {
+  return ig.user_search(instagramUsername, {
+    "count": 1
+  }, function(err, users, remaining, limit) {
     var user;
     console.log('finished searching users: ' + JSON.stringify(users));
     if (!err) {
       console.log('no error searching users');
       user = users[0];
       console.log('user: ' + JSON.stringify(user));
-      return ig.user_media_recent(user["id"], function(err, medias, pagination, remaining, limit) {
+      return ig.user_media_recent(user["id"], {
+        "count": 100
+      }, function(err, medias, pagination, remaining, limit) {
         var query;
         console.log('finished searching media');
         query = new Parse.Query("Animal");
