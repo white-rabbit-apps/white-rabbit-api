@@ -53,6 +53,10 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
       console.log('user: ' + JSON.stringify(user));
       return ig.user_media_recent(user["id"], function(err, medias, pagination, remaining, limit) {
         var query;
+        if (err) {
+          console.log('error searching media: ' + JSON.stringify(err));
+          return;
+        }
         console.log('finished searching media: ' + JSON.stringify(medias));
         query = new Parse.Query("Animal");
         query.equalTo("objectId", animalObjectId);
