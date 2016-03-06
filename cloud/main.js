@@ -18,7 +18,7 @@ download = function(url, cb) {
   var options;
   console.log("downloading url: " + url);
   options = {
-    "string": true
+    "string": false
   };
   return base64.base64encoder(url, options, cb);
 };
@@ -77,7 +77,7 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
                 console.log('media: ' + media_url);
                 _results.push(download(media_url, function(error, image) {
                   var timelineEntry;
-                  console.log("back from download: " + image);
+                  console.log("back from download: " + error);
                   if (!error) {
                     timelineEntry = new Parse.Object("AnimalTimelineEntry");
                     timelineEntry.set("instagramId", media_id);

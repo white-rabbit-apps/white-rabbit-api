@@ -12,7 +12,7 @@ base64 = require('node-base64-image')
 
 download = (url, cb) ->
   console.log("downloading url: " + url)
-  options = {"string": true}
+  options = {"string": false}
   base64.base64encoder url, options, cb
 
   # request
@@ -90,7 +90,7 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
                 console.log 'media: ' + media_url
 
                 download(media_url, (error, image) ->
-                  console.log("back from download: " + image)
+                  console.log("back from download: " + error)
                   if !error
                     timelineEntry = new Parse.Object("AnimalTimelineEntry")
                     timelineEntry.set("instagramId", media_id)
