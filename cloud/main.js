@@ -26,11 +26,13 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
       user = users[0];
       console.log('user: ' + JSON.stringify(user));
       return ig.user_media_recent(user["id"], function(err, medias, pagination, remaining, limit) {
-        var media, media_url, _i, _len, _results;
-        console.log('finished searching media: ' + JSON.stringify(medias));
+        var media, media_caption, media_id, media_url, _i, _len, _results;
+        console.log('finished searching media');
         _results = [];
         for (_i = 0, _len = medias.length; _i < _len; _i++) {
           media = medias[_i];
+          media_id = media["id"];
+          media_caption = media["caption"];
           media_url = media["images"]["standard_resolution"]["url"];
           _results.push(console.log('media: ' + media_url));
         }

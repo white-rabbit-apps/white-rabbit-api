@@ -22,8 +22,10 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
       user = users[0]
       console.log 'user: ' + JSON.stringify(user)
       ig.user_media_recent(user["id"], (err, medias, pagination, remaining, limit) ->
-        console.log 'finished searching media: ' + JSON.stringify(medias)
+        console.log 'finished searching media'
         for media in medias
+          media_id = media["id"]
+          media_caption = media["caption"]
           media_url = media["images"]["standard_resolution"]["url"]
           console.log 'media: ' + media_url
       )
