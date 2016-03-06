@@ -1,4 +1,4 @@
-var download, fs, http, ig;
+var download, fs, http, ig, request;
 
 require(__dirname + '/validations.js');
 
@@ -10,20 +10,14 @@ http = require('http');
 
 fs = require('fs');
 
+request = require('request');
+
 download = function(url, dest, cb) {
-  var file, request;
-  file = fs.createWriteStream(dest);
-  request = http.get(url, function(response) {
-    response.pipe(file);
-    file.on('finish', function() {
-      file.close(cb);
-    });
-  }).on('error', function(err) {
-    fs.unlink(dest);
-    if (cb) {
-      cb(err.message);
-    }
-  });
+  return request.get(url).on('response', function(response) {
+    console.log("download response: " + JSON.stringify(response));
+    console.log(response.statusCode);
+    return console.log(response.headers['content-type']);
+  }).pipe(request.put(dest));
 };
 
 ig = require('instagram-node').instagram();

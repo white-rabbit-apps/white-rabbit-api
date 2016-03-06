@@ -7,25 +7,35 @@ require __dirname + '/activity.js'
 
 http = require('http')
 fs = require('fs')
+request = require('request')
 
 download = (url, dest, cb) ->
-  file = fs.createWriteStream(dest)
-  request = http.get(url, (response) ->
-    response.pipe file
-    file.on 'finish', ->
-      file.close cb
-      # close() is async, call cb after close completes.
-      return
-    return
-  ).on('error', (err) ->
-    # Handle errors
-    fs.unlink dest
-    # Delete the file async. (But we don't check the result)
-    if cb
-      cb err.message
-    return
-  )
-  return
+  request
+    .get(url)
+    .on('response', (response) ->
+      console.log("download response: " + JSON.stringify(response))
+      console.log(response.statusCode)
+      console.log(response.headers['content-type'])
+    )
+    .pipe(request.put(dest))
+
+  # file = fs.createWriteStream(dest)
+  # request = http.get(url, (response) ->
+  #   response.pipe file
+  #   file.on 'finish', ->
+  #     file.close cb
+  #     # close() is async, call cb after close completes.
+  #     return
+  #   return
+  # ).on('error', (err) ->
+  #   # Handle errors
+  #   fs.unlink dest
+  #   # Delete the file async. (But we don't check the result)
+  #   if cb
+  #     cb err.message
+  #   return
+  # )
+  # return
 
 
 ig = require('instagram-node').instagram()
