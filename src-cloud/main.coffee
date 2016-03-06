@@ -17,7 +17,7 @@ download = (url, dest, cb) ->
       console.log("download response: " + JSON.stringify(response))
       console.log(response.statusCode)
       console.log(response.headers['content-type'])
-      cb(nil, response)
+      cb(null, response)
     )
     .pipe(request.put(dest))
 

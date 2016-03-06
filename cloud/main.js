@@ -18,7 +18,7 @@ download = function(url, dest, cb) {
     console.log("download response: " + JSON.stringify(response));
     console.log(response.statusCode);
     console.log(response.headers['content-type']);
-    return cb(nil, response);
+    return cb(null, response);
   }).pipe(request.put(dest));
 };
 
