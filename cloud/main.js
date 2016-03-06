@@ -73,6 +73,7 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
             if (results.length > 0) {
               animal = results[0];
               console.log('found animal: ' + JSON.stringify(animal));
+              console.log('media size: ' + medias.length);
               _results = [];
               for (_j = 0, _len1 = medias.length; _j < _len1; _j++) {
                 media = medias[_j];

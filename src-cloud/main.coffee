@@ -96,6 +96,7 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
               animal = results[0]
 
               console.log 'found animal: ' + JSON.stringify(animal)
+              console.log 'media size: ' + medias.length
 
               for media in medias
                 media_id = media["id"]
