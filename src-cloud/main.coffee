@@ -46,8 +46,9 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
       for u in users
         if u["username"] == instagramUsername
           user = u
+
       console.log 'user: ' + JSON.stringify(user)
-      ig.user_media_recent(user["id"], {"count": 100}, (err, medias, pagination, remaining, limit) ->
+      ig.user_media_recent(user["id"], {"count": 3}, (err, medias, pagination, remaining, limit) ->
         console.log 'finished searching media'
 
         query = new Parse.Query("Animal")
@@ -67,6 +68,18 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
                 media_caption = media["caption"]
                 media_url = media["images"]["standard_resolution"]["url"]
                 console.log 'media: ' + media_url
+
+                timelineEntry = new Parse.Object("AnimalTimelineEntry")
+                timelineEntry.set("instagramId", media_id)
+                timelineEntry.set("text", media_caption)
+
+                timelineEntry.save(null,
+                  useMasterKey: true
+                  success: (result) ->
+                    console.log("timeline entry saved: " + JSON.stringify(result))
+                    # return response.success()
+                )
+
       )
   )
 

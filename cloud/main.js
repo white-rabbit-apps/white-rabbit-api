@@ -52,7 +52,7 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
       }
       console.log('user: ' + JSON.stringify(user));
       return ig.user_media_recent(user["id"], {
-        "count": 100
+        "count": 3
       }, function(err, medias, pagination, remaining, limit) {
         var query;
         console.log('finished searching media');
@@ -62,7 +62,7 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
         return query.find({
           useMasterKey: true,
           success: function(results) {
-            var animal, media, media_caption, media_id, media_url, _j, _len1, _results;
+            var animal, media, media_caption, media_id, media_url, timelineEntry, _j, _len1, _results;
             console.log("found animals: " + results);
             if (results.length > 0) {
               animal = results[0];
@@ -73,7 +73,16 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
                 media_id = media["id"];
                 media_caption = media["caption"];
                 media_url = media["images"]["standard_resolution"]["url"];
-                _results.push(console.log('media: ' + media_url));
+                console.log('media: ' + media_url);
+                timelineEntry = new Parse.Object("AnimalTimelineEntry");
+                timelineEntry.set("instagramId", media_id);
+                timelineEntry.set("text", media_caption);
+                _results.push(timelineEntry.save(null, {
+                  useMasterKey: true,
+                  success: function(result) {
+                    return console.log("timeline entry saved: " + JSON.stringify(result));
+                  }
+                }));
               }
               return _results;
             }
