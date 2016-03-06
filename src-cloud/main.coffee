@@ -73,23 +73,28 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
                 media_url = media["images"]["standard_resolution"]["url"]
                 console.log 'media: ' + media_url
 
-                timelineEntry = new Parse.Object("AnimalTimelineEntry")
-                timelineEntry.set("instagramId", media_id)
-                timelineEntry.set("text", media_caption)
-                timelineEntry.set("type", "image")
-                timelineEntry.set("image", media_url)
-                timelineEntry.set("animal", animal)
+                download(media_url, image, (error) ->
+                  if !error
+                    timelineEntry = new Parse.Object("AnimalTimelineEntry")
+                    timelineEntry.set("instagramId", media_id)
+                    timelineEntry.set("text", media_caption)
+                    timelineEntry.set("type", "image")
+                    timelineEntry.set("image", image)
+                    timelineEntry.set("animal", animal)
 
-                timelineEntry.save(null,
-                  useMasterKey: true
-                  success: (result) ->
-                    console.log("timeline entry saved: " + JSON.stringify(result))
-                    # return response.success()
-                  error: (error) ->
-                    console.log("error: " + JSON.stringify(error))
+                    timelineEntry.save(null,
+                      useMasterKey: true
+                      success: (result) ->
+                        console.log("timeline entry saved: " + JSON.stringify(result))
+                      error: (error) ->
+                        console.log("error: " + JSON.stringify(error))
+                    )
+                  else
+                    console.log "error downloading file " + JSON.stringify(error)
                 )
-
       )
+
+      return response.success()
   )
 
 
