@@ -26,17 +26,31 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
       user = users[0];
       console.log('user: ' + JSON.stringify(user));
       return ig.user_media_recent(user["id"], function(err, medias, pagination, remaining, limit) {
-        var media, media_caption, media_id, media_url, _i, _len, _results;
+        var query;
         console.log('finished searching media');
-        _results = [];
-        for (_i = 0, _len = medias.length; _i < _len; _i++) {
-          media = medias[_i];
-          media_id = media["id"];
-          media_caption = media["caption"];
-          media_url = media["images"]["standard_resolution"]["url"];
-          _results.push(console.log('media: ' + media_url));
-        }
-        return _results;
+        query = new Parse.Query("Animal");
+        query.equalTo("objectId", animalObjectId);
+        console.log("finding animal: " + request.object.get("following").id);
+        return query.find({
+          useMasterKey: true,
+          success: function(results) {
+            var animal, media, media_caption, media_id, media_url, _i, _len, _results;
+            console.log("found: " + results);
+            if (results.length > 0) {
+              animal = results[0];
+              console.log('found animal: ' + JSON.stringify(animal));
+              _results = [];
+              for (_i = 0, _len = medias.length; _i < _len; _i++) {
+                media = medias[_i];
+                media_id = media["id"];
+                media_caption = media["caption"];
+                media_url = media["images"]["standard_resolution"]["url"];
+                _results.push(console.log('media: ' + media_url));
+              }
+              return _results;
+            }
+          }
+        });
       });
     }
   });

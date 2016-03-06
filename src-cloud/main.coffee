@@ -23,11 +23,24 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
       console.log 'user: ' + JSON.stringify(user)
       ig.user_media_recent(user["id"], (err, medias, pagination, remaining, limit) ->
         console.log 'finished searching media'
-        for media in medias
-          media_id = media["id"]
-          media_caption = media["caption"]
-          media_url = media["images"]["standard_resolution"]["url"]
-          console.log 'media: ' + media_url
+
+        query = new Parse.Query("Animal")
+        query.equalTo("objectId", animalObjectId)
+        console.log("finding animal: " + request.object.get("following").id)
+        query.find
+          useMasterKey: true
+          success: (results) ->
+            console.log("found: " + results)
+            if results.length > 0
+              animal = results[0]
+
+              console.log 'found animal: ' + JSON.stringify(animal)
+
+              for media in medias
+                media_id = media["id"]
+                media_caption = media["caption"]
+                media_url = media["images"]["standard_resolution"]["url"]
+                console.log 'media: ' + media_url
       )
   )
 
