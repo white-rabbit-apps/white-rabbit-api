@@ -106,6 +106,8 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
                 console.log 'media: ' + media_url
                 continue
 
+              return
+              
                 # timelineEntry = new Parse.Object("AnimalTimelineEntry")
                 # timelineEntry.set("instagramId", media_id)
                 # timelineEntry.set("text", media_caption)

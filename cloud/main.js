@@ -68,13 +68,12 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
         return query.find({
           useMasterKey: true,
           success: function(results) {
-            var animal, media, media_caption, media_date, media_id, media_url, _j, _len1, _results;
+            var animal, media, media_caption, media_date, media_id, media_url, _j, _len1;
             console.log("found animals: " + results);
             if (results.length > 0) {
               animal = results[0];
               console.log('found animal: ' + JSON.stringify(animal));
               console.log('media size: ' + medias.length);
-              _results = [];
               for (_j = 0, _len1 = medias.length; _j < _len1; _j++) {
                 media = medias[_j];
                 media_id = media["id"];
@@ -84,7 +83,6 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
                 console.log('media: ' + media_url);
                 continue;
               }
-              return _results;
             }
           }
         });
