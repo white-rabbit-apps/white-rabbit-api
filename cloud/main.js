@@ -54,7 +54,7 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
       }
       console.log('user: ' + JSON.stringify(user));
       return ig.user_media_recent(user["id"], {
-        "count": 10
+        "count": 2
       }, function(err, medias, pagination, remaining, limit) {
         var query;
         if (err) {
@@ -68,7 +68,7 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
         return query.find({
           useMasterKey: true,
           success: function(results) {
-            var animal, media, media_caption, media_date, media_id, media_url, _j, _len1;
+            var animal, media, media_caption, media_date, media_id, media_url, timelineEntry, _j, _len1;
             console.log("found animals: " + results);
             if (results.length > 0) {
               animal = results[0];
@@ -81,13 +81,48 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
                 media_date = new Date(parseInt(media["created_time"]) * 1000);
                 media_url = media["images"]["standard_resolution"]["url"];
                 console.log('media: ' + media_url);
-                continue;
+                timelineEntry = new Parse.Object("AnimalTimelineEntry");
+                timelineEntry.set("instagramId", media_id);
+                timelineEntry.set("text", media_caption);
+                timelineEntry.set("type", "image");
+                timelineEntry.set("date", media_date);
+                timelineEntry.set("imageUrl", media_url);
+                timelineEntry.set("animal", animal);
+                timelineEntry.save(null, {
+                  useMasterKey: true,
+                  success: function(result) {
+                    console.log("timeline entry saved: " + JSON.stringify(result));
+                  },
+                  error: function(error) {
+                    console.log("error: " + JSON.stringify(error));
+                  }
+                });
               }
               return response.success();
             }
           }
         });
       });
+    }
+  });
+});
+
+Parse.Cloud.beforeSave("AnimalTimelineEntry", function(request, response) {
+  var timelineEntryQuery;
+  console.log("creating timeline entry: " + JSON.stringify(request));
+  timelineEntryQuery = new Parse.Query("AnimalTimelineEntry");
+  timelineEntryQuery.equalTo("instagramId", request.object.get("instagramId"));
+  timelineEntryQuery.equalTo("animal", request.object.get("animal"));
+  return timelineEntryQuery.find({
+    useMasterKey: true,
+    success: function(results) {
+      if (results.length === 0) {
+        console.log("found no timeline entries");
+        return response.success();
+      } else {
+        console.log("already have a timeline entry for that photo");
+        return response.error("Already have a timeline entry for that instagram photo");
+      }
     }
   });
 });

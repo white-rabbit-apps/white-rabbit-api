@@ -78,7 +78,7 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
           user = u
 
       console.log 'user: ' + JSON.stringify(user)
-      ig.user_media_recent(user["id"], {"count": 10}, (err, medias, pagination, remaining, limit) ->
+      ig.user_media_recent(user["id"], {"count": 2}, (err, medias, pagination, remaining, limit) ->
         if(err)
           console.log 'error searching media: ' + JSON.stringify(err)
           return
@@ -104,29 +104,59 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
                 media_date = new Date(parseInt(media["created_time"]) * 1000)
                 media_url = media["images"]["standard_resolution"]["url"]
                 console.log 'media: ' + media_url
-                continue
+
+                timelineEntry = new Parse.Object("AnimalTimelineEntry")
+                timelineEntry.set("instagramId", media_id)
+                timelineEntry.set("text", media_caption)
+                timelineEntry.set("type", "image")
+                timelineEntry.set("date", media_date)
+                timelineEntry.set("imageUrl", media_url)
+                timelineEntry.set("animal", animal)
+
+                timelineEntry.save(null,
+                  useMasterKey: true
+                  success: (result) ->
+                    console.log("timeline entry saved: " + JSON.stringify(result))
+                    return
+                  error: (error) ->
+                    console.log("error: " + JSON.stringify(error))
+                    return
+                )
+
+                # timelineEntryQuery = new Parse.Query("AnimalTimelineEntry")
+                # timelineEntryQuery.equalTo("instagramId", media["id"])
+                # timelineEntryQuery.equalTo("animal", animal)
+                # timelineEntryQuery.find
+                #   useMasterKey: true
+                #   success: (results) ->
+                #     if results.length == 0
+                #       console.log("found no timeline entries")
+                #
+                #     else
+                #       console.log("already have a timeline entry for that photo")
+
+                # return response.success()
 
               return response.success()
-
-                # timelineEntry = new Parse.Object("AnimalTimelineEntry")
-                # timelineEntry.set("instagramId", media_id)
-                # timelineEntry.set("text", media_caption)
-                # timelineEntry.set("type", "image")
-                # timelineEntry.set("date", media_date)
-                # timelineEntry.set("imageUrl", media_url)
-                # timelineEntry.set("animal", animal)
-                #
-                # timelineEntry.save(null,
-                #   useMasterKey: true
-                #   success: (result) ->
-                #     console.log("timeline entry saved: " + JSON.stringify(result))
-                #     return
-                #   error: (error) ->
-                #     console.log("error: " + JSON.stringify(error))
-                #     return
-                # )
       )
   )
+
+
+Parse.Cloud.beforeSave "AnimalTimelineEntry", (request, response) ->
+  console.log("creating timeline entry: " + JSON.stringify(request))
+
+  timelineEntryQuery = new Parse.Query("AnimalTimelineEntry")
+  timelineEntryQuery.equalTo("instagramId", request.object.get("instagramId"))
+  timelineEntryQuery.equalTo("animal", request.object.get("animal"))
+  timelineEntryQuery.find
+    useMasterKey: true
+    success: (results) ->
+      if results.length == 0
+        console.log("found no timeline entries")
+        return response.success()
+      else
+        console.log("already have a timeline entry for that photo")
+        return response.error("Already have a timeline entry for that instagram photo")
 
 
 # sendgrid = require("sendgrid")
