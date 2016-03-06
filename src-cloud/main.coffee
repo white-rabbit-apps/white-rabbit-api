@@ -48,7 +48,7 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
           user = u
 
       console.log 'user: ' + JSON.stringify(user)
-      ig.user_media_recent(user["id"], (err, medias, pagination, remaining, limit) ->
+      ig.user_media_recent(user["id"], {"count": 3}, (err, medias, pagination, remaining, limit) ->
         if(err)
           console.log 'error searching media: ' + JSON.stringify(err)
           return
@@ -69,7 +69,7 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
 
               for media in medias
                 media_id = media["id"]
-                media_caption = media["caption"]
+                media_caption = media["caption"]["text"]
                 media_url = media["images"]["standard_resolution"]["url"]
                 console.log 'media: ' + media_url
 

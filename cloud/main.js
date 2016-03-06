@@ -51,7 +51,9 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
         }
       }
       console.log('user: ' + JSON.stringify(user));
-      return ig.user_media_recent(user["id"], function(err, medias, pagination, remaining, limit) {
+      return ig.user_media_recent(user["id"], {
+        "count": 3
+      }, function(err, medias, pagination, remaining, limit) {
         var query;
         if (err) {
           console.log('error searching media: ' + JSON.stringify(err));
@@ -73,7 +75,7 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
               for (_j = 0, _len1 = medias.length; _j < _len1; _j++) {
                 media = medias[_j];
                 media_id = media["id"];
-                media_caption = media["caption"];
+                media_caption = media["caption"]["text"];
                 media_url = media["images"]["standard_resolution"]["url"];
                 console.log('media: ' + media_url);
                 timelineEntry = new Parse.Object("AnimalTimelineEntry");
