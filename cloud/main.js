@@ -83,6 +83,7 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
                 console.log('media: ' + media_url);
                 continue;
               }
+              return response.success();
             }
           }
         });
