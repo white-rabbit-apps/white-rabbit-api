@@ -13,7 +13,9 @@ download = (url, dest, cb) ->
   request = http.get(url, (response) ->
     response.pipe file
     file.on 'finish', ->
-      file.close cb(null, file)
+      console.log("finished downloading")
+      file.close()
+      cb(null, file)
       # close() is async, call cb after close completes.
       return
     return

@@ -16,7 +16,9 @@ download = function(url, dest, cb) {
   request = http.get(url, function(response) {
     response.pipe(file);
     file.on('finish', function() {
-      file.close(cb(null, file));
+      console.log("finished downloading");
+      file.close();
+      cb(null, file);
     });
   }).on('error', function(err) {
     fs.unlink(dest);
