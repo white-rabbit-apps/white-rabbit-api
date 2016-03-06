@@ -68,7 +68,7 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
         return query.find({
           useMasterKey: true,
           success: function(results) {
-            var animal, media, media_caption, media_id, media_url, timelineEntry, _j, _len1, _results;
+            var animal, media, media_caption, media_date, media_id, media_url, timelineEntry, _j, _len1, _results;
             console.log("found animals: " + results);
             if (results.length > 0) {
               animal = results[0];
@@ -78,12 +78,14 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
                 media = medias[_j];
                 media_id = media["id"];
                 media_caption = media["caption"]["text"];
+                media_date = new Date(parseInt(media["created_time"]) * 1000);
                 media_url = media["images"]["standard_resolution"]["url"];
                 console.log('media: ' + media_url);
                 timelineEntry = new Parse.Object("AnimalTimelineEntry");
                 timelineEntry.set("instagramId", media_id);
                 timelineEntry.set("text", media_caption);
                 timelineEntry.set("type", "image");
+                timelineEntry.set("date", media_date);
                 timelineEntry.set("imageUrl", media_url);
                 timelineEntry.set("animal", animal);
                 _results.push(timelineEntry.save(null, {

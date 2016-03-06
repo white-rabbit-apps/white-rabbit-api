@@ -100,6 +100,7 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
               for media in medias
                 media_id = media["id"]
                 media_caption = media["caption"]["text"]
+                media_date = new Date(parseInt(media["created_time"]) * 1000)
                 media_url = media["images"]["standard_resolution"]["url"]
                 console.log 'media: ' + media_url
 
@@ -107,6 +108,7 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
                 timelineEntry.set("instagramId", media_id)
                 timelineEntry.set("text", media_caption)
                 timelineEntry.set("type", "image")
+                timelineEntry.set("date", media_date)
                 timelineEntry.set("imageUrl", media_url)
                 timelineEntry.set("animal", animal)
 
