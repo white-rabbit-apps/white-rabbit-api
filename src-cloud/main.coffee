@@ -26,7 +26,7 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
 
         query = new Parse.Query("Animal")
         query.equalTo("objectId", animalObjectId)
-        console.log("finding animal: " + request.object.get("following").id)
+        console.log("finding animal: " + animalObjectId)
         query.find
           useMasterKey: true
           success: (results) ->

@@ -30,7 +30,7 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
         console.log('finished searching media');
         query = new Parse.Query("Animal");
         query.equalTo("objectId", animalObjectId);
-        console.log("finding animal: " + request.object.get("following").id);
+        console.log("finding animal: " + animalObjectId);
         return query.find({
           useMasterKey: true,
           success: function(results) {
