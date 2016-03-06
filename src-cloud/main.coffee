@@ -17,6 +17,7 @@ download = (url, dest, cb) ->
       console.log("download response: " + JSON.stringify(response))
       console.log(response.statusCode)
       console.log(response.headers['content-type'])
+      cb(nil, response)
     )
     .pipe(request.put(dest))
 
@@ -84,7 +85,8 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
                 media_url = media["images"]["standard_resolution"]["url"]
                 console.log 'media: ' + media_url
 
-                download(media_url, 'image.jpg', (error) ->
+                download(media_url, 'image.jpg', (error, image) ->
+                  console.log("back from download: " + image)
                   if !error
                     timelineEntry = new Parse.Object("AnimalTimelineEntry")
                     timelineEntry.set("instagramId", media_id)

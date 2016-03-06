@@ -17,7 +17,8 @@ download = function(url, dest, cb) {
   return request.get(url).on('response', function(response) {
     console.log("download response: " + JSON.stringify(response));
     console.log(response.statusCode);
-    return console.log(response.headers['content-type']);
+    console.log(response.headers['content-type']);
+    return cb(nil, response);
   }).pipe(request.put(dest));
 };
 
@@ -73,8 +74,9 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
                 media_caption = media["caption"]["text"];
                 media_url = media["images"]["standard_resolution"]["url"];
                 console.log('media: ' + media_url);
-                _results.push(download(media_url, 'image.jpg', function(error) {
+                _results.push(download(media_url, 'image.jpg', function(error, image) {
                   var timelineEntry;
+                  console.log("back from download: " + image);
                   if (!error) {
                     timelineEntry = new Parse.Object("AnimalTimelineEntry");
                     timelineEntry.set("instagramId", media_id);
