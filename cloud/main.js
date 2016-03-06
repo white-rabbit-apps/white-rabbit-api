@@ -81,7 +81,8 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
                 media_caption = media["caption"]["text"];
                 media_date = new Date(parseInt(media["created_time"]) * 1000);
                 media_url = media["images"]["standard_resolution"]["url"];
-                _results.push(console.log('media: ' + media_url));
+                console.log('media: ' + media_url);
+                continue;
               }
               return _results;
             }

@@ -104,6 +104,7 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
                 media_date = new Date(parseInt(media["created_time"]) * 1000)
                 media_url = media["images"]["standard_resolution"]["url"]
                 console.log 'media: ' + media_url
+                continue
 
                 # timelineEntry = new Parse.Object("AnimalTimelineEntry")
                 # timelineEntry.set("instagramId", media_id)
