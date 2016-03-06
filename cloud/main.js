@@ -81,6 +81,9 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
                 timelineEntry = new Parse.Object("AnimalTimelineEntry");
                 timelineEntry.set("instagramId", media_id);
                 timelineEntry.set("text", media_caption);
+                timelineEntry.set("type", "image");
+                timelineEntry.set("image", media_url);
+                timelineEntry.set("animal", animal);
                 _results.push(timelineEntry.save(null, {
                   useMasterKey: true,
                   success: function(result) {
