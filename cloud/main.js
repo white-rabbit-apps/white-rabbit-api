@@ -39,11 +39,17 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
   animalObjectId = request.params.animalObjectId;
   instagramUsername = request.params.instagramUsername;
   return ig.user_search(instagramUsername, function(err, users, remaining, limit) {
-    var user;
+    var u, user, _i, _len;
     console.log('finished searching users: ' + JSON.stringify(users));
     if (!err) {
       console.log('no error searching users');
       user = users[0];
+      for (_i = 0, _len = users.length; _i < _len; _i++) {
+        u = users[_i];
+        if (u["username"] === instagramUsername) {
+          user = u;
+        }
+      }
       console.log('user: ' + JSON.stringify(user));
       return ig.user_media_recent(user["id"], {
         "count": 100
@@ -56,16 +62,10 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
         return query.find({
           useMasterKey: true,
           success: function(results) {
-            var animal, media, media_caption, media_id, media_url, result, _i, _j, _len, _len1, _results;
+            var animal, media, media_caption, media_id, media_url, _j, _len1, _results;
             console.log("found animals: " + results);
             if (results.length > 0) {
               animal = results[0];
-              for (_i = 0, _len = results.length; _i < _len; _i++) {
-                result = results[_i];
-                if (result["username"] === instagramUsername) {
-                  animal = result;
-                }
-              }
               console.log('found animal: ' + JSON.stringify(animal));
               _results = [];
               for (_j = 0, _len1 = medias.length; _j < _len1; _j++) {

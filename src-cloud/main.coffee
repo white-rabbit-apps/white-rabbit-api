@@ -43,6 +43,9 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
     if(!err)
       console.log 'no error searching users'
       user = users[0]
+      for u in users
+        if u["username"] == instagramUsername
+          user = u
       console.log 'user: ' + JSON.stringify(user)
       ig.user_media_recent(user["id"], {"count": 100}, (err, medias, pagination, remaining, limit) ->
         console.log 'finished searching media'
@@ -56,9 +59,6 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
             console.log("found animals: " + results)
             if results.length > 0
               animal = results[0]
-              for result in results
-                if result["username"] == instagramUsername
-                  animal = result
 
               console.log 'found animal: ' + JSON.stringify(animal)
 
