@@ -115,12 +115,6 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
 
                 timelineEntry.save(null,
                   useMasterKey: true
-                  success: (result) ->
-                    console.log("timeline entry saved: " + JSON.stringify(result))
-                    return
-                  error: (error) ->
-                    console.log("error: " + JSON.stringify(error))
-                    return
                 )
       )
   )

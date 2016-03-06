@@ -90,13 +90,7 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
                 timelineEntry.set("imageUrl", media_url);
                 timelineEntry.set("animal", animal);
                 _results.push(timelineEntry.save(null, {
-                  useMasterKey: true,
-                  success: function(result) {
-                    console.log("timeline entry saved: " + JSON.stringify(result));
-                  },
-                  error: function(error) {
-                    console.log("error: " + JSON.stringify(error));
-                  }
+                  useMasterKey: true
                 }));
               }
               return _results;
