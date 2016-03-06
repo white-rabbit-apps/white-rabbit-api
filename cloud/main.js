@@ -55,7 +55,7 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
         "count": 3
       }, function(err, medias, pagination, remaining, limit) {
         var query;
-        console.log('finished searching media');
+        console.log('finished searching media: ' + JSON.stringify(medias));
         query = new Parse.Query("Animal");
         query.equalTo("objectId", animalObjectId);
         console.log("finding animal: " + animalObjectId);
@@ -81,6 +81,9 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
                   useMasterKey: true,
                   success: function(result) {
                     return console.log("timeline entry saved: " + JSON.stringify(result));
+                  },
+                  error: function(error) {
+                    return console.log("error: " + JSON.stringify(error));
                   }
                 }));
               }

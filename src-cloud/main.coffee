@@ -49,7 +49,7 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
 
       console.log 'user: ' + JSON.stringify(user)
       ig.user_media_recent(user["id"], {"count": 3}, (err, medias, pagination, remaining, limit) ->
-        console.log 'finished searching media'
+        console.log 'finished searching media: ' + JSON.stringify(medias)
 
         query = new Parse.Query("Animal")
         query.equalTo("objectId", animalObjectId)
@@ -78,6 +78,8 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
                   success: (result) ->
                     console.log("timeline entry saved: " + JSON.stringify(result))
                     # return response.success()
+                  error: (error) ->
+                    console.log("error: " + JSON.stringify(error))
                 )
 
       )
