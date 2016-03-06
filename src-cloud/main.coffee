@@ -249,7 +249,7 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
       # error
       return
 
-  return response.success()
+#return response.success()
 
 
 Parse.Cloud.afterSave "Animal", (request, response) ->

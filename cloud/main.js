@@ -165,14 +165,13 @@ Parse.Cloud.afterSave("AnimalTimelineEntry", function(request, response) {
   }
   if (request.object.get("shareToTwitter")) {
     console.log("sharing to Twitter for: " + request.object.get("createdBy").id);
-    Parse.Cloud.run('shareToTwitter', {
+    return Parse.Cloud.run('shareToTwitter', {
       userObjectId: request.object.get("createdBy").id,
       entryText: request.object.get("text")
     }).then((function(result) {
       console.log('result :' + JSON.stringify(result));
     }), function(error) {});
   }
-  return response.success();
 });
 
 Parse.Cloud.afterSave("Animal", function(request, response) {
