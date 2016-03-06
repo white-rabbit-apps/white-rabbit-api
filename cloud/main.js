@@ -1,8 +1,36 @@
+var ig;
+
 require(__dirname + '/validations.js');
 
 require(__dirname + '/deletes.js');
 
 require(__dirname + '/activity.js');
+
+ig = require('instagram-node').instagram();
+
+ig.use({
+  client_id: '09214a4e95494f70873ea3f8c7c82960',
+  client_secret: '18c7f3e84ee54c429364ad48f8a00146'
+});
+
+Parse.Cloud.define('importInstagramPhotos', function(request, response) {
+  var animalObjectId, instagramUsername;
+  console.log('importing instagram photos');
+  animalObjectId = request.params.animalObjectId;
+  instagramUsername = request.params.instagramUsername;
+  return ig.user_search('username', function(err, users, remaining, limit) {
+    var user;
+    console.log('finished searching users: ' + JSON.stringify(users));
+    if (!err) {
+      console.log('no error searching users');
+      user = users[0];
+      console.log('user: ' + JSON.stringify(user));
+      return ig.user_media_recent(user.get('id'), function(err, medias, pagination, remaining, limit) {
+        return console.log('finished searching media: ' + JSON.stringify(medias));
+      });
+    }
+  });
+});
 
 Parse.Cloud.define('shareToTwitter', function(request, response) {
   var entryText, user, userObjectId;

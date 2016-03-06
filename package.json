@@ -16,6 +16,7 @@
     "connect-s4a": "*",
     "express": "~4.9.x",
     "express-urlrewrite": "*",
+    "instagram-node": "*",
     "jade": "1.3.x",
     "jsonfile": "~2.2.3",
     "lodash": "2.4.x",

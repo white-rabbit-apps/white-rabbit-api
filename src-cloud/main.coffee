@@ -4,6 +4,30 @@ require __dirname + '/validations.js'
 require __dirname + '/deletes.js'
 require __dirname + '/activity.js'
 
+
+ig = require('instagram-node').instagram()
+ig.use
+  client_id: '09214a4e95494f70873ea3f8c7c82960'
+  client_secret: '18c7f3e84ee54c429364ad48f8a00146'
+
+Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
+  console.log 'importing instagram photos'
+  animalObjectId = request.params.animalObjectId
+  instagramUsername = request.params.instagramUsername
+
+  ig.user_search('username', (err, users, remaining, limit) ->
+    console.log 'finished searching users: ' + JSON.stringify(users)
+    if(!err)
+      console.log 'no error searching users'
+      user = users[0]
+      console.log 'user: ' + JSON.stringify(user)
+      ig.user_media_recent(user.get('id'), (err, medias, pagination, remaining, limit) ->
+        console.log 'finished searching media: ' + JSON.stringify(medias)
+
+      )
+  )
+
+
 # sendgrid = require("sendgrid")
 # sendgrid.initialize("michaelbina", "m8E-gWK-tL6-zvu");
 
