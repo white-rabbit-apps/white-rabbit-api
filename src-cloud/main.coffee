@@ -5,6 +5,29 @@ require __dirname + '/deletes.js'
 require __dirname + '/activity.js'
 
 
+http = require('http')
+fs = require('fs')
+
+download = (url, dest, cb) ->
+  file = fs.createWriteStream(dest)
+  request = http.get(url, (response) ->
+    response.pipe file
+    file.on 'finish', ->
+      file.close cb
+      # close() is async, call cb after close completes.
+      return
+    return
+  ).on('error', (err) ->
+    # Handle errors
+    fs.unlink dest
+    # Delete the file async. (But we don't check the result)
+    if cb
+      cb err.message
+    return
+  )
+  return
+
+
 ig = require('instagram-node').instagram()
 ig.use
   client_id: '09214a4e95494f70873ea3f8c7c82960'
@@ -30,9 +53,12 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
         query.find
           useMasterKey: true
           success: (results) ->
-            console.log("found: " + results)
+            console.log("found animals: " + results)
             if results.length > 0
               animal = results[0]
+              for result in results
+                if result["username"] == instagramUsername
+                  animal = result
 
               console.log 'found animal: ' + JSON.stringify(animal)
 

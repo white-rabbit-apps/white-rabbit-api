@@ -1,10 +1,30 @@
-var ig;
+var download, fs, http, ig;
 
 require(__dirname + '/validations.js');
 
 require(__dirname + '/deletes.js');
 
 require(__dirname + '/activity.js');
+
+http = require('http');
+
+fs = require('fs');
+
+download = function(url, dest, cb) {
+  var file, request;
+  file = fs.createWriteStream(dest);
+  request = http.get(url, function(response) {
+    response.pipe(file);
+    file.on('finish', function() {
+      file.close(cb);
+    });
+  }).on('error', function(err) {
+    fs.unlink(dest);
+    if (cb) {
+      cb(err.message);
+    }
+  });
+};
 
 ig = require('instagram-node').instagram();
 
@@ -36,14 +56,20 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
         return query.find({
           useMasterKey: true,
           success: function(results) {
-            var animal, media, media_caption, media_id, media_url, _i, _len, _results;
-            console.log("found: " + results);
+            var animal, media, media_caption, media_id, media_url, result, _i, _j, _len, _len1, _results;
+            console.log("found animals: " + results);
             if (results.length > 0) {
               animal = results[0];
+              for (_i = 0, _len = results.length; _i < _len; _i++) {
+                result = results[_i];
+                if (result["username"] === instagramUsername) {
+                  animal = result;
+                }
+              }
               console.log('found animal: ' + JSON.stringify(animal));
               _results = [];
-              for (_i = 0, _len = medias.length; _i < _len; _i++) {
-                media = medias[_i];
+              for (_j = 0, _len1 = medias.length; _j < _len1; _j++) {
+                media = medias[_j];
                 media_id = media["id"];
                 media_caption = media["caption"];
                 media_url = media["images"]["standard_resolution"]["url"];
