@@ -92,10 +92,10 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
                 _results.push(timelineEntry.save(null, {
                   useMasterKey: true,
                   success: function(result) {
-                    return console.log("timeline entry saved: " + JSON.stringify(result));
+                    console.log("timeline entry saved: " + JSON.stringify(result));
                   },
                   error: function(error) {
-                    return console.log("error: " + JSON.stringify(error));
+                    console.log("error: " + JSON.stringify(error));
                   }
                 }));
               }
