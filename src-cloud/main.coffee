@@ -160,7 +160,7 @@ Parse.Cloud.beforeSave "AnimalTimelineEntry", (request, response) ->
           return response.error("Already have a timeline entry for that instagram photo")
   else
     return response.success()
-    
+
 
 
 # sendgrid = require("sendgrid")
@@ -171,10 +171,10 @@ Parse.Cloud.beforeSave "AnimalTimelineEntry", (request, response) ->
 #   userObjectId = request.params.userObjectId
 #   entryText = request.params.entryText
 #   user = new Parse.Query(Parse.User)
-#   user.get(userObjectId).then((user) ->
-#     console.log 'UserID: ' + user.id
-#     if Parse.FacebookUtils.isLinked(user)
-#       console.log 'token:' + user.get('authData').facebook.access_token
+  # user.get(userObjectId).then((user) ->
+  #   console.log 'UserID: ' + user.id
+  #   if Parse.FacebookUtils.isLinked(user)
+  #     console.log 'token:' + user.get('authData').facebook.access_token
 #
 #       Parse.Cloud.httpRequest(
 #         useMasterKey: true
@@ -245,6 +245,10 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
     ).then((user) ->
       console.log 'User: ' + JSON.stringify(user)
       # if Parse.FacebookUtils.isLinked(user)
+
+      if user.get('authData') && user.get('authData').facebook
+        console.log user.get('authData').facebook.access_token
+
       if user.get('_auth_data_facebook')
         console.log 'token:' + user.get('_auth_data_facebook').access_token
 
