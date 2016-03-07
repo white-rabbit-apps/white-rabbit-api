@@ -246,17 +246,17 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
       console.log 'User: ' + JSON.stringify(user)
       # if Parse.FacebookUtils.isLinked(user)
 
-      if user.get('authData') && user.get('authData').facebook
-        console.log user.get('authData').facebook.access_token
+      # if user.get('_auth_data_facebook')
+      #   console.log 'token:' + user.get('_auth_data_facebook').access_token
 
-      if user.get('_auth_data_facebook')
-        console.log 'token:' + user.get('_auth_data_facebook').access_token
+      if user.get('authData') && user.get('authData').facebook
+        console.log 'token: ' + user.get('authData').facebook.access_token
 
         Parse.Cloud.httpRequest(
           method: 'POST'
           url: 'https://graph.facebook.com/me/feed'
           params:
-            access_token: user.get('_auth_data_facebook').access_token
+            access_token: user.get('authData').facebook.access_token
             message: entryText + "\n\nCheck out Phoebe on White Rabbit Apps"
             link: "http://www.whiterabbitapps.net/cat/phoebe_the_bug"
         ).then ((httpResponse) ->
