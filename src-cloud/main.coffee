@@ -322,6 +322,25 @@ Parse.Cloud.afterSave "AnimalTransfer", (request, response) ->
     if(request.object.get("type") == "Foster")
       console.log 'animal transfer has been accepted for an foster'
 
+      entry = new Parse.Object("AnimalTimelineEntry")
+      entry.set("type", "fostered")
+      entry.set("animal", request.object.get("animal"))
+      entry.set("text", "Started being fostered by")
+      entry.set("actingUser", request.object.get("actingUser"))
+      entry.set("date", {
+          "__type": "Date",
+          "iso": (new Date()).toISOString()
+      })
+      console.log("saving entry")
+      entry.save(null,
+        useMasterKey: true
+        success: (result) ->
+          console.log("saved: " + result.id)
+          return response.success()
+        error: (error) ->
+          return response.error(error.message)
+      )
+
 
 Parse.Cloud.afterSave "Animal", (request, response) ->
   console.log("afterSave: " + request.object.id)
