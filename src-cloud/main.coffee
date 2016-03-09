@@ -326,7 +326,7 @@ Parse.Cloud.afterSave "AnimalTransfer", (request, response) ->
       entry.set("type", "fostered")
       entry.set("animal", request.object.get("animal"))
       entry.set("text", "Started being fostered by")
-      entry.set("actingUser", request.object.get("actingUser"))
+      entry.set("actingUser", request.object.get("acceptedByUser"))
       entry.set("date", {
           "__type": "Date",
           "iso": (new Date()).toISOString()
