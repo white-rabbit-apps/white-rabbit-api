@@ -260,11 +260,10 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
             message: entryText + "\n\nCheck out Phoebe on White Rabbit Apps"
             link: "http://www.whiterabbitapps.net/cat/phoebe_the_bug"
         ).then ((httpResponse) ->
-          console.log("back from http request 6543")
+          console.log("back from http request")
         ), (error) ->
           console.log("error with http request: " + error.data.error.message)
           return response.error(error.data.error.message)
-
       else
         return Parse.Promise.error('user not linked to fb account')
       return
@@ -291,6 +290,37 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
       return
 
 #return response.success()
+
+Parse.Cloud.afterSave "AnimalTransfer", (request, response) ->
+  console.log 'creating activity for animal transfer'
+
+  if(request.object.get("status") == "accepted")
+    console.log 'animal transfer has been accepted'
+
+    if(request.object.get("type") == "Adopter")
+      console.log 'animal transfer has been accepted for an adopter'
+
+      entry = new Parse.Object("AnimalTimelineEntry")
+      entry.set("type", "adopted")
+      entry.set("animal", request.object.get("animal"))
+      entry.set("text", "Adopted by")
+      entry.set("actingUser", request.object.get("actingUser"))
+      entry.set("date", {
+          "__type": "Date",
+          "iso": (new Date()).toISOString()
+      })
+      console.log("saving entry")
+      entry.save(null,
+        useMasterKey: true
+        success: (result) ->
+          console.log("saved: " + result.id)
+          return response.success()
+        error: (error) ->
+          return response.error(error.message)
+      )
+
+    if(request.object.get("type") == "Foster")
+      console.log 'animal transfer has been accepted for an foster'
 
 
 Parse.Cloud.afterSave "Animal", (request, response) ->

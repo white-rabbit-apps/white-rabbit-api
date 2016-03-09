@@ -168,7 +168,7 @@ Parse.Cloud.afterSave("AnimalTimelineEntry", function(request, response) {
             link: "http://www.whiterabbitapps.net/cat/phoebe_the_bug"
           }
         }).then((function(httpResponse) {
-          return console.log("back from http request 6543");
+          return console.log("back from http request");
         }), function(error) {
           console.log("error with http request: " + error.data.error.message);
           return response.error(error.data.error.message);
