@@ -57,7 +57,7 @@ app.controller 'AnimalCtrl', ($scope, Animal, AnimalTimelineEntry, $stateParams,
       if $scope.animal.deceasedDate
         $scope.isAlive = false
 
-      if $scope.entryId != nil
+      if $scope.entryId
         AnimalTimelineEntry.query(
           where:
             objectId: $scope.entryId

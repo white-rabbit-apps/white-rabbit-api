@@ -273,7 +273,7 @@ app.controller('AnimalCtrl', function($scope, Animal, AnimalTimelineEntry, $stat
       if ($scope.animal.deceasedDate) {
         $scope.isAlive = false;
       }
-      if ($scope.entryId !== nil) {
+      if ($scope.entryId) {
         return AnimalTimelineEntry.query({
           where: {
             objectId: $scope.entryId
