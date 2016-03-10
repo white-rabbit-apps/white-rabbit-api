@@ -34,10 +34,8 @@
         a(href="/location/{{animal.shelter.short_name}}")
           | {{animal.shelter.name}}
 
-  .entryId {{entryId}}
-  
   div.entries(ng-repeat="entry in entries")
-    .entry
+    .entry(id = "{{entry.id}}")
       .date {{prettyDate(entry.date.iso)}}
       img(ng-src="{{entry.image.url}}" ng-show="entry.image" style="width:400px; margin: 0 auto;")
       .type(class="{{entry.type}}")
