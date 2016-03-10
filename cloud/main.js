@@ -144,7 +144,7 @@ shareToFacebook = function(forUser, message, link) {
 };
 
 Parse.Cloud.afterSave("AnimalTimelineEntry", function(request, response) {
-  var entryText, link, user;
+  var animal, animalQuery, entryId, entryText, user;
   console.log("timeline entry created: " + JSON.stringify(request));
   console.log("shareToFacebook: " + request.object.get("shareToFacebook"));
   console.log("shareToTwitter: " + request.object.get("shareToTwitter"));
@@ -152,8 +152,18 @@ Parse.Cloud.afterSave("AnimalTimelineEntry", function(request, response) {
     console.log("sharing to Facebook for: " + request.object.get("createdBy").id);
     user = request.object.get("createdBy");
     entryText = request.object.get("text");
-    link = "http://www.whiterabbitapps.net/cat/phoebe_the_bug";
-    shareToFacebook(user, entryText, link);
+    entryId = request.object.id;
+    animal = request.object.get("animal");
+    animalQuery = new Parse.Query("Animal");
+    animalQuery.get(animal.id, {
+      useMasterKey: true
+    }).then(function(animal) {
+      var link, username;
+      console.log('Animal: ' + JSON.stringify(animal));
+      username = animal.get("username");
+      link = "http://www.whiterabbitapps.net/cat/" + username + "/" + entryId;
+      return shareToFacebook(user, entryText, link);
+    });
   }
   if (request.object.get("shareToTwitter")) {
     console.log("sharing to Twitter for: " + request.object.get("createdBy").id);

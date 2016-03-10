@@ -68,7 +68,7 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
                     console.log("error: " + JSON.stringify(error))
                     return
                 )
-                
+
               return response.success()
       )
   )
@@ -148,14 +148,29 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
   console.log("shareToFacebook: " + request.object.get("shareToFacebook"))
   console.log("shareToTwitter: " + request.object.get("shareToTwitter"))
 
+
   if(request.object.get("shareToFacebook"))
     console.log("sharing to Facebook for: " + request.object.get("createdBy").id)
 
     user = request.object.get("createdBy")
     entryText = request.object.get("text")
-    link = "http://www.whiterabbitapps.net/cat/phoebe_the_bug"
 
-    shareToFacebook(user, entryText, link)
+    entryId = request.object.id
+    animal = request.object.get("animal")
+
+    animalQuery = new Parse.Query("Animal")
+    animalQuery.get(animal.id,
+      useMasterKey: true
+    ).then((animal) ->
+      console.log 'Animal: ' + JSON.stringify(animal)
+
+      username = animal.get("username")
+      link = "http://www.whiterabbitapps.net/cat/" + username + "/" + entryId
+
+      shareToFacebook(user, entryText, link)
+    )
+
+
 
   if(request.object.get("shareToTwitter"))
     console.log("sharing to Twitter for: " + request.object.get("createdBy").id)
