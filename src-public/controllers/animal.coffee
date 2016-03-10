@@ -57,7 +57,7 @@ app.controller 'AnimalCtrl', ($scope, Animal, AnimalTimelineEntry, $stateParams,
       if $scope.animal.deceasedDate
         $scope.isAlive = false
 
-      if $scope.entryId
+      if $scope.entryId != null
         AnimalTimelineEntry.query(
           where:
             objectId: $scope.entryId
@@ -104,19 +104,5 @@ app.controller 'AnimalCtrl', ($scope, Animal, AnimalTimelineEntry, $stateParams,
     year = date.getFullYear()
     dateString = day + ' ' + monthNames[monthIndex] + ' ' + year
     return dateString
-
-  offsetAnchor = ->
-    if location.hash.length != 0
-      window.scrollTo window.scrollX, window.scrollY + 500
-    return
-
-  $(window).on 'hashchange', ->
-    offsetAnchor()
-    return
-
-  window.setTimeout (->
-    offsetAnchor()
-    return
-  ), 1
 
   $scope.fetchAnimal()

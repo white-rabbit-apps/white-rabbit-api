@@ -164,7 +164,7 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
       console.log 'Animal: ' + JSON.stringify(animal)
 
       username = animal.get("username")
-      link = "http://www.whiterabbitapps.net/cat/" + username + "/" + entryId
+      link = "http://www.whiterabbitapps.net/cat/" + username + "#" + entryId
 
       shareToFacebook(user, entryText, link)
     )
