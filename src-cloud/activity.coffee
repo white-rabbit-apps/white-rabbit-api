@@ -40,6 +40,9 @@ generateActivityString = (action, info) ->
   return activityString
 
 
+sendPushNorification = () ->
+  console.log("Sending push notification")
+
 
 Parse.Cloud.afterSave "Activity", (request, response) ->
   console.log("new activity")
@@ -77,7 +80,7 @@ Parse.Cloud.afterSave "Activity", (request, response) ->
     where: pushQuery
     data:
       alert: generateActivityString(action, info)
-      sound: soundsDirectory + soundFilename
+      sound: soundFilename
   },
     useMasterKey: true
     success: ->
