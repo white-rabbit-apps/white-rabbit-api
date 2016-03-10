@@ -273,11 +273,30 @@ app.controller('AnimalCtrl', function($scope, Animal, AnimalTimelineEntry, $stat
       if ($scope.animal.deceasedDate) {
         $scope.isAlive = false;
       }
-      $rootScope.title = $scope.animal.name + ' on ' + $rootScope.title;
-      $rootScope.description = 'Check out ' + $scope.animal.name + '\'s profile on White Rabbit Apps';
-      $rootScope.mainImage = $scope.animal.profilePhoto.url;
-      $scope.createNewEntry();
-      return $scope.fetchEntries();
+      if ($scope.entryId !== nil) {
+        return AnimalTimelineEntry.query({
+          where: {
+            objectId: $scope.entryId
+          },
+          include: 'animal'
+        }).then(function(entries) {
+          var entry;
+          if (entries.length > 0) {
+            entry = entries[0];
+            $rootScope.title = $scope.animal.name + "'s photo on " + $rootScope.title;
+            $rootScope.description = 'Check out ' + $scope.animal.name + '\'s photo on White Rabbit Apps';
+            $rootScope.mainImage = entry.image.url;
+            $scope.createNewEntry();
+            return $scope.fetchEntries();
+          }
+        });
+      } else {
+        $rootScope.title = $scope.animal.name + ' on ' + $rootScope.title;
+        $rootScope.description = 'Check out ' + $scope.animal.name + '\'s profile on White Rabbit Apps';
+        $rootScope.mainImage = $scope.animal.profilePhoto.url;
+        $scope.createNewEntry();
+        return $scope.fetchEntries();
+      }
     });
   };
   $scope.fetchEntries = function() {

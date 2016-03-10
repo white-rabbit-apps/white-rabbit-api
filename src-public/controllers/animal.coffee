@@ -57,11 +57,28 @@ app.controller 'AnimalCtrl', ($scope, Animal, AnimalTimelineEntry, $stateParams,
       if $scope.animal.deceasedDate
         $scope.isAlive = false
 
-      $rootScope.title = $scope.animal.name + ' on ' + $rootScope.title
-      $rootScope.description = 'Check out ' + $scope.animal.name + '\'s profile on White Rabbit Apps'
-      $rootScope.mainImage = $scope.animal.profilePhoto.url
-      $scope.createNewEntry()
-      $scope.fetchEntries()
+      if $scope.entryId != nil
+        AnimalTimelineEntry.query(
+          where:
+            objectId: $scope.entryId
+          include: 'animal'
+        )
+        .then (entries) ->
+          if entries.length > 0
+            entry = entries[0]
+
+            $rootScope.title = $scope.animal.name + "'s photo on " + $rootScope.title
+            $rootScope.description = 'Check out ' + $scope.animal.name + '\'s photo on White Rabbit Apps'
+            $rootScope.mainImage = entry.image.url
+            $scope.createNewEntry()
+            $scope.fetchEntries()
+
+      else
+        $rootScope.title = $scope.animal.name + ' on ' + $rootScope.title
+        $rootScope.description = 'Check out ' + $scope.animal.name + '\'s profile on White Rabbit Apps'
+        $rootScope.mainImage = $scope.animal.profilePhoto.url
+        $scope.createNewEntry()
+        $scope.fetchEntries()
 
   $scope.fetchEntries = ->
     AnimalTimelineEntry.query(
