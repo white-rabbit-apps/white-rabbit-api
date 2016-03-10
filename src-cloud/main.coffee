@@ -1,67 +1,13 @@
-# require __dirname + '/app.js'
-# require __dirname + '/../server.js'
 require __dirname + '/validations.js'
 require __dirname + '/deletes.js'
 require __dirname + '/activity.js'
-
-
-http = require('http')
-fs = require('fs')
-
-download = (url, dest, cb) ->
-  file = fs.createWriteStream(dest)
-  request = http.get(url, (response) ->
-    response.pipe file
-    file.on 'finish', ->
-      console.log("finished downloading")
-      file.close()
-      cb(null, file)
-      # close() is async, call cb after close completes.
-      return
-    return
-  ).on('error', (err) ->
-    # Handle errors
-    fs.unlink dest
-    # Delete the file async. (But we don't check the result)
-    if cb
-      cb err.message
-    return
-  )
-  return
-
-  # request
-  #   .get(url)
-  #   .on('response', (response) ->
-  #     console.log("download response: " + JSON.stringify(response))
-  #     console.log(response.statusCode)
-  #     console.log(response.headers['content-type'])
-  #     cb(null, response)
-  #   )
-  #   .pipe(request.put(dest))
-
-  # file = fs.createWriteStream(dest)
-  # request = http.get(url, (response) ->
-  #   response.pipe file
-  #   file.on 'finish', ->
-  #     file.close cb
-  #     # close() is async, call cb after close completes.
-  #     return
-  #   return
-  # ).on('error', (err) ->
-  #   # Handle errors
-  #   fs.unlink dest
-  #   # Delete the file async. (But we don't check the result)
-  #   if cb
-  #     cb err.message
-  #   return
-  # )
-  # return
 
 
 ig = require('instagram-node').instagram()
 ig.use
   client_id: '09214a4e95494f70873ea3f8c7c82960'
   client_secret: '18c7f3e84ee54c429364ad48f8a00146'
+
 
 Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
   console.log 'importing instagram photos'
@@ -145,6 +91,7 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
 Parse.Cloud.beforeSave "AnimalTimelineEntry", (request, response) ->
   console.log("creating timeline entry: " + JSON.stringify(request))
 
+  ## Check if there's already a timeline entry for that instagram photo
   if request.object.get("instagramId")
     timelineEntryQuery = new Parse.Query("AnimalTimelineEntry")
     timelineEntryQuery.equalTo("instagramId", request.object.get("instagramId"))
@@ -166,46 +113,6 @@ Parse.Cloud.beforeSave "AnimalTimelineEntry", (request, response) ->
 # sendgrid = require("sendgrid")
 # sendgrid.initialize("michaelbina", "m8E-gWK-tL6-zvu");
 
-# Parse.Cloud.define 'shareToFacebook', (request, response) ->
-#   console.log 'sharing to facebook method'
-#   userObjectId = request.params.userObjectId
-#   entryText = request.params.entryText
-#   user = new Parse.Query(Parse.User)
-  # user.get(userObjectId).then((user) ->
-  #   console.log 'UserID: ' + user.id
-  #   if Parse.FacebookUtils.isLinked(user)
-  #     console.log 'token:' + user.get('authData').facebook.access_token
-#
-#       Parse.Cloud.httpRequest(
-#         useMasterKey: true
-#         method: 'POST'
-#         params:
-#           message: entryText + "\n\nCheck out Phoebe on White Rabbit Apps"
-#           link: "http://www.whiterabbitapps.net/cat/phoebe_the_bug"
-#           access_token: user.get('authData').facebook.access_token
-#         url: 'https://graph.facebook.com/me/feed').then ((result) ->
-#         Parse.Promise.as 'Post'
-#       ), (httpRequest) ->
-#         Parse.Promise.error httpRequest
-#     else
-#       return Parse.Promise.error('user not linked to fb account')
-#     return
-#   ).then ((result) ->
-#     console.log "result from post: " + JSON.stringify(result)
-#     return response.success 'Post'
-#   ), (error) ->
-#     console.log error
-#     console.error error
-#     return response.error("Error posting")
-#   return
-
-
-Parse.Cloud.define 'shareToTwitter', (request, response) ->
-  Parse.Cloud.useMasterKey()
-  userObjectId = request.params.userObjectId
-  entryText = request.params.entryText
-  user = new Parse.Query(Parse.User)
-
 
 Parse.Cloud.afterSave "AnimalTransfer", (request, response) ->
   console.log 'attempting email for animal transfer'
@@ -220,6 +127,29 @@ Parse.Cloud.afterSave "AnimalTransfer", (request, response) ->
   #   console.error httpResponse
 
 
+shareToFacebook = (forUser, message, link) ->
+  console.log 'sharing to facebook'
+
+  # if user.get('authData') && user.get('authData').facebook
+  if Parse.FacebookUtils.isLinked(user)
+    console.log 'token: ' + user.get('authData').facebook.access_token
+
+    Parse.Cloud.httpRequest(
+      method: 'POST'
+      url: 'https://graph.facebook.com/me/feed'
+      params:
+        access_token: user.get('authData').facebook.access_token
+        message: message
+        link: link
+    ).then ((httpResponse) ->
+      console.log("back from http request")
+    ), (error) ->
+      console.log("error with http request: " + error.data.error.message)
+      return response.error(error.data.error.message)
+  else
+    return Parse.Promise.error('user not linked to fb account')
+
+
 Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
   console.log("timeline entry created: " + JSON.stringify(request))
   console.log("shareToFacebook: " + request.object.get("shareToFacebook"))
@@ -227,69 +157,20 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
 
   if(request.object.get("shareToFacebook"))
     console.log("sharing to Facebook for: " + request.object.get("createdBy").id)
-    # Parse.Cloud.run('shareToFacebook',
-    #   useMasterKey: true
-    #   sessionToken: request.user.getSessionToken()
-    #   userObjectId: request.object.get("createdBy").id
-    #   entryText: request.object.get("text")
-    # ).then ((result) ->
-    #   console.log 'result :' + JSON.stringify(result)
-    # ), (error) ->
-    #   # error
-    userObjectId = request.object.get("createdBy").id
+
+    user = request.object.get("createdBy")
     entryText = request.object.get("text")
+    link = "http://www.whiterabbitapps.net/cat/phoebe_the_bug"
 
-    userQuery = new Parse.Query(Parse.User)
-    userQuery.get(userObjectId,
-      useMasterKey: true
-    ).then((user) ->
-      console.log 'User: ' + JSON.stringify(user)
-      # if Parse.FacebookUtils.isLinked(user)
-
-      # if user.get('_auth_data_facebook')
-      #   console.log 'token:' + user.get('_auth_data_facebook').access_token
-
-      if user.get('authData') && user.get('authData').facebook
-        console.log 'token: ' + user.get('authData').facebook.access_token
-
-        Parse.Cloud.httpRequest(
-          method: 'POST'
-          url: 'https://graph.facebook.com/me/feed'
-          params:
-            access_token: user.get('authData').facebook.access_token
-            message: entryText + "\n\nCheck out Phoebe on White Rabbit Apps"
-            link: "http://www.whiterabbitapps.net/cat/phoebe_the_bug"
-        ).then ((httpResponse) ->
-          console.log("back from http request")
-        ), (error) ->
-          console.log("error with http request: " + error.data.error.message)
-          return response.error(error.data.error.message)
-      else
-        return Parse.Promise.error('user not linked to fb account')
-      return
-    ).then ((result) ->
-      console.log "result from post: " + JSON.stringify(result)
-      return response.success 'Post'
-    ), (error) ->
-      console.log error
-      console.error error
-      return response.error("Error posting")
-    return
+    shareToFacebook(user, entryText, link)
 
 
   if(request.object.get("shareToTwitter"))
     console.log("sharing to Twitter for: " + request.object.get("createdBy").id)
-    Parse.Cloud.run('shareToTwitter',
-      userObjectId: request.object.get("createdBy").id
-      entryText: request.object.get("text")
-    ).then ((result) ->
-      console.log 'result :' + JSON.stringify(result)
-      return
-    ), (error) ->
-      # error
-      return
 
-#return response.success()
+  return response.success()
+
+
 
 Parse.Cloud.afterSave "AnimalTransfer", (request, response) ->
   console.log 'creating activity for animal transfer'
@@ -340,6 +221,9 @@ Parse.Cloud.afterSave "AnimalTransfer", (request, response) ->
         error: (error) ->
           return response.error(error.message)
       )
+
+
+
 
 
 Parse.Cloud.afterSave "Animal", (request, response) ->

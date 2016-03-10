@@ -1,32 +1,10 @@
-var download, fs, http, ig;
+var ig, shareToFacebook;
 
 require(__dirname + '/validations.js');
 
 require(__dirname + '/deletes.js');
 
 require(__dirname + '/activity.js');
-
-http = require('http');
-
-fs = require('fs');
-
-download = function(url, dest, cb) {
-  var file, request;
-  file = fs.createWriteStream(dest);
-  request = http.get(url, function(response) {
-    response.pipe(file);
-    file.on('finish', function() {
-      console.log("finished downloading");
-      file.close();
-      cb(null, file);
-    });
-  }).on('error', function(err) {
-    fs.unlink(dest);
-    if (cb) {
-      cb(err.message);
-    }
-  });
-};
 
 ig = require('instagram-node').instagram();
 
@@ -131,70 +109,49 @@ Parse.Cloud.beforeSave("AnimalTimelineEntry", function(request, response) {
   }
 });
 
-Parse.Cloud.define('shareToTwitter', function(request, response) {
-  var entryText, user, userObjectId;
-  Parse.Cloud.useMasterKey();
-  userObjectId = request.params.userObjectId;
-  entryText = request.params.entryText;
-  return user = new Parse.Query(Parse.User);
-});
-
 Parse.Cloud.afterSave("AnimalTransfer", function(request, response) {
   return console.log('attempting email for animal transfer');
 });
 
+shareToFacebook = function(forUser, message, link) {
+  console.log('sharing to facebook');
+  if (Parse.FacebookUtils.isLinked(user)) {
+    console.log('token: ' + user.get('authData').facebook.access_token);
+    return Parse.Cloud.httpRequest({
+      method: 'POST',
+      url: 'https://graph.facebook.com/me/feed',
+      params: {
+        access_token: user.get('authData').facebook.access_token,
+        message: message,
+        link: link
+      }
+    }).then((function(httpResponse) {
+      return console.log("back from http request");
+    }), function(error) {
+      console.log("error with http request: " + error.data.error.message);
+      return response.error(error.data.error.message);
+    });
+  } else {
+    return Parse.Promise.error('user not linked to fb account');
+  }
+};
+
 Parse.Cloud.afterSave("AnimalTimelineEntry", function(request, response) {
-  var entryText, userObjectId, userQuery;
+  var entryText, link, user;
   console.log("timeline entry created: " + JSON.stringify(request));
   console.log("shareToFacebook: " + request.object.get("shareToFacebook"));
   console.log("shareToTwitter: " + request.object.get("shareToTwitter"));
   if (request.object.get("shareToFacebook")) {
     console.log("sharing to Facebook for: " + request.object.get("createdBy").id);
-    userObjectId = request.object.get("createdBy").id;
+    user = request.object.get("createdBy");
     entryText = request.object.get("text");
-    userQuery = new Parse.Query(Parse.User);
-    userQuery.get(userObjectId, {
-      useMasterKey: true
-    }).then(function(user) {
-      console.log('User: ' + JSON.stringify(user));
-      if (user.get('authData') && user.get('authData').facebook) {
-        console.log('token: ' + user.get('authData').facebook.access_token);
-        Parse.Cloud.httpRequest({
-          method: 'POST',
-          url: 'https://graph.facebook.com/me/feed',
-          params: {
-            access_token: user.get('authData').facebook.access_token,
-            message: entryText + "\n\nCheck out Phoebe on White Rabbit Apps",
-            link: "http://www.whiterabbitapps.net/cat/phoebe_the_bug"
-          }
-        }).then((function(httpResponse) {
-          return console.log("back from http request");
-        }), function(error) {
-          console.log("error with http request: " + error.data.error.message);
-          return response.error(error.data.error.message);
-        });
-      } else {
-        return Parse.Promise.error('user not linked to fb account');
-      }
-    }).then((function(result) {
-      console.log("result from post: " + JSON.stringify(result));
-      return response.success('Post');
-    }), function(error) {
-      console.log(error);
-      console.error(error);
-      return response.error("Error posting");
-    });
-    return;
+    link = "http://www.whiterabbitapps.net/cat/phoebe_the_bug";
+    shareToFacebook(user, entryText, link);
   }
   if (request.object.get("shareToTwitter")) {
     console.log("sharing to Twitter for: " + request.object.get("createdBy").id);
-    return Parse.Cloud.run('shareToTwitter', {
-      userObjectId: request.object.get("createdBy").id,
-      entryText: request.object.get("text")
-    }).then((function(result) {
-      console.log('result :' + JSON.stringify(result));
-    }), function(error) {});
   }
+  return response.success();
 });
 
 Parse.Cloud.afterSave("AnimalTransfer", function(request, response) {
