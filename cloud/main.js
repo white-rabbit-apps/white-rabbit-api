@@ -114,26 +114,33 @@ Parse.Cloud.afterSave("AnimalTransfer", function(request, response) {
 });
 
 shareToFacebook = function(forUser, message, link) {
+  var userQuery;
   console.log('sharing to facebook');
-  if (Parse.FacebookUtils.isLinked(user)) {
-    console.log('token: ' + user.get('authData').facebook.access_token);
-    return Parse.Cloud.httpRequest({
-      method: 'POST',
-      url: 'https://graph.facebook.com/me/feed',
-      params: {
-        access_token: user.get('authData').facebook.access_token,
-        message: message,
-        link: link
-      }
-    }).then((function(httpResponse) {
-      return console.log("back from http request");
-    }), function(error) {
-      console.log("error with http request: " + error.data.error.message);
-      return response.error(error.data.error.message);
-    });
-  } else {
-    return Parse.Promise.error('user not linked to fb account');
-  }
+  userQuery = new Parse.Query(Parse.User);
+  return userQuery.get(forUser.id, {
+    useMasterKey: true
+  }).then(function(user) {
+    console.log('User: ' + JSON.stringify(user));
+    if (Parse.FacebookUtils.isLinked(user)) {
+      console.log('token: ' + user.get('authData').facebook.access_token);
+      return Parse.Cloud.httpRequest({
+        method: 'POST',
+        url: 'https://graph.facebook.com/me/feed',
+        params: {
+          access_token: user.get('authData').facebook.access_token,
+          message: message,
+          link: link
+        }
+      }).then((function(httpResponse) {
+        return console.log("back from http request");
+      }), function(error) {
+        console.log("error with http request: " + error.data.error.message);
+        return response.error(error.data.error.message);
+      });
+    } else {
+      return Parse.Promise.error('user not linked to fb account');
+    }
+  });
 };
 
 Parse.Cloud.afterSave("AnimalTimelineEntry", function(request, response) {

@@ -68,21 +68,7 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
                     console.log("error: " + JSON.stringify(error))
                     return
                 )
-
-                # timelineEntryQuery = new Parse.Query("AnimalTimelineEntry")
-                # timelineEntryQuery.equalTo("instagramId", media["id"])
-                # timelineEntryQuery.equalTo("animal", animal)
-                # timelineEntryQuery.find
-                #   useMasterKey: true
-                #   success: (results) ->
-                #     if results.length == 0
-                #       console.log("found no timeline entries")
-                #
-                #     else
-                #       console.log("already have a timeline entry for that photo")
-
-                # return response.success()
-
+                
               return response.success()
       )
   )
@@ -130,24 +116,31 @@ Parse.Cloud.afterSave "AnimalTransfer", (request, response) ->
 shareToFacebook = (forUser, message, link) ->
   console.log 'sharing to facebook'
 
-  # if user.get('authData') && user.get('authData').facebook
-  if Parse.FacebookUtils.isLinked(user)
-    console.log 'token: ' + user.get('authData').facebook.access_token
+  userQuery = new Parse.Query(Parse.User)
+  userQuery.get(forUser.id,
+    useMasterKey: true
+  ).then((user) ->
+    console.log 'User: ' + JSON.stringify(user)
 
-    Parse.Cloud.httpRequest(
-      method: 'POST'
-      url: 'https://graph.facebook.com/me/feed'
-      params:
-        access_token: user.get('authData').facebook.access_token
-        message: message
-        link: link
-    ).then ((httpResponse) ->
-      console.log("back from http request")
-    ), (error) ->
-      console.log("error with http request: " + error.data.error.message)
-      return response.error(error.data.error.message)
-  else
-    return Parse.Promise.error('user not linked to fb account')
+    # if user.get('authData') && user.get('authData').facebook
+    if Parse.FacebookUtils.isLinked(user)
+      console.log 'token: ' + user.get('authData').facebook.access_token
+
+      Parse.Cloud.httpRequest(
+        method: 'POST'
+        url: 'https://graph.facebook.com/me/feed'
+        params:
+          access_token: user.get('authData').facebook.access_token
+          message: message
+          link: link
+      ).then ((httpResponse) ->
+        console.log("back from http request")
+      ), (error) ->
+        console.log("error with http request: " + error.data.error.message)
+        return response.error(error.data.error.message)
+    else
+      return Parse.Promise.error('user not linked to fb account')
+  )
 
 
 Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
@@ -163,7 +156,6 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
     link = "http://www.whiterabbitapps.net/cat/phoebe_the_bug"
 
     shareToFacebook(user, entryText, link)
-
 
   if(request.object.get("shareToTwitter"))
     console.log("sharing to Twitter for: " + request.object.get("createdBy").id)
@@ -221,9 +213,6 @@ Parse.Cloud.afterSave "AnimalTransfer", (request, response) ->
         error: (error) ->
           return response.error(error.message)
       )
-
-
-
 
 
 Parse.Cloud.afterSave "Animal", (request, response) ->
