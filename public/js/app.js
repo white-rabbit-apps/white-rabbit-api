@@ -215,6 +215,7 @@ app.run(function($rootScope, $state, $location) {
 });
 
 app.controller('AnimalCtrl', function($scope, Animal, AnimalTimelineEntry, $stateParams, $rootScope) {
+  var offsetAnchor;
   $scope.isAlive = true;
   $scope.username = $stateParams.username;
   $scope.entryId = $stateParams.entryId;
@@ -306,6 +307,17 @@ app.controller('AnimalCtrl', function($scope, Animal, AnimalTimelineEntry, $stat
     dateString = day + ' ' + monthNames[monthIndex] + ' ' + year;
     return dateString;
   };
+  offsetAnchor = function() {
+    if (location.hash.length !== 0) {
+      window.scrollTo(window.scrollX, window.scrollY - 300);
+    }
+  };
+  $(window).on('hashchange', function() {
+    offsetAnchor();
+  });
+  window.setTimeout((function() {
+    offsetAnchor();
+  }), 1);
   return $scope.fetchAnimal();
 });
 

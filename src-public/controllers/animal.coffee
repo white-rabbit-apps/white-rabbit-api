@@ -88,4 +88,18 @@ app.controller 'AnimalCtrl', ($scope, Animal, AnimalTimelineEntry, $stateParams,
     dateString = day + ' ' + monthNames[monthIndex] + ' ' + year
     return dateString
 
+  offsetAnchor = ->
+    if location.hash.length != 0
+      window.scrollTo window.scrollX, window.scrollY - 300
+    return
+
+  $(window).on 'hashchange', ->
+    offsetAnchor()
+    return
+
+  window.setTimeout (->
+    offsetAnchor()
+    return
+  ), 1
+
   $scope.fetchAnimal()
