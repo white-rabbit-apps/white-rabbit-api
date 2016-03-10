@@ -148,7 +148,6 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
   console.log("shareToFacebook: " + request.object.get("shareToFacebook"))
   console.log("shareToTwitter: " + request.object.get("shareToTwitter"))
 
-
   if(request.object.get("shareToFacebook"))
     console.log("sharing to Facebook for: " + request.object.get("createdBy").id)
 
@@ -169,8 +168,6 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
 
       shareToFacebook(user, entryText, link)
     )
-
-
 
   if(request.object.get("shareToTwitter"))
     console.log("sharing to Twitter for: " + request.object.get("createdBy").id)

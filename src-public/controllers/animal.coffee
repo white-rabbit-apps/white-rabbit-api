@@ -2,6 +2,7 @@ app.controller 'AnimalCtrl', ($scope, Animal, AnimalTimelineEntry, $stateParams,
 
   $scope.isAlive = true
   $scope.username = $stateParams.username
+  $scope.entryId = $stateParams.entryId
   $rootScope.hideNavigation = false
   $rootScope.bodyClass = 'no-nav'
 

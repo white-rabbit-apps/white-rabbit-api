@@ -37,6 +37,11 @@ app.config (
     url: '/beta/:status'
     controller: 'BetaCtrl'
     templateUrl: 'landing.html'
+  .state 'entry',
+    url: '/cat/:username/:entryId'
+    controller: 'AnimalCtrl'
+    templateUrl: 'animal.html'
+
   .state 'animal',
     url: '/cat/:username'
     controller: 'AnimalCtrl'

@@ -17,6 +17,10 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider, Parse
     url: '/beta/:status',
     controller: 'BetaCtrl',
     templateUrl: 'landing.html'
+  }).state('entry', {
+    url: '/cat/:username/:entryId',
+    controller: 'AnimalCtrl',
+    templateUrl: 'animal.html'
   }).state('animal', {
     url: '/cat/:username',
     controller: 'AnimalCtrl',
@@ -213,6 +217,7 @@ app.run(function($rootScope, $state, $location) {
 app.controller('AnimalCtrl', function($scope, Animal, AnimalTimelineEntry, $stateParams, $rootScope) {
   $scope.isAlive = true;
   $scope.username = $stateParams.username;
+  $scope.entryId = $stateParams.entryId;
   $rootScope.hideNavigation = false;
   $rootScope.bodyClass = 'no-nav';
   $scope.createNewEntry = function() {
