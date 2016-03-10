@@ -34,8 +34,7 @@
         a(href="/location/{{animal.shelter.short_name}}")
           | {{animal.shelter.name}}
 
-  if entryId
-    .entryId {{entryId}}
+  .entryId {{entryId}}
   
   div.entries(ng-repeat="entry in entries")
     .entry
