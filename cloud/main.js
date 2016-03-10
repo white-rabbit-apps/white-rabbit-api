@@ -197,6 +197,60 @@ Parse.Cloud.afterSave("AnimalTimelineEntry", function(request, response) {
   }
 });
 
+Parse.Cloud.afterSave("AnimalTransfer", function(request, response) {
+  var entry;
+  console.log('creating activity for animal transfer');
+  if (request.object.get("status") === "accepted") {
+    console.log('animal transfer has been accepted');
+    if (request.object.get("type") === "Adopter") {
+      console.log('animal transfer has been accepted for an adopter');
+      entry = new Parse.Object("AnimalTimelineEntry");
+      entry.set("type", "adopted");
+      entry.set("animal", request.object.get("animal"));
+      entry.set("text", "Adopted by");
+      entry.set("actingUser", request.object.get("acceptedByUser"));
+      entry.set("date", {
+        "__type": "Date",
+        "iso": (new Date()).toISOString()
+      });
+      console.log("saving entry");
+      entry.save(null, {
+        useMasterKey: true,
+        success: function(result) {
+          console.log("saved: " + result.id);
+          return response.success();
+        },
+        error: function(error) {
+          return response.error(error.message);
+        }
+      });
+    }
+    if (request.object.get("type") === "Foster") {
+      console.log('animal transfer has been accepted for an foster');
+      entry = new Parse.Object("AnimalTimelineEntry");
+      entry.set("type", "fostered");
+      entry.set("animal", request.object.get("animal"));
+      entry.set("text", "Started being fostered by");
+      entry.set("actingUser", request.object.get("acceptedByUser"));
+      entry.set("date", {
+        "__type": "Date",
+        "iso": (new Date()).toISOString()
+      });
+      console.log("saving entry");
+      return entry.save(null, {
+        useMasterKey: true,
+        success: function(result) {
+          console.log("saved: " + result.id);
+          return response.success();
+        },
+        error: function(error) {
+          return response.error(error.message);
+        }
+      });
+    }
+  }
+});
+
 Parse.Cloud.afterSave("Animal", function(request, response) {
   var query;
   console.log("afterSave: " + request.object.id);

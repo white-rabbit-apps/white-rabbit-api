@@ -1,4 +1,4 @@
-var generateActivityString;
+var generateActivityString, sendPushNotification;
 
 generateActivityString = function(action, info) {
   var activityString;
@@ -32,23 +32,14 @@ generateActivityString = function(action, info) {
   return activityString;
 };
 
-Parse.Cloud.afterSave("Activity", function(request, response) {
-  var action, info, pushQuery, soundFilename, targetUser;
-  console.log("new activity");
-  targetUser = new Parse.User();
-  targetUser.id = request.object.get("forUser").id;
+sendPushNotification = function(userToSendTo, message, sound) {
+  var pushQuery, soundFilename, soundsDirectory;
+  console.log("Sending push notification");
   pushQuery = new Parse.Query(Parse.Installation);
-  pushQuery.equalTo('user', targetUser);
-  action = request.object.get("action");
-  info = {
-    'actingUserName': request.object.get('actingUserName'),
-    'actingAnimalName': request.object.get('actingAnimalName'),
-    'animalActedOnName': request.object.get('animalActedOnName'),
-    'commentMadeText': request.object.get('commentMadeText'),
-    'likeAction': request.object.get('likeAction')
-  };
+  pushQuery.equalTo('user', userToSendTo);
+  soundsDirectory = 'sound/';
   soundFilename = 'meow1.caf';
-  switch (info['likeAction']) {
+  switch (sound) {
     case "meow":
       soundFilename = 'meow1.caf';
       break;
@@ -67,7 +58,7 @@ Parse.Cloud.afterSave("Activity", function(request, response) {
   return Parse.Push.send({
     where: pushQuery,
     data: {
-      alert: generateActivityString(action, info),
+      alert: message,
       sound: soundFilename
     }
   }, {
@@ -79,6 +70,23 @@ Parse.Cloud.afterSave("Activity", function(request, response) {
       return console.log("error sending notification");
     }
   });
+};
+
+Parse.Cloud.afterSave("Activity", function(request, response) {
+  var action, info, message, sound, targetUser;
+  console.log("new activity");
+  targetUser = request.object.get("forUser");
+  action = request.object.get("action");
+  info = {
+    'actingUserName': request.object.get('actingUserName'),
+    'actingAnimalName': request.object.get('actingAnimalName'),
+    'animalActedOnName': request.object.get('animalActedOnName'),
+    'commentMadeText': request.object.get('commentMadeText'),
+    'likeAction': request.object.get('likeAction')
+  };
+  message = generateActivityString(action, info);
+  sound = info['likeAction'];
+  return sendPushNotification(targetUser, message, sound);
 });
 
 Parse.Cloud.afterSave("Follow", function(request, response) {

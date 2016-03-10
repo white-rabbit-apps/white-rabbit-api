@@ -40,31 +40,15 @@ generateActivityString = (action, info) ->
   return activityString
 
 
-sendPushNorification = () ->
+sendPushNotification = (userToSendTo, message, sound) ->
   console.log("Sending push notification")
 
-
-Parse.Cloud.afterSave "Activity", (request, response) ->
-  console.log("new activity")
-
-  targetUser = new Parse.User()
-  targetUser.id = request.object.get("forUser").id
-
   pushQuery = new Parse.Query(Parse.Installation)
-  pushQuery.equalTo 'user', targetUser
-
-  action = request.object.get("action")
-
-  info =
-    'actingUserName': request.object.get('actingUserName')
-    'actingAnimalName': request.object.get('actingAnimalName')
-    'animalActedOnName': request.object.get('animalActedOnName')
-    'commentMadeText': request.object.get('commentMadeText')
-    'likeAction': request.object.get('likeAction')
+  pushQuery.equalTo 'user', userToSendTo
 
   soundsDirectory = 'sound/'
   soundFilename = 'meow1.caf'
-  switch info['likeAction']
+  switch sound
     when "meow"
       soundFilename = 'meow1.caf'
     when "purr"
@@ -79,17 +63,34 @@ Parse.Cloud.afterSave "Activity", (request, response) ->
   Parse.Push.send {
     where: pushQuery
     data:
-      alert: generateActivityString(action, info)
+      alert: message
       sound: soundFilename
   },
     useMasterKey: true
     success: ->
       console.log("notification sent!")
-      # return response.success()
     error: (error) ->
       console.log("error sending notification")
-      # return response.error(error)
 
+
+
+Parse.Cloud.afterSave "Activity", (request, response) ->
+  console.log("new activity")
+
+  targetUser = request.object.get("forUser")
+
+  action = request.object.get("action")
+  info =
+    'actingUserName': request.object.get('actingUserName')
+    'actingAnimalName': request.object.get('actingAnimalName')
+    'animalActedOnName': request.object.get('animalActedOnName')
+    'commentMadeText': request.object.get('commentMadeText')
+    'likeAction': request.object.get('likeAction')
+
+  message = generateActivityString(action, info)
+  sound = info['likeAction']
+
+  sendPushNotification(targetUser, message, sound)
 
 
 Parse.Cloud.afterSave "Follow", (request, response) ->
