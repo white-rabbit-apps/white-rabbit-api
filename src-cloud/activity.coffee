@@ -59,6 +59,7 @@ Parse.Cloud.afterSave "Activity", (request, response) ->
     'commentMadeText': request.object.get('commentMadeText')
     'likeAction': request.object.get('likeAction')
 
+  soundsDirectory = 'sound/'
   soundFilename = 'meow1.caf'
   switch info['likeAction']
     when "meow"
@@ -76,7 +77,7 @@ Parse.Cloud.afterSave "Activity", (request, response) ->
     where: pushQuery
     data:
       alert: generateActivityString(action, info)
-      sound: soundFilename
+      sound: soundsDirectory + soundFilename
   },
     useMasterKey: true
     success: ->
