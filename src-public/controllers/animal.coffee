@@ -90,7 +90,7 @@ app.controller 'AnimalCtrl', ($scope, Animal, AnimalTimelineEntry, $stateParams,
 
   offsetAnchor = ->
     if location.hash.length != 0
-      window.scrollTo window.scrollX, window.scrollY - 300
+      window.scrollTo window.scrollX, window.scrollY + 500
     return
 
   $(window).on 'hashchange', ->

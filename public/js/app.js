@@ -309,7 +309,7 @@ app.controller('AnimalCtrl', function($scope, Animal, AnimalTimelineEntry, $stat
   };
   offsetAnchor = function() {
     if (location.hash.length !== 0) {
-      window.scrollTo(window.scrollX, window.scrollY - 300);
+      window.scrollTo(window.scrollX, window.scrollY + 500);
     }
   };
   $(window).on('hashchange', function() {
