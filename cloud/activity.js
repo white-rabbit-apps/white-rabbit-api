@@ -50,7 +50,7 @@ sendPushNotification = function(userToSendTo, message, sound) {
       soundFilename = 'hiss1.caf';
       break;
     case "bump":
-      soundFilename = 'bump1.caf';
+      soundFilename = 'chirp1.caf';
       break;
     case "lick":
       soundFilename = 'lick1.caf';

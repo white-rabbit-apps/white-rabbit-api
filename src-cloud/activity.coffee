@@ -56,7 +56,7 @@ sendPushNotification = (userToSendTo, message, sound) ->
     when "hiss"
       soundFilename = 'hiss1.caf'
     when "bump"
-      soundFilename = 'bump1.caf'
+      soundFilename = 'chirp1.caf'
     when "lick"
       soundFilename = 'lick1.caf'
 
