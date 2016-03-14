@@ -88,7 +88,7 @@ app.controller 'AnimalCtrl', ($scope, Animal, AnimalTimelineEntry, $stateParams,
           className: 'Animal'
           objectId: $scope.animal.objectId
       include: 'shelter'
-      orderBy: 'date DESC'
+      order: 'date DESC'
     )
     .then (entries) ->
       if $scope.isAlive
