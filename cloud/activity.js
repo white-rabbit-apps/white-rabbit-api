@@ -53,7 +53,7 @@ sendPushNotification = function(userToSendTo, message, sound) {
       soundFilename = 'chirp1.caf';
       break;
     case "lick":
-      soundFilename = 'lick1.caf';
+      soundFilename = 'lick2.caf';
   }
   return Parse.Push.send({
     where: pushQuery,

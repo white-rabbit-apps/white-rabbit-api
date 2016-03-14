@@ -58,7 +58,7 @@ sendPushNotification = (userToSendTo, message, sound) ->
     when "bump"
       soundFilename = 'chirp1.caf'
     when "lick"
-      soundFilename = 'lick1.caf'
+      soundFilename = 'lick2.caf'
 
   Parse.Push.send {
     where: pushQuery
