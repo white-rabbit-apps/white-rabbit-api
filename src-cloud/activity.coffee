@@ -101,6 +101,7 @@ Parse.Cloud.afterSave "Poke", (request, response) ->
   userQuery.get request.object.get("userActedOn").id,
     useMasterKey: true
     success: (user) ->
+      activity = new Parse.Object("Activity")
 
       activity.set("actingUserName", user.get('username'))
       activity.set("action", "poke")
