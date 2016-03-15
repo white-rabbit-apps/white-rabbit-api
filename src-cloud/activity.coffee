@@ -106,12 +106,6 @@ Parse.Cloud.afterSave "Poke", (request, response) ->
       activity.set("action", "poke")
       activity.set("likeAction", request.object.get("action"))
 
-      activity.set("entryActedOn", {
-        "__type": "Pointer",
-        "className": "AnimalTimelineEntry",
-        "objectId": request.object.get("entry").id
-      })
-
       activity.set("actingUser", {
         "__type": "Pointer",
         "className": "_User",
