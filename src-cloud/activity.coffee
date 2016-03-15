@@ -92,6 +92,46 @@ Parse.Cloud.afterSave "Activity", (request, response) ->
 
   sendPushNotification(targetUser, message, sound)
 
+Parse.Cloud.afterSave "Poke", (request, response) ->
+  console.log("new poke")
+
+  console.log("finding user: " + request.object.get("userActedOn").id)
+
+  userQuery = new Parse.Query("_User")
+  userQuery.get request.object.get("userActedOn").id,
+    useMasterKey: true
+    success: (user) ->
+
+      activity.set("actingUserName", user.get('username'))
+      activity.set("action", "poke")
+      activity.set("likeAction", request.object.get("action"))
+
+      activity.set("entryActedOn", {
+        "__type": "Pointer",
+        "className": "AnimalTimelineEntry",
+        "objectId": request.object.get("entry").id
+      })
+
+      activity.set("actingUser", {
+        "__type": "Pointer",
+        "className": "_User",
+        "objectId": request.object.get("actingUser").id
+      })
+
+      activity.set("forUser", {
+        "__type": "Pointer",
+        "className": "_User",
+        "objectId": request.object.get("userActedOn").id
+      })
+
+      console.log("saving activity")
+      activity.save(null,
+        useMasterKey: true
+        success: (result) ->
+          console.log("activity saved: " + result)
+          # return response.success()
+      )
+
 
 Parse.Cloud.afterSave "Follow", (request, response) ->
   console.log("new follow")
