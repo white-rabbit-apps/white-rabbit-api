@@ -41,10 +41,6 @@ Parse.Cloud.beforeSave Parse.User, (request, response) ->
     unless usernameRegex.test(request.object.get("username"))
     		return response.error("Username must be valid.")
 
-  if request.object.isNew()
-    request.object.set("admin", false)
-    request.object.save()
-
   if request.object.get("username")
     console.log("checking username uniqueness")
     request.object.set("username", request.object.get("username").toLowerCase())
