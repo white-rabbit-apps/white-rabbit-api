@@ -116,7 +116,7 @@ Parse.Cloud.afterSave "Poke", (request, response) ->
     success: (user) ->
       activity = new Parse.Object("Activity")
 
-      activity.set("actingUserName", user.get('username'))
+      activity.set("actingUserName", request.object.get("actingUserName"))
       activity.set("action", "poke")
       activity.set("likeAction", request.object.get("action"))
 
