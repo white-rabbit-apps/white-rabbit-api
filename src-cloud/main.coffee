@@ -11,7 +11,7 @@ Parse.Cloud.define 'translate', (request, response) ->
   exec 'lolspeak ' + message, (error, stdout, stderr) ->
     console.log 'lolspeak OUTPUT: ', error, stdout, stderr
     if (err instanceof Error)
-      return response.error(err.message)
+      return response.error(error.message)
     else
       return response.success()
 
