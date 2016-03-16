@@ -3,6 +3,15 @@ require __dirname + '/deletes.js'
 require __dirname + '/activity.js'
 
 
+Parse.Cloud.define 'translate', (request, response) ->
+  console.log 'translating'
+  message = request.params.message
+
+  exec 'lolspeak ' + message, (error, stdout, stderr) ->
+    console.log 'lolspeak OUTPUT: ', error, stdout, stderr
+    return response.success()
+
+
 ig = require('instagram-node').instagram()
 ig.use
   client_id: '09214a4e95494f70873ea3f8c7c82960'
