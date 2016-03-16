@@ -3,7 +3,7 @@ require __dirname + '/deletes.js'
 require __dirname + '/activity.js'
 
 exec = require('exec')
-lolspeak = REQUIRE('lolspeak')
+lolspeak = require('lolspeak')
 
 Parse.Cloud.define 'translate', (request, response) ->
   console.log 'translating'
