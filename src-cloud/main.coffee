@@ -12,6 +12,7 @@ ig.use
 
 Parse.Cloud.define 'translate', (request, response) ->
   console.log 'translating'
+  
   message = request.params.message
   translated_message = lolspeak(message)
 
