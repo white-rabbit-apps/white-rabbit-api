@@ -3,17 +3,21 @@ require __dirname + '/deletes.js'
 require __dirname + '/activity.js'
 
 exec = require('exec')
+lolspeak = REQUIRE('lolspeak')
 
 Parse.Cloud.define 'translate', (request, response) ->
   console.log 'translating'
   message = request.params.message
+  translated_message = lolspeak(message)
 
-  exec 'lolspeak ' + message, (error, stdout, stderr) ->
-    console.log 'lolspeak OUTPUT: ', error, stdout, stderr
-    if (error instanceof Error)
-      return response.error(error.message)
-    else
-      return response.success(stdout)
+  return response.success(translated_message)
+
+  # exec 'lolspeak ' + message, (error, stdout, stderr) ->
+  #   console.log 'lolspeak OUTPUT: ', error, stdout, stderr
+  #   if (error instanceof Error)
+  #     return response.error(error.message)
+  #   else
+
 
 
 ig = require('instagram-node').instagram()
