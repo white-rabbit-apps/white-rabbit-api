@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
-ruby '1.8.6'
+ruby '1.9.3'
 
 gem 'lolspeak'
