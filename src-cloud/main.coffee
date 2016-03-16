@@ -2,6 +2,7 @@ require __dirname + '/validations.js'
 require __dirname + '/deletes.js'
 require __dirname + '/activity.js'
 
+exec = require('exec')
 
 Parse.Cloud.define 'translate', (request, response) ->
   console.log 'translating'
@@ -9,7 +10,10 @@ Parse.Cloud.define 'translate', (request, response) ->
 
   exec 'lolspeak ' + message, (error, stdout, stderr) ->
     console.log 'lolspeak OUTPUT: ', error, stdout, stderr
-    return response.success()
+    if (err instanceof Error)
+      return response.error(err.message)
+    else
+      return response.success()
 
 
 ig = require('instagram-node').instagram()
