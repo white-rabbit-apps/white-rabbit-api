@@ -13,7 +13,7 @@ Parse.Cloud.define 'translate', (request, response) ->
     if (error instanceof Error)
       return response.error(error.message)
     else
-      return response.success()
+      return response.success(stdout)
 
 
 ig = require('instagram-node').instagram()
