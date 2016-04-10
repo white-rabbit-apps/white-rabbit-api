@@ -11,19 +11,38 @@ generateActivityString = function(action, info) {
       activityString = "" + info['actingUserName'] + " liked your photo";
       switch (info['likeAction']) {
         case "meow":
-          activityString = "" + info['actingUserName'] + " meowed at your photo";
+          activityString = "" + info['actingUserName'] + " meowed at your photo 😺";
           break;
         case "purr":
-          activityString = "" + info['actingUserName'] + " purred at your photo";
+          activityString = "" + info['actingUserName'] + " purred at your photo 😻";
           break;
         case "lick":
-          activityString = "" + info['actingUserName'] + " licked your photo";
+          activityString = "" + info['actingUserName'] + " licked your photo 😽";
           break;
         case "bump":
-          activityString = "" + info['actingUserName'] + " head bumped your photo";
+          activityString = "" + info['actingUserName'] + " head bumped your photo 😸";
           break;
         case "hiss":
-          activityString = "" + info['actingUserName'] + " hissed at your photo";
+          activityString = "" + info['actingUserName'] + " hissed at your photo 😼";
+      }
+      break;
+    case "poke":
+      activityString = "" + info['actingUserName'] + " poked you";
+      switch (info['likeAction']) {
+        case "meow":
+          activityString = "" + info['actingUserName'] + " meowed at you 😺";
+          break;
+        case "purr":
+          activityString = "" + info['actingUserName'] + " purred at you 😻";
+          break;
+        case "lick":
+          activityString = "" + info['actingUserName'] + " licked you 😽";
+          break;
+        case "bump":
+          activityString = "" + info['actingUserName'] + " head bumped you 😸";
+          break;
+        case "hiss":
+          activityString = "" + info['actingUserName'] + " hissed at you! 😼";
       }
       break;
     case "comment":
@@ -87,6 +106,40 @@ Parse.Cloud.afterSave("Activity", function(request, response) {
   message = generateActivityString(action, info);
   sound = info['likeAction'];
   return sendPushNotification(targetUser, message, sound);
+});
+
+Parse.Cloud.afterSave("Poke", function(request, response) {
+  var userQuery;
+  console.log("new poke");
+  console.log("finding user: " + request.object.get("userActedOn").id);
+  userQuery = new Parse.Query("_User");
+  return userQuery.get(request.object.get("userActedOn").id, {
+    useMasterKey: true,
+    success: function(user) {
+      var activity;
+      activity = new Parse.Object("Activity");
+      activity.set("actingUserName", request.object.get("actingUserName"));
+      activity.set("action", "poke");
+      activity.set("likeAction", request.object.get("action"));
+      activity.set("actingUser", {
+        "__type": "Pointer",
+        "className": "_User",
+        "objectId": request.object.get("actingUser").id
+      });
+      activity.set("forUser", {
+        "__type": "Pointer",
+        "className": "_User",
+        "objectId": request.object.get("userActedOn").id
+      });
+      console.log("saving activity");
+      return activity.save(null, {
+        useMasterKey: true,
+        success: function(result) {
+          return console.log("activity saved: " + result);
+        }
+      });
+    }
+  });
 });
 
 Parse.Cloud.afterSave("Follow", function(request, response) {

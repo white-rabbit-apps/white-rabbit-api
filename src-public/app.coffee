@@ -41,7 +41,6 @@ app.config (
     url: '/cat/:username/:entryId'
     controller: 'AnimalCtrl'
     templateUrl: 'animal.html'
-
   .state 'animal',
     url: '/cat/:username'
     controller: 'AnimalCtrl'

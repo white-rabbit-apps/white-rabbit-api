@@ -47,10 +47,6 @@ Parse.Cloud.beforeSave(Parse.User, function(request, response) {
       return response.error("Username must be valid.");
     }
   }
-  if (request.object.isNew()) {
-    request.object.set("admin", false);
-    request.object.save();
-  }
   if (request.object.get("username")) {
     console.log("checking username uniqueness");
     request.object.set("username", request.object.get("username").toLowerCase());

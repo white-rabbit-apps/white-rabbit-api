@@ -1,4 +1,4 @@
-var ig, shareToFacebook;
+var ig, lolspeak, shareToFacebook;
 
 require(__dirname + '/validations.js');
 
@@ -6,11 +6,21 @@ require(__dirname + '/deletes.js');
 
 require(__dirname + '/activity.js');
 
+lolspeak = require('lolspeak');
+
 ig = require('instagram-node').instagram();
 
 ig.use({
   client_id: '09214a4e95494f70873ea3f8c7c82960',
   client_secret: '18c7f3e84ee54c429364ad48f8a00146'
+});
+
+Parse.Cloud.define('translate', function(request, response) {
+  var message, translated_message;
+  console.log('translating');
+  message = request.params.message;
+  translated_message = lolspeak(message);
+  return response.success(translated_message);
 });
 
 Parse.Cloud.define('importInstagramPhotos', function(request, response) {
@@ -58,12 +68,13 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
                 media_caption = media["caption"]["text"];
                 media_date = new Date(parseInt(media["created_time"]) * 1000);
                 media_url = media["images"]["standard_resolution"]["url"];
-                console.log('media: ' + media_url);
+                console.log('media: ' + JSON.stringify(media));
                 timelineEntry = new Parse.Object("AnimalTimelineEntry");
                 timelineEntry.set("instagramId", media_id);
                 timelineEntry.set("text", media_caption);
                 timelineEntry.set("type", "image");
                 timelineEntry.set("date", media_date);
+                timelineEntry.set("createdAt", media_date);
                 timelineEntry.set("imageUrl", media_url);
                 timelineEntry.set("animal", animal);
                 timelineEntry.save(null, {

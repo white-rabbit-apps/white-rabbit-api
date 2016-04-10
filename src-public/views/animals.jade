@@ -21,6 +21,9 @@ div.animals
         .info
           a(ng-href="/cat/{{animal.username}}")
             h1 {{animal.name}}
+            
+          a(ng-href="whiterabbit://kitteh/feed")
+            .app App Link
           .gender {{animal.gender}}
           .age {{animal.age()}}
           .breed {{animal.breed.name}}
