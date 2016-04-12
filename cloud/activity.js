@@ -78,7 +78,8 @@ sendPushNotification = function(userToSendTo, message, sound) {
     where: pushQuery,
     data: {
       alert: message,
-      sound: soundFilename
+      sound: soundFilename,
+      uri: "whiterabbit://notifications"
     }
   }, {
     useMasterKey: true,
