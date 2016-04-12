@@ -22,7 +22,7 @@ div.animals
           a(ng-href="/cat/{{animal.username}}")
             h1 {{animal.name}}
             
-          a(ng-href="whiterabbit://app/feed")
+          a(ng-href="whiterabbit://cat/{{animal.username}}")
             .app App Link
           .gender {{animal.gender}}
           .age {{animal.age()}}

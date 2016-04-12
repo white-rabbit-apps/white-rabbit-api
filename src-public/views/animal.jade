@@ -45,6 +45,7 @@ script.
     .entry(id = "{{entry.objectId}}")
       .date {{prettyDate(entry.date.iso)}}
       img(ng-src="{{entry.image.url}}" ng-show="entry.image" style="width:400px; margin: 0 auto;")
+      img(ng-src="{{entry.imageUrl}}" ng-show="entry.imageUrl" style="width:400px; margin: 0 auto;")
       .type(class="{{entry.type}}")
       //- h3.text {{entry.text}}
       p(ng-bind-html="entry.text | hashtagFilter")
