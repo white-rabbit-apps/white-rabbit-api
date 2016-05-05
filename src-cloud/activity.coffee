@@ -79,6 +79,7 @@ sendPushNotification = (userToSendTo, message, sound) ->
       alert: message
       sound: soundFilename
       uri: "whiterabbit://notifications"
+      # content-available: 1
       # badge: "Increment"
   },
     useMasterKey: true

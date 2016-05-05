@@ -110,11 +110,22 @@ app.use(mountPath, api);
 //   response.status(404).send('Page not found.');
 // });
 
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", 'http://127.0.0.1:8080');
+  res.setHeader('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Accept');
+
+  next();
+});
+
 /*
  * Launch the HTTP server
  */
 var port = process.env.PORT || 5000;
 var server = http.createServer(app);
+
+
+
 server.listen(port, function() {
   console.log('Cloud Code Webhooks server running on port ' + port + '.');
 });
