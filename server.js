@@ -8,7 +8,8 @@ var http = require('http'),
     SNSAdapter = require('parse-server').SNSAdapter,
     // parseAdaptor = require('./cloud/prerender-parse.js'),
     // prerender = require("./cloud/prerenderio.js").setAdaptor(parseAdaptor(Parse)).set("prerenderToken", "2ymS1B3grxMTCzfud9D6"),
-    connect_s4a = require('connect-s4a');
+    connect_s4a = require('connect-s4a'),
+    cors = require('cors');
 
 if (!process.env.DATABASE_URI) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
@@ -60,13 +61,7 @@ var app = express();
 
 app.set("view engine", "jade");
 
-app.use(function(req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", 'http://127.0.0.1:8080');
-  res.setHeader('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Accept');
-
-  next();
-});
+app.use(cors());
 
 // Host static files from public/
 app.use(express.static(__dirname + '/public'));
