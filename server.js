@@ -60,6 +60,14 @@ var app = express();
 
 app.set("view engine", "jade");
 
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", 'http://127.0.0.1:8080');
+  res.setHeader('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Accept');
+
+  next();
+});
+
 // Host static files from public/
 app.use(express.static(__dirname + '/public'));
 
@@ -109,14 +117,6 @@ app.use(mountPath, api);
 // app.all('/', function(request, response) {
 //   response.status(404).send('Page not found.');
 // });
-
-app.use(function(req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", 'http://127.0.0.1:8080');
-  res.setHeader('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Accept');
-
-  next();
-});
 
 /*
  * Launch the HTTP server
