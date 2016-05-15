@@ -13,6 +13,7 @@ app = angular.module 'white-rabbit', [
   'angulartics'
   'angulartics.google.analytics'
   'ngFileUpload'
+  'checklist-model'
 ]
 
 app.config (

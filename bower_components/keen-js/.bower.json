@@ -51,14 +51,14 @@
     "requirejs-bower": "2.1.14",
     "sinon-1.12.1": "http://sinonjs.org/releases/sinon-1.12.1.js"
   },
-  "version": "3.3.0",
-  "_release": "3.3.0",
+  "version": "3.4.1",
+  "_release": "3.4.1",
   "_resolution": {
     "type": "version",
-    "tag": "v3.3.0",
-    "commit": "d53f49146108163248300501f016f8fdce2529ae"
+    "tag": "v3.4.1",
+    "commit": "38073304fb2ff28e4060b5de3ec1322a1b935233"
   },
-  "_source": "git://github.com/keen/keen-js.git",
+  "_source": "https://github.com/keen/keen-js.git",
   "_target": "*",
   "_originalSource": "keen-js"
 }

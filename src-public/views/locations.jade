@@ -18,22 +18,22 @@ select(id="type-select", name="type", ng-model="selectedType", ng-change="fetchL
       .geo {{location.geo.latitude}},{{location.geo.longitude}}
       .phone {{location.phone}}
       .email {{location.email}}
-      .web
+      .web(ng-show="location.website")
         a(ng-href="{{location.website}}" target="_blank")
           | {{location.website}}
-      .fbUrl
-        a(ng-href="{{location.fbUrl}}" target="_blank")
-          | {{location.fbUrl}}
-      .twitterUrl
-        a(ng-href="{{location.twitterUrl}}" target="_blank")
-          | {{location.twitterUrl}}
-      .instagramUrl
-        a(ng-href="{{location.instagramUrl}}" target="_blank")
-          | {{location.instagramUrl}}
-      .yelpUrl
-        a(ng-href="{{location.yelpUrl}}" target="_blank")
-          | {{location.yelpUrl}}
-      .youtubeUrl
+      .fbUrl(ng-show="location.facebookPageId")
+        a(ng-href="https://facebook.com/{{location.facebookPageId}}" target="_blank")
+          | https://facebook.com/{{location.facebookPageId}}
+      .twitterUrl(ng-show="location.twitterId")
+        a(ng-href="https://twitter.com/{{location.twitterId}}" target="_blank")
+          | https://twitter.com/{{location.twitterId}}
+      .instagramUrl(ng-show="location.instagramId")
+        a(ng-href="https://instagram.com/{{location.instagramId}}" target="_blank")
+          | https://instagram.com/{{location.instagramId}}
+      .yelpUrl(ng-show="location.yelpBusinessId")
+        a(ng-href="https://yelp.com/biz/{{location.yelpBusinessId}}" target="_blank")
+          | https://yelp.com/biz/{{location.yelpBusinessId}}
+      .youtubeUrl(ng-show="location.youtubeUrl")
         a(ng-href="{{location.youtubeUrl}}" target="_blank")
           | {{location.youtubeUrl}}
     .actions
@@ -41,13 +41,23 @@ select(id="type-select", name="type", ng-model="selectedType", ng-change="fetchL
       .button.close(ng-click="removeLocation(location)")
       .clear
     .clear
+
   .edit(ng-hide="!location.editing")
 
-    div(file-dropzone='[image/png, image/jpeg, image/gif]', file='location.logo.file', file-name='location.logo.filename', data-max-file-size='3', style='width:100px;height:100px;')
+    div(file-dropzone='[image/png, image/jpeg, image/gif]', file='location.logo.file', file-name='location.logo.filename', data-max-file-size='3', style='width:100px;height:100px;display:block;')
       img.logo(ng-src="{{location.logo.file || location.logo.url || '/img/avatar_blank.png'}}")
 
-    select(name="type", ng-model="location.type")
-      option(value="{{type}}", ng-repeat="type in types") {{type}}
+    //- select(name="type", ng-model="location.type")
+    //-   option(value="{{type}}", ng-repeat="type in types") {{type}}
+      
+    label(ng-repeat="type in types").
+      <input type="checkbox" checklist-model="location.types" checklist-value="type"> {{type}}
+    
+    br
+
+    label(ng-repeat="animal in animals").
+      <input type="checkbox" checklist-model="location.animals" checklist-value="animal"> {{animal}}
+
 
     input.form-control.name(ng-model="location.name", placeholder="Name")
     input.form-control.name(ng-model="location.short_name", placeholder="short_name")
@@ -60,10 +70,10 @@ select(id="type-select", name="type", ng-model="selectedType", ng-change="fetchL
     input.form-control.email(ng-model="location.email", placeholder="Email")
     input.form-control.phone(ng-model="location.phone", placeholder="Phone")
     input.form-control.website(ng-model="location.website", placeholder="Website")
-    input.form-control.fbUrl(ng-model="location.fbUrl", placeholder="Facebook Url")
-    input.form-control.twitterUrl(ng-model="location.twitterUrl", placeholder="Twitter Url")
-    input.form-control.instagramUrl(ng-model="location.instagramUrl", placeholder="Instagram Url")
-    input.form-control.yelpUrl(ng-model="location.yelpUrl", placeholder="Yelp Url")
+    input.form-control.facebookPageId(ng-model="location.facebookPageId", placeholder="Facebook Page Id")
+    input.form-control.twitterId(ng-model="location.twitterId", placeholder="Twitter Id")
+    input.form-control.instagramId(ng-model="location.instagramId", placeholder="Instagram Id")
+    input.form-control.yelpBusinessId(ng-model="location.yelpBusinessId", placeholder="Yelp Business Id")
     input.form-control.youtubeUrl(ng-model="location.youtubeUrl", placeholder="Youtube Url")
     .actions
       .button.save(ng-click="editLocation(location)")

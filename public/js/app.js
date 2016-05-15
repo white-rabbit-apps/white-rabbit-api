@@ -1,7 +1,7 @@
 'use strict';
 var app;
 
-app = angular.module('white-rabbit', ['ng', 'ngResource', 'ui.router', 'ui.bootstrap', 'app.templates', 'Parse', 'angulartics', 'angulartics.google.analytics', 'ngFileUpload']);
+app = angular.module('white-rabbit', ['ng', 'ngResource', 'ui.router', 'ui.bootstrap', 'app.templates', 'Parse', 'angulartics', 'angulartics.google.analytics', 'ngFileUpload', 'checklist-model']);
 
 app.config(function($locationProvider, $stateProvider, $urlRouterProvider, ParseProvider) {
   $locationProvider.html5Mode({
@@ -712,7 +712,8 @@ app.controller('LocationsCtrl', function($scope, Location, Upload) {
       return $scope.locations = locations;
     });
   };
-  $scope.types = ["vet", "shelter", "supplies", "grooming", "_new"];
+  $scope.types = ["vet", "shelter", "supplies", "grooming", "boarding", "daycare", "training", "sitting", "walking"];
+  $scope.animals = ["cats", "dogs", "birds", "reptiles"];
   $scope.selectedType = $scope.types[0];
   $scope.fetchLocations();
   return $scope.newLocation = new Location;
@@ -948,7 +949,7 @@ app.factory('Location', function(Parse) {
       return Location.__super__.constructor.apply(this, arguments);
     }
 
-    Location.configure("Location", "type", "name", "short_name", "email", "address", "city", "state", "zip", "geo", "phone", "website", "fbUrl", "twitterUrl", "instagramUrl", "youtubeUrl", "fbUrl", "yelpUrl", "logo");
+    Location.configure("Location", "type", "name", "short_name", "email", "address", "city", "state", "zip", "geo", "phone", "website", "facebookPageId", "twitterId", "instagramId", "youtubeUrl", "yelpBusinessId", "logo", "types", "animals");
 
     return Location;
 

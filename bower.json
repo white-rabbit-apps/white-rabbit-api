@@ -9,6 +9,7 @@
     "angular-parse": "*",
     "angulartics": "~0.17.1",
     "bootstrap": "3.2.x",
+    "checklist-model": "*",
     "moment": "2.6.x",
     "lodash": "~2.4.1",
     "dropzone": "*",
