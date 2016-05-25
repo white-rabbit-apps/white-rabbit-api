@@ -522,25 +522,42 @@ h3 {
   font-size: 30px;
 }
 
-.form-control {
-  background: none !important;
-  color: white !important;
-  border: none !important;
-  height: 50px !important;
-  float: none !important;
+.form-row {
 
-  .label {
-    color: black;
+  overflow: auto;
+
+  label {
+    float: left;
+    width: 300px;
+    text-align: right;
+    margin-right: 20px;
+    padding-top: 13px;
   }
 
-  &.description {
-    height: 200px !important;
+  .checkbox-control {
+    float: left;
+    width: 300px;
+    padding-top: 10px;
   }
 
-  input, select {
-    float: right;
+  .form-control {
+    // background: none !important;
+    // color: white !important;
+    // border: none !important;
+    // height: 50px !important;
+    // float: none !important;
+    margin-top: 5px;
+    width: 300px;
+    float: left;
+
+    &.description {
+      height: 200px !important;
+    }
   }
+
 }
+
+
 
 .input-group-addon {
   background: none !important;

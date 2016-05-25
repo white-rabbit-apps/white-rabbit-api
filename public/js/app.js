@@ -706,14 +706,14 @@ app.controller('LocationsCtrl', function($scope, Location, Upload) {
   $scope.fetchLocations = function() {
     return Location.query({
       where: {
-        type: $scope.selectedType
+        types: $scope.selectedType
       }
     }).then(function(locations) {
       return $scope.locations = locations;
     });
   };
-  $scope.types = ["vet", "shelter", "supplies", "grooming", "boarding", "daycare", "training", "sitting", "walking"];
-  $scope.animals = ["cats", "dogs", "birds", "reptiles"];
+  $scope.types = ["vet", "shelter", "cafe", "supplies", "grooming", "boarding", "daycare", "training", "sitting", "walking"];
+  $scope.animals = ["cats", "dogs", "birds", "rabbits", "reptiles"];
   $scope.selectedType = $scope.types[0];
   $scope.fetchLocations();
   return $scope.newLocation = new Location;

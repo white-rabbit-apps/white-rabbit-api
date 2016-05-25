@@ -44,37 +44,111 @@ select(id="type-select", name="type", ng-model="selectedType", ng-change="fetchL
 
   .edit(ng-hide="!location.editing")
 
-    div(file-dropzone='[image/png, image/jpeg, image/gif]', file='location.logo.file', file-name='location.logo.filename', data-max-file-size='3', style='width:100px;height:100px;display:block;')
-      img.logo(ng-src="{{location.logo.file || location.logo.url || '/img/avatar_blank.png'}}")
+
+    .form-row
+      label
+        | Logo
+      div.checkbox-control
+        div(file-dropzone='[image/png, image/jpeg, image/gif]', file='location.logo.file', file-name='location.logo.filename', data-max-file-size='3', style='width:100px;height:100px;display:block;')
+          img.logo(ng-src="{{location.logo.file || location.logo.url || '/img/avatar_blank.png'}}")
 
     //- select(name="type", ng-model="location.type")
     //-   option(value="{{type}}", ng-repeat="type in types") {{type}}
       
-    label(ng-repeat="type in types").
-      <input type="checkbox" checklist-model="location.types" checklist-value="type"> {{type}}
+    .form-row
+      label
+        | Location Types
+      div.checkbox-control
+        div(ng-repeat="type in types").
+          <input type="checkbox" checklist-model="location.types" checklist-value="type"> {{type}}
     
-    br
+    .form-row
+      label
+        | Animals
+      div.checkbox-control
+        div(ng-repeat="animal in animals").
+          <input type="checkbox" checklist-model="location.animals" checklist-value="animal"> {{animal}}
 
-    label(ng-repeat="animal in animals").
-      <input type="checkbox" checklist-model="location.animals" checklist-value="animal"> {{animal}}
+    .form-row
+      label
+        | Location Name
+      input.form-control.name(ng-model="location.name", placeholder="Name")
+      
+    .form-row
+      label
+        | Short Name
+      input.form-control.name(ng-model="location.short_name", placeholder="short_name")
 
+    .form-row
+      label
+        | Address
+      input.form-control.address(ng-model="location.address", placeholder="Address")
 
-    input.form-control.name(ng-model="location.name", placeholder="Name")
-    input.form-control.name(ng-model="location.short_name", placeholder="short_name")
-    input.form-control.address(ng-model="location.address", placeholder="Address")
-    input.form-control.city(ng-model="location.city", placeholder="City")
-    input.form-control.state(ng-model="location.state", placeholder="State")
-    input.form-control.zip(ng-model="location.zip", placeholder="Zip")
-    input.form-control.latitude(ng-model="location.geo.latitude")
-    input.form-control.longitude(ng-model="location.geo.longitude")
-    input.form-control.email(ng-model="location.email", placeholder="Email")
-    input.form-control.phone(ng-model="location.phone", placeholder="Phone")
-    input.form-control.website(ng-model="location.website", placeholder="Website")
-    input.form-control.facebookPageId(ng-model="location.facebookPageId", placeholder="Facebook Page Id")
-    input.form-control.twitterId(ng-model="location.twitterId", placeholder="Twitter Id")
-    input.form-control.instagramId(ng-model="location.instagramId", placeholder="Instagram Id")
-    input.form-control.yelpBusinessId(ng-model="location.yelpBusinessId", placeholder="Yelp Business Id")
-    input.form-control.youtubeUrl(ng-model="location.youtubeUrl", placeholder="Youtube Url")
+    .form-row
+      label
+        | City
+      input.form-control.city(ng-model="location.city", placeholder="City")
+      
+    .form-row
+      label
+        | State
+      input.form-control.state(ng-model="location.state", placeholder="State")
+      
+    .form-row
+      label
+        | Zip Code    
+      input.form-control.zip(ng-model="location.zip", placeholder="Zip")
+
+    .form-row
+      label
+        | Latitude
+      input.form-control.latitude(ng-model="location.geo.latitude")
+      
+    .form-row
+      label
+        | Longitude
+      input.form-control.longitude(ng-model="location.geo.longitude")
+      
+    .form-row
+      label
+        | Email
+      input.form-control.email(ng-model="location.email", placeholder="Email")
+      
+    .form-row
+      label
+        | Phone    
+      input.form-control.phone(ng-model="location.phone", placeholder="Phone")
+
+    .form-row
+      label
+        | Website
+      input.form-control.website(ng-model="location.website", placeholder="Website")
+      
+    .form-row
+      label
+        | Facebook Page ID
+      input.form-control.facebookPageId(ng-model="location.facebookPageId", placeholder="Facebook Page Id")
+
+    .form-row
+      label
+        | Twitter ID
+      input.form-control.twitterId(ng-model="location.twitterId", placeholder="Twitter Id")
+
+    .form-row
+      label
+        | Instagram ID
+      input.form-control.instagramId(ng-model="location.instagramId", placeholder="Instagram Id")
+      
+    .form-row
+      label
+        | Yelp Business ID
+      input.form-control.yelpBusinessId(ng-model="location.yelpBusinessId", placeholder="Yelp Business Id")
+      
+    .form-row
+      label
+        | Youtube URL
+      input.form-control.youtubeUrl(ng-model="location.youtubeUrl", placeholder="Youtube Url")
+
     .actions
       .button.save(ng-click="editLocation(location)")
       .button.close(ng-click="cancelEditing(location)")

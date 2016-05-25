@@ -66,13 +66,13 @@ app.controller 'LocationsCtrl', ($scope, Location, Upload) ->
   $scope.fetchLocations = ->
     Location.query(
       where:
-        type: $scope.selectedType
+        types: $scope.selectedType
     )
     .then (locations) ->
       $scope.locations = locations
 
-  $scope.types = ["vet", "shelter", "supplies", "grooming", "boarding", "daycare", "training", "sitting", "walking"]
-  $scope.animals = ["cats", "dogs", "birds", "reptiles"]
+  $scope.types = ["vet", "shelter", "cafe", "supplies", "grooming", "boarding", "daycare", "training", "sitting", "walking"]
+  $scope.animals = ["cats", "dogs", "birds", "rabbits", "reptiles"]
   $scope.selectedType = $scope.types[0]
   $scope.fetchLocations()
   $scope.newLocation = new Location

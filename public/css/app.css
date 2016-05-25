@@ -9078,22 +9078,28 @@ h3 {
   color: white;
   font-size: 30px;
 }
-.form-control {
-  background: none !important;
-  color: white !important;
-  border: none !important;
-  height: 50px !important;
-  float: none !important;
+.form-row {
+  overflow: auto;
 }
-.form-control .label {
-  color: black;
+.form-row label {
+  float: left;
+  width: 300px;
+  text-align: right;
+  margin-right: 20px;
+  padding-top: 13px;
 }
-.form-control.description {
+.form-row .checkbox-control {
+  float: left;
+  width: 300px;
+  padding-top: 10px;
+}
+.form-row .form-control {
+  margin-top: 5px;
+  width: 300px;
+  float: left;
+}
+.form-row .form-control.description {
   height: 200px !important;
-}
-.form-control input,
-.form-control select {
-  float: right;
 }
 .input-group-addon {
   background: none !important;
