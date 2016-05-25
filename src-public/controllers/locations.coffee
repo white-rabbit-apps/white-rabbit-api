@@ -1,10 +1,10 @@
 app.controller 'LocationsCtrl', ($scope, Location, Upload) ->
 
   $scope.addLocation = ->
+    $scope.newLocation = new Location
+    $scope.newLocation.types = ["_new"]
     $scope.newLocation.save().then (location) ->
       $scope.fetchLocations()
-    $scope.newLocation = new Location
-    $scope.newLocation.type = "_new"
 
   $scope.removeLocation = (location) ->
     if confirm("Are you sure?  All data will be lost.")
@@ -71,7 +71,7 @@ app.controller 'LocationsCtrl', ($scope, Location, Upload) ->
     .then (locations) ->
       $scope.locations = locations
 
-  $scope.types = ["vet", "shelter", "cafe", "supplies", "grooming", "boarding", "daycare", "training", "sitting", "walking"]
+  $scope.types = ["_new", "vet", "shelter", "cafe", "supplies", "grooming", "boarding", "daycare", "training", "sitting", "walking"]
   $scope.animals = ["cats", "dogs", "birds", "rabbits", "reptiles"]
   $scope.selectedType = $scope.types[0]
   $scope.fetchLocations()

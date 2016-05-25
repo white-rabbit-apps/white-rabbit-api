@@ -638,11 +638,11 @@ app.controller('LocationCtrl', function($scope, $rootScope, $stateParams, Locati
 
 app.controller('LocationsCtrl', function($scope, Location, Upload) {
   $scope.addLocation = function() {
-    $scope.newLocation.save().then(function(location) {
+    $scope.newLocation = new Location;
+    $scope.newLocation.types = ["_new"];
+    return $scope.newLocation.save().then(function(location) {
       return $scope.fetchLocations();
     });
-    $scope.newLocation = new Location;
-    return $scope.newLocation.type = "_new";
   };
   $scope.removeLocation = function(location) {
     if (confirm("Are you sure?  All data will be lost.")) {
@@ -712,7 +712,7 @@ app.controller('LocationsCtrl', function($scope, Location, Upload) {
       return $scope.locations = locations;
     });
   };
-  $scope.types = ["vet", "shelter", "cafe", "supplies", "grooming", "boarding", "daycare", "training", "sitting", "walking"];
+  $scope.types = ["_new", "vet", "shelter", "cafe", "supplies", "grooming", "boarding", "daycare", "training", "sitting", "walking"];
   $scope.animals = ["cats", "dogs", "birds", "rabbits", "reptiles"];
   $scope.selectedType = $scope.types[0];
   $scope.fetchLocations();
