@@ -712,8 +712,8 @@ app.controller('LocationsCtrl', function($scope, Location, Upload) {
       return $scope.locations = locations;
     });
   };
-  $scope.types = ["_new", "vet", "shelter", "cafe", "supplies", "grooming", "boarding", "daycare", "training", "sitting", "walking"];
-  $scope.animals = ["cats", "dogs", "birds", "rabbits", "reptiles"];
+  $scope.types = ["_new", "vet", "shelter", "cafe", "supplies", "grooming", "boarding", "daycare", "training", "sitting", "walking", "insurance"];
+  $scope.animals = ["cats", "dogs", "birds", "rabbits", "reptiles", "fish", "rodents", "horses", "pigs"];
   $scope.selectedType = $scope.types[0];
   $scope.fetchLocations();
   return $scope.newLocation = new Location;
