@@ -38,6 +38,12 @@ div
       .instagramUrl(ng-show="location.instagramId")
         a(ng-href="https://instagram.com/{{location.instagramId}}" target="_blank")
           | https://instagram.com/{{location.instagramId}}
+      .instagramPlaceUrl(ng-show="location.instagramPlaceId")
+        a(ng-href="https://www.instagram.com/explore/locations/{{location.instagramPlaceId}}" target="_blank")
+          | https://www.instagram.com/explore/locations/{{location.instagramPlaceId}}
+      .pinterestUrl(ng-show="location.pinterestId")
+        a(ng-href="https://www.pinterest.com/{{location.pinterestId}}" target="_blank")
+          | https://www.pinterest.com/{{location.pinterestId}}
       .yelpUrl(ng-show="location.yelpBusinessId")
         a(ng-href="https://yelp.com/biz/{{location.yelpBusinessId}}" target="_blank")
           | https://yelp.com/biz/{{location.yelpBusinessId}}
@@ -146,6 +152,17 @@ div
       label
         | Instagram ID
       input.form-control.instagramId(ng-model="location.instagramId", placeholder="Instagram Id")
+    
+    .form-row
+      label
+        | Instagram Place ID
+      input.form-control.instagramPlaceId(ng-model="location.instagramPlaceId", placeholder="Instagram Place Id")
+    
+    .form-row
+      label
+        | Pinterest ID
+      input.form-control.pinterestId(ng-model="location.pinterestId", placeholder="Pinterest Id")
+    
       
     .form-row
       label
