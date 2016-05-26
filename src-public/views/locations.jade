@@ -21,11 +21,45 @@ div
       .name 
         a(href="/location/{{location.short_name}}")
           | {{location.name}}
-      .address1 {{location.address}}
-      .address2 {{location.city}}, {{location.state}} {{location.zip}}
-      .geo {{location.geo.latitude}},{{location.geo.longitude}}
-      .phone {{location.phone}}
-      .email {{location.email}}
+      
+      .shortName 
+        label
+          | Short Name:
+        {{location.short_name}}
+      
+      .types 
+        label
+          | Types:
+        {{location.types.join(", ")}}
+        
+      .animals 
+        label
+          | Animals:
+        {{location.animals.join(", ")}}
+
+      
+      .address1 
+        label
+          | Address:
+        {{location.address}}
+        
+      .address2
+        label
+        {{location.city}}, {{location.state}} {{location.zip}}
+
+      .geo 
+        label
+          | Lat, Long:
+        {{location.geo.latitude}},{{location.geo.longitude}}
+        
+      .phone 
+        label
+          | Phone:
+        {{location.phone}}
+      .email 
+        label
+          | Email:
+        {{location.email}}
       .web(ng-show="location.website")
         a(ng-href="{{location.website}}" target="_blank")
           | {{location.website}}

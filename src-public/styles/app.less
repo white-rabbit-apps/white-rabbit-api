@@ -1,13 +1,14 @@
 @import "../../bower_components/font-awesome/less/font-awesome.less";
 @import "../../bower_components/bootstrap/less/bootstrap.less";
 @import "../../bower_components/startbootstrap-sb-admin-2/less/sb-admin-2.less";
-@import url(https://fonts.googleapis.com/css?family=Poiret+One);
-@import url(https://fonts.googleapis.com/css?family=Montserrat);
+// @import url(https://fonts.googleapis.com/css?family=Poiret+One);
+@import url(https://fonts.googleapis.com/css?family=Josefin+Sans);
 @import url(https://fonts.googleapis.com/css?family=Calligraffitti);
 
 body {
   background-color: #000033;
-  font-family: 'Poiret One', sans-serif;
+  // font-family: 'Poiret One', sans-serif;
+  font-family: 'Josefin Sans', sans-serif;
   font-weight: 100;
   color: #000;
 }
@@ -194,6 +195,7 @@ body.no-nav {
         .name {
           width: 240px;
         }
+
       }
     }
   }
@@ -424,6 +426,13 @@ body.no-nav {
     margin-left: 10px;
     float: left;
 
+
+    label {
+      width: 90px;
+      color: #999;
+      margin: 0px;
+    }
+
     .links {
       margin-top: 15px;
       float: right;
@@ -442,10 +451,18 @@ body.no-nav {
       font-size: 24px;
     }
 
-    .geo {
+    .types {
+      margin-top: 10px;
+    }
+
+    .address1 {
       margin-top: 10px;
     }
     .phone {
+      margin-top: 10px;
+    }
+
+    .web {
       margin-top: 10px;
     }
   }

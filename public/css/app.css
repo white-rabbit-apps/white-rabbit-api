@@ -4,8 +4,7 @@
  */
 /* FONT PATH
  * -------------------------- */
-@import url(https://fonts.googleapis.com/css?family=Poiret+One);
-@import url(https://fonts.googleapis.com/css?family=Montserrat);
+@import url(https://fonts.googleapis.com/css?family=Josefin+Sans);
 @import url(https://fonts.googleapis.com/css?family=Calligraffitti);
 @font-face {
   font-family: 'FontAwesome';
@@ -8679,7 +8678,7 @@ table.dataTable thead .sorting:after {
 }
 body {
   background-color: #000033;
-  font-family: 'Poiret One', sans-serif;
+  font-family: 'Josefin Sans', sans-serif;
   font-weight: 100;
   color: #000;
 }
@@ -8998,6 +8997,11 @@ body.no-nav .location .location-header .info .name {
   margin-left: 10px;
   float: left;
 }
+.location .info label {
+  width: 90px;
+  color: #999;
+  margin: 0px;
+}
 .location .info .links {
   margin-top: 15px;
   float: right;
@@ -9012,10 +9016,16 @@ body.no-nav .location .location-header .info .name {
 .location .info .name {
   font-size: 24px;
 }
-.location .info .geo {
+.location .info .types {
+  margin-top: 10px;
+}
+.location .info .address1 {
   margin-top: 10px;
 }
 .location .info .phone {
+  margin-top: 10px;
+}
+.location .info .web {
   margin-top: 10px;
 }
 .location img.logo {
@@ -9143,12 +9153,8 @@ label {
 Made with love by Creative Tim (http://www.creative-tim.com)
 
 */
-@import url(https://fonts.googleapis.com/css?family=Poiret+One);
-@import url(https://fonts.googleapis.com/css?family=Montserrat);
-@import url(https://fonts.googleapis.com/css?family=Calligraffitti);
 body {
   background-color: #000033;
-  font-family: 'Poiret One', sans-serif;
   font-weight: 100;
 }
 div.spacer {
