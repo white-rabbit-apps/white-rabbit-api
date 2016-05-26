@@ -9078,6 +9078,10 @@ h3 {
   color: white;
   font-size: 30px;
 }
+label {
+  color: white;
+  margin-right: 10px;
+}
 .form-row {
   overflow: auto;
 }
