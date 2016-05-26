@@ -74,10 +74,17 @@ app.controller 'LocationsCtrl', ($scope, Location, Upload) ->
       $scope.locations = locations
 
   $scope.fetchLocations = ->
-    Location.query(
-      where:
-        types: $scope.selectedType
-    )
+    if $scope.selectedAnimal != null && $scope.selectedAnimal != "any"
+      params =
+        where:
+          types: $scope.selectedType
+          animals: $scope.selectedAnimal
+    else
+      params =
+        where:
+          types: $scope.selectedType
+
+    Location.query(params)
     .then (locations) ->
       $scope.locations = locations
 
@@ -85,5 +92,6 @@ app.controller 'LocationsCtrl', ($scope, Location, Upload) ->
   $scope.types = ["_new", "vet", "hospital", "emergency", "shelter", "rescue", "cafe", "supplies", "grooming", "boarding", "daycare", "training", "sitting", "walking", "insurance"]
   $scope.animals = ["cats", "dogs", "birds", "rabbits", "reptiles", "fish", "rodents", "horses", "pigs"]
   $scope.selectedType = $scope.types[0]
+  $scope.selectedAnimal = "any"
   $scope.fetchLocations()
   $scope.newLocation = new Location

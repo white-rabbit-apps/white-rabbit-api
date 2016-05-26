@@ -716,11 +716,22 @@ app.controller('LocationsCtrl', function($scope, Location, Upload) {
     });
   };
   $scope.fetchLocations = function() {
-    return Location.query({
-      where: {
-        types: $scope.selectedType
-      }
-    }).then(function(locations) {
+    var params;
+    if ($scope.selectedAnimal !== null && $scope.selectedAnimal !== "any") {
+      params = {
+        where: {
+          types: $scope.selectedType,
+          animals: $scope.selectedAnimal
+        }
+      };
+    } else {
+      params = {
+        where: {
+          types: $scope.selectedType
+        }
+      };
+    }
+    return Location.query(params).then(function(locations) {
       return $scope.locations = locations;
     });
   };
@@ -728,6 +739,7 @@ app.controller('LocationsCtrl', function($scope, Location, Upload) {
   $scope.types = ["_new", "vet", "hospital", "emergency", "shelter", "rescue", "cafe", "supplies", "grooming", "boarding", "daycare", "training", "sitting", "walking", "insurance"];
   $scope.animals = ["cats", "dogs", "birds", "rabbits", "reptiles", "fish", "rodents", "horses", "pigs"];
   $scope.selectedType = $scope.types[0];
+  $scope.selectedAnimal = "any";
   $scope.fetchLocations();
   return $scope.newLocation = new Location;
 });

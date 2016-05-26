@@ -14,6 +14,14 @@
     select(id="type-select", name="type", ng-model="selectedType", ng-change="fetchLocations()")
       option(value="{{type}}", ng-repeat="type in types") {{type}}
 
+  div
+    label
+      | Animal: 
+    select(id="animal-select", name="animal", ng-model="selectedAnimal", ng-change="fetchLocations()")
+      option(value="any", selected='selected') any
+      option(value="{{animal}}", ng-repeat="animal in animals") {{animal}}
+
+
 
 .location(ng-repeat="location in locations")
   .not-editing(ng-hide="location.editing")
