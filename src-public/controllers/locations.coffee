@@ -82,7 +82,7 @@ app.controller 'LocationsCtrl', ($scope, Location, Upload) ->
       $scope.locations = locations
 
   $scope.searchTerm = ""
-  $scope.types = ["_new", "vet", "shelter", "rescue", "cafe", "supplies", "grooming", "boarding", "daycare", "training", "sitting", "walking", "insurance"]
+  $scope.types = ["_new", "vet", "hospital", "emergency", "shelter", "rescue", "cafe", "supplies", "grooming", "boarding", "daycare", "training", "sitting", "walking", "insurance"]
   $scope.animals = ["cats", "dogs", "birds", "rabbits", "reptiles", "fish", "rodents", "horses", "pigs"]
   $scope.selectedType = $scope.types[0]
   $scope.fetchLocations()
