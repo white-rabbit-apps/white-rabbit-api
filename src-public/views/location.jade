@@ -14,17 +14,19 @@
       .links
         a(ng-href="{{location.youtubeUrl}}", target="_blank", ng-show="location.youtubeUrl")
           img(src="/img/youtube.png")
-        a(ng-href="{{location.instagramUrl}}", target="_blank", ng-show="location.instagramUrl")
+        a(ng-href="https://instagram.com/{{location.instagramId}}", target="_blank", ng-show="location.instagramId")
           img(src="/img/instagram.png")
-        a(ng-href="{{location.twitterUrl}}", target="_blank", ng-show="location.twitterUrl")
+        a(ng-href="https://twitter.com/{{location.twitterId}}", target="_blank", ng-show="location.twitterId")
           img(src="/img/twitter.png")
-        a(ng-href="{{location.fbUrl}}", target="_blank", ng-show="location.fbUrl")
+        a(ng-href="https://facebook.com/{{location.facebookPageId}}", target="_blank", ng-show="location.facebookPageId")
           img(src="/img/facebook.png")
-        a(ng-href="{{location.yelpUrl}}", target="_blank", ng-show="location.yelpUrl")
+        a(ng-href="https://www.pinterest.com/{{location.pinterestId}}", target="_blank", ng-show="location.pinterestId")
+          img(src="/img/pinterest.png")
+        a(ng-href="https://yelp.com/biz/{{location.yelpBusinessId}}", target="_blank", ng-show="location.yelpBusinessId")
           img(src="/img/yelp.png")
         a(ng-href="{{location.website}}", target="_blank", ng-show="location.website")
           img(src="/img/web.png")
-          
+
     .clear
 
 
