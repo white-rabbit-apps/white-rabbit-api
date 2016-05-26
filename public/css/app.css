@@ -4,7 +4,7 @@
  */
 /* FONT PATH
  * -------------------------- */
-@import url(https://fonts.googleapis.com/css?family=Josefin+Sans);
+@import url(https://fonts.googleapis.com/css?family=Varela+Round);
 @import url(https://fonts.googleapis.com/css?family=Calligraffitti);
 @font-face {
   font-family: 'FontAwesome';
@@ -8678,7 +8678,7 @@ table.dataTable thead .sorting:after {
 }
 body {
   background-color: #000033;
-  font-family: 'Josefin Sans', sans-serif;
+  font-family: 'Varela Round', sans-serif;
   font-weight: 100;
   color: #000;
 }
@@ -8841,6 +8841,9 @@ body.no-nav .location .location-header .info .name {
 .navbar-header {
   padding-top: 30px;
   padding-left: 40px;
+}
+.header label {
+  width: 90px;
 }
 .sidebar .sidebar-nav.navbar-collapse {
   padding-left: 40px;

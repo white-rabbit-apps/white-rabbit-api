@@ -1,16 +1,18 @@
-h1 Locations
-  .button.add(ng-click="addLocation()")
+.header
 
-div
-  label
-    | Search: 
-  input#searchbar(type="text", ng-model="searchTerm", ng-change="searchLocations()")
+  h1 Locations
+    .button.add(ng-click="addLocation()")
 
-div
-  label
-    | Type: 
-  select(id="type-select", name="type", ng-model="selectedType", ng-change="fetchLocations()")
-    option(value="{{type}}", ng-repeat="type in types") {{type}}
+  div
+    label
+      | Search: 
+    input#searchbar(type="text", ng-model="searchTerm", ng-change="searchLocations()")
+
+  div
+    label
+      | Type: 
+    select(id="type-select", name="type", ng-model="selectedType", ng-change="fetchLocations()")
+      option(value="{{type}}", ng-repeat="type in types") {{type}}
 
 
 .location(ng-repeat="location in locations")
