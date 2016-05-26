@@ -63,6 +63,16 @@ app.controller 'LocationsCtrl', ($scope, Location, Upload) ->
     $scope.selectedType = type
     $scope.fetchLocations()
 
+  $scope.searchLocations = () ->
+    Location.query(
+      where:
+        name:
+          "$regex": '\\Q' + $scope.searchTerm + '\\E'
+          "$options": "i"
+    )
+    .then (locations) ->
+      $scope.locations = locations
+
   $scope.fetchLocations = ->
     Location.query(
       where:
@@ -71,6 +81,7 @@ app.controller 'LocationsCtrl', ($scope, Location, Upload) ->
     .then (locations) ->
       $scope.locations = locations
 
+  $scope.searchTerm = ""
   $scope.types = ["_new", "vet", "shelter", "rescue", "cafe", "supplies", "grooming", "boarding", "daycare", "training", "sitting", "walking", "insurance"]
   $scope.animals = ["cats", "dogs", "birds", "rabbits", "reptiles", "fish", "rodents", "horses", "pigs"]
   $scope.selectedType = $scope.types[0]

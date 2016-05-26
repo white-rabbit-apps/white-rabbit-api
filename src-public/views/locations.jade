@@ -1,8 +1,11 @@
 h1 Locations
-.button.add(ng-click="addLocation()")
+  .button.add(ng-click="addLocation()")
 
-select(id="type-select", name="type", ng-model="selectedType", ng-change="fetchLocations()")
-  option(value="{{type}}", ng-repeat="type in types") {{type}}
+input#searchbar(type="text", ng-model="searchTerm", ng-change="searchLocations()")
+
+div
+  select(id="type-select", name="type", ng-model="selectedType", ng-change="fetchLocations()")
+    option(value="{{type}}", ng-repeat="type in types") {{type}}
 
 
 .location(ng-repeat="location in locations")

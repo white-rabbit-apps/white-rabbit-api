@@ -703,6 +703,18 @@ app.controller('LocationsCtrl', function($scope, Location, Upload) {
     $scope.selectedType = type;
     return $scope.fetchLocations();
   };
+  $scope.searchLocations = function() {
+    return Location.query({
+      where: {
+        name: {
+          "$regex": '\\Q' + $scope.searchTerm + '\\E',
+          "$options": "i"
+        }
+      }
+    }).then(function(locations) {
+      return $scope.locations = locations;
+    });
+  };
   $scope.fetchLocations = function() {
     return Location.query({
       where: {
@@ -712,7 +724,8 @@ app.controller('LocationsCtrl', function($scope, Location, Upload) {
       return $scope.locations = locations;
     });
   };
-  $scope.types = ["_new", "vet", "shelter", "cafe", "supplies", "grooming", "boarding", "daycare", "training", "sitting", "walking", "insurance"];
+  $scope.searchTerm = "";
+  $scope.types = ["_new", "vet", "shelter", "rescue", "cafe", "supplies", "grooming", "boarding", "daycare", "training", "sitting", "walking", "insurance"];
   $scope.animals = ["cats", "dogs", "birds", "rabbits", "reptiles", "fish", "rodents", "horses", "pigs"];
   $scope.selectedType = $scope.types[0];
   $scope.fetchLocations();
