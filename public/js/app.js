@@ -644,6 +644,20 @@ app.controller('LocationsCtrl', function($scope, Location, Upload) {
       return $scope.fetchLocations();
     });
   };
+  $scope.duplicateLocation = function(location) {
+    var attrs, attrsJson, key, newLocation, _i, _len, _ref;
+    newLocation = new Location;
+    attrsJson = JSON.stringify(location.attributes());
+    attrs = JSON.parse(attrsJson);
+    _ref = Object.keys(attrs);
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      key = _ref[_i];
+      newLocation[key] = attrs[key];
+    }
+    return newLocation.save().then(function() {
+      return $scope.fetchLocations();
+    });
+  };
   $scope.removeLocation = function(location) {
     if (confirm("Are you sure?  All data will be lost.")) {
       return location.destroy().then(function() {

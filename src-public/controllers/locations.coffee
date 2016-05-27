@@ -6,6 +6,18 @@ app.controller 'LocationsCtrl', ($scope, Location, Upload) ->
     $scope.newLocation.save().then (location) ->
       $scope.fetchLocations()
 
+  $scope.duplicateLocation = (location) ->
+    newLocation = new Location
+    attrsJson = JSON.stringify(location.attributes())
+    attrs = JSON.parse(attrsJson)
+
+    for key in Object.keys(attrs)
+      newLocation[key] = attrs[key]
+
+    newLocation.save().then () ->
+      $scope.fetchLocations()
+
+
   $scope.removeLocation = (location) ->
     if confirm("Are you sure?  All data will be lost.")
       location.destroy().then () ->
