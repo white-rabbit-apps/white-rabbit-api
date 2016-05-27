@@ -80,6 +80,8 @@
       .web(ng-show="location.website")
         a(ng-href="{{location.website}}" target="_blank")
           | {{location.website}}
+          span(ng-show="location.websiteDown")
+            | &nbsp;(Down)
       .fbUrl(ng-show="location.facebookPageId")
         a(ng-href="https://facebook.com/{{location.facebookPageId}}" target="_blank")
           | https://facebook.com/{{location.facebookPageId}}
@@ -193,6 +195,12 @@
       label
         | Website
       input.form-control.website(ng-model="location.website", placeholder="Website")
+    
+    .form-row
+      label
+        | Website Down?
+      input.form-control.websiteDown(ng-model="location.websiteDown", type="checkbox")
+      
       
     .form-row
       label
