@@ -9023,6 +9023,9 @@ body.no-nav .location .location-header .info .name {
 .location .info .types {
   margin-top: 10px;
 }
+.location .info .notes {
+  margin-top: 10px;
+}
 .location .info .address1 {
   margin-top: 10px;
 }

@@ -60,7 +60,14 @@
       .geo 
         label
           | Lat, Long:
-        {{location.geo.latitude}},{{location.geo.longitude}}
+        {{location.geo.latitude}}, {{location.geo.longitude}}
+        span(ng-show="location.geoForCity")
+          | &nbsp;(City)
+          
+      .notes(ng-show="location.notes")
+        label
+          | Notes:
+        {{location.notes}}
                 
       .phone 
         label
@@ -222,6 +229,12 @@
       label
         | Youtube URL
       input.form-control.youtubeUrl(ng-model="location.youtubeUrl", placeholder="Youtube Url")
+
+    .form-row
+      label
+        | Notes
+      textarea.form-control.notes(ng-model="location.notes", placeholder="Take notes on this location...")
+
 
     .actions
       .button.save(ng-click="editLocation(location)")

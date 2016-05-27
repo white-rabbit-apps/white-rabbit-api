@@ -737,7 +737,7 @@ app.controller('LocationsCtrl', function($scope, Location, Upload) {
   };
   $scope.searchTerm = "";
   $scope.types = ["_new", "vet", "hospital", "emergency", "shelter", "rescue", "cafe", "supplies", "grooming", "boarding", "daycare", "training", "sitting", "walking", "insurance"];
-  $scope.animals = ["cats", "dogs", "birds", "rabbits", "reptiles", "fish", "rodents", "horses", "pigs"];
+  $scope.animals = ["cats", "dogs", "birds", "rabbits", "reptiles", "fish", "rodents", "horses", "pigs", "chicken"];
   $scope.selectedType = $scope.types[0];
   $scope.selectedAnimal = "any";
   $scope.fetchLocations();
@@ -974,7 +974,7 @@ app.factory('Location', function(Parse) {
       return Location.__super__.constructor.apply(this, arguments);
     }
 
-    Location.configure("Location", "type", "name", "short_name", "email", "address", "city", "state", "zip", "geo", "geoForCity", "phone", "website", "facebookPageId", "twitterId", "instagramId", "instagramPlaceId", "youtubeUrl", "pinterestId", "yelpBusinessId", "logo", "types", "animals");
+    Location.configure("Location", "type", "name", "short_name", "email", "address", "city", "state", "zip", "geo", "geoForCity", "phone", "website", "facebookPageId", "twitterId", "instagramId", "instagramPlaceId", "youtubeUrl", "pinterestId", "yelpBusinessId", "logo", "types", "animals", "notes");
 
     return Location;
 
