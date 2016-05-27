@@ -8894,10 +8894,11 @@ body.no-nav .location .location-header .info .name {
   width: 100%;
 }
 .navbar-header .navbar-brand {
-  font-family: 'Calligraffitti', sans-serif;
   color: white;
   font-size: 24px;
   border: none;
+  width: 200px;
+  text-align: center;
 }
 .animal {
   width: 440px;
@@ -9156,6 +9157,7 @@ label {
 Made with love by Creative Tim (http://www.creative-tim.com)
 
 */
+@import url(https://fonts.googleapis.com/css?family=Varela+Round);
 body {
   background-color: #000033;
   font-weight: 100;
@@ -9757,7 +9759,6 @@ fieldset[disabled] .btn-warning.active {
   width: 60px;
 }
 .main .logo {
-  font-family: 'Calligraffitti', sans-serif;
   font-size: 50px;
   color: #FFFFFF;
   font-weight: 300;
@@ -9768,7 +9769,6 @@ fieldset[disabled] .btn-warning.active {
   z-index: 3;
 }
 .main .logo.cursive {
-  font-family: 'Grand Hotel', cursive;
   font-size: 82px;
 }
 .main .content {

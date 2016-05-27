@@ -61,7 +61,7 @@
         label
           | Lat, Long:
         {{location.geo.latitude}},{{location.geo.longitude}}
-        
+                
       .phone 
         label
           | Phone:
@@ -166,6 +166,11 @@
       label
         | Longitude
       input.form-control.longitude(ng-model="location.geo.longitude")
+    
+    .form-row
+      label
+        | Geo for City?
+      input.form-control.geoForCity(ng-model="location.geoForCity", type="checkbox")
       
     .form-row
       label
