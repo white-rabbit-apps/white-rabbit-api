@@ -99,7 +99,7 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
 Parse.Cloud.beforeSave("AnimalTimelineEntry", function(request, response) {
   var timelineEntryQuery;
   console.log("creating timeline entry: " + JSON.stringify(request));
-  if (request.object.get("instagramId")) {
+  if (!request.object.existed() && request.object.get("instagramId")) {
     timelineEntryQuery = new Parse.Query("AnimalTimelineEntry");
     timelineEntryQuery.equalTo("instagramId", request.object.get("instagramId"));
     timelineEntryQuery.equalTo("animal", request.object.get("animal"));

@@ -89,7 +89,7 @@ Parse.Cloud.beforeSave "AnimalTimelineEntry", (request, response) ->
   console.log("creating timeline entry: " + JSON.stringify(request))
 
   ## Check if there's already a timeline entry for that instagram photo
-  if request.object.get("instagramId")
+  if !request.object.existed() && request.object.get("instagramId")
     timelineEntryQuery = new Parse.Query("AnimalTimelineEntry")
     timelineEntryQuery.equalTo("instagramId", request.object.get("instagramId"))
     timelineEntryQuery.equalTo("animal", request.object.get("animal"))
