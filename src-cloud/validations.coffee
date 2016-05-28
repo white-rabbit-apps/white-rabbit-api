@@ -132,7 +132,7 @@ Parse.Cloud.beforeSave "Animal", (request, response) ->
 
 
 Parse.Cloud.afterSave "Like", (request, response) ->
-  console.log("new like")
+  console.log("new like - incrementing count")
 
   query = new Parse.Query("AnimalTimelineEntry")
   query.equalTo("objectId", request.object.get("entry").id)
@@ -140,7 +140,7 @@ Parse.Cloud.afterSave "Like", (request, response) ->
   query.find
     useMasterKey: true
     success: (results) ->
-      console.log("found: " + JSON.stringify(results))
+      console.log("found - incrementing count: " + JSON.stringify(results))
       if results.length > 0
         entry = results[0]
         if entry.get("likeCount")
@@ -160,14 +160,14 @@ Parse.Cloud.afterSave "Like", (request, response) ->
 
 
 Parse.Cloud.afterSave "Comment", (request, response) ->
-  console.log("new comment")
+  console.log("new comment - incrementing count")
 
   query = new Parse.Query("AnimalTimelineEntry")
   query.equalTo("objectId", request.object.get("entry").id)
   query.find
     useMasterKey: true
     success: (results) ->
-      console.log("found: " + JSON.stringify(results))
+      console.log("found - incrementing count: " + JSON.stringify(results))
       if results.length > 0
         entry = results[0]
         if entry.get("commentCount")
