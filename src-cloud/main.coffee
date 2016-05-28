@@ -285,6 +285,36 @@ Parse.Cloud.afterSave "Animal", (request, response) ->
         return response.error(error.message)
 
 
+# Cascading deletes for User
+Parse.Cloud.afterDelete "Like", (request, response) ->
+  console.log("deleted like - decrementing count")
+  query = new Parse.Query("AnimalTimelineEntry")
+  query.equalTo("objectId", request.object.get("entry").id)
+  console.log("finding entry: " + request.object.get("entry").id)
+  query.find
+    useMasterKey: true
+    success: (results) ->
+      console.log("found - decrementing count: " + JSON.stringify(results))
+      if results.length > 0
+        entry = results[0]
+        if entry.get("likeCount")
+          likeCount = parseInt(entry.get("likeCount"), 10)
+        else
+          likeCount = 0
+
+        console.log("likeCount before: " + likeCount)
+
+        entry.set("likeCount", likeCount - 1)
+
+        entry.save(null,
+          useMasterKey: true
+          success: (result) ->
+            console.log("entry saved: " + result)
+            # return response.success()
+        )
+
+
+
 Parse.Cloud.afterSave "Like", (request, response) ->
   console.log("new like - incrementing count")
 
