@@ -285,36 +285,8 @@ Parse.Cloud.afterSave "Animal", (request, response) ->
         return response.error(error.message)
 
 
-# Cascading deletes for User
-Parse.Cloud.afterDelete "Like", (request, response) ->
-  console.log("deleted like - decrementing count")
-  query = new Parse.Query("AnimalTimelineEntry")
-  query.equalTo("objectId", request.object.get("entry").id)
-  console.log("finding entry: " + request.object.get("entry").id)
-  query.find
-    useMasterKey: true
-    success: (results) ->
-      console.log("found - decrementing count: " + JSON.stringify(results))
-      if results.length > 0
-        entry = results[0]
-        if entry.get("likeCount")
-          likeCount = parseInt(entry.get("likeCount"), 10)
-        else
-          likeCount = 0
 
-        console.log("likeCount before: " + likeCount)
-
-        entry.set("likeCount", likeCount - 1)
-
-        entry.save(null,
-          useMasterKey: true
-          success: (result) ->
-            console.log("entry saved: " + result)
-            # return response.success()
-        )
-
-
-
+# After creating a like, increment the likeCount on the entry
 Parse.Cloud.afterSave "Like", (request, response) ->
   console.log("new like - incrementing count")
 
@@ -344,6 +316,35 @@ Parse.Cloud.afterSave "Like", (request, response) ->
         )
 
 
+# After deleting a like, decrement the likeCount on the entry
+Parse.Cloud.afterDelete "Like", (request, response) ->
+  console.log("deleted like - decrementing count")
+  query = new Parse.Query("AnimalTimelineEntry")
+  query.equalTo("objectId", request.object.get("entry").id)
+  console.log("finding entry: " + request.object.get("entry").id)
+  query.find
+    useMasterKey: true
+    success: (results) ->
+      console.log("found - decrementing count: " + JSON.stringify(results))
+      if results.length > 0
+        entry = results[0]
+        if entry.get("likeCount")
+          likeCount = parseInt(entry.get("likeCount"), 10)
+        else
+          likeCount = 0
+
+        console.log("likeCount before: " + likeCount)
+
+        entry.set("likeCount", likeCount - 1)
+
+        entry.save(null,
+          useMasterKey: true
+          success: (result) ->
+            console.log("entry saved: " + result)
+            # return response.success()
+        )
+
+
 
 Parse.Cloud.afterSave "Comment", (request, response) ->
   console.log("new comment - incrementing count")
@@ -362,6 +363,34 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
           likeCount = 0
 
         entry.set("commentCount", likeCount + 1)
+
+        entry.save(null,
+          useMasterKey: true
+          success: (result) ->
+            console.log("entry saved: " + result)
+            # return response.success()
+        )
+
+# After deleting a like, decrement the likeCount on the entry
+Parse.Cloud.afterDelete "Comment", (request, response) ->
+  console.log("deleted like - decrementing count")
+  query = new Parse.Query("AnimalTimelineEntry")
+  query.equalTo("objectId", request.object.get("entry").id)
+  console.log("finding entry: " + request.object.get("entry").id)
+  query.find
+    useMasterKey: true
+    success: (results) ->
+      console.log("found - decrementing count: " + JSON.stringify(results))
+      if results.length > 0
+        entry = results[0]
+        if entry.get("commentCount")
+          likeCount = parseInt(entry.get("commentCount"), 10)
+        else
+          likeCount = 0
+
+        console.log("commentCount before: " + commentCount)
+
+        entry.set("commentCount", commentCount - 1)
 
         entry.save(null,
           useMasterKey: true
