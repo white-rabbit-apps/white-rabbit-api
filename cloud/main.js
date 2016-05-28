@@ -385,21 +385,21 @@ Parse.Cloud.afterSave("Comment", function(request, response) {
 
 Parse.Cloud.afterDelete("Comment", function(request, response) {
   var query;
-  console.log("deleted like - decrementing count");
+  console.log("deleted comment - decrementing count");
   query = new Parse.Query("AnimalTimelineEntry");
   query.equalTo("objectId", request.object.get("entry").id);
   console.log("finding entry: " + request.object.get("entry").id);
   return query.find({
     useMasterKey: true,
     success: function(results) {
-      var entry, likeCount;
+      var commentCount, entry;
       console.log("found - decrementing count: " + JSON.stringify(results));
       if (results.length > 0) {
         entry = results[0];
         if (entry.get("commentCount")) {
-          likeCount = parseInt(entry.get("commentCount"), 10);
+          commentCount = parseInt(entry.get("commentCount"), 10);
         } else {
-          likeCount = 0;
+          commentCount = 0;
         }
         console.log("commentCount before: " + commentCount);
         entry.set("commentCount", commentCount - 1);
