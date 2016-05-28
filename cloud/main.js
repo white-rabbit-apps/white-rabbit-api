@@ -292,37 +292,6 @@ Parse.Cloud.afterSave("Animal", function(request, response) {
   }
 });
 
-Parse.Cloud.afterDelete("Like", function(request, response) {
-  var query;
-  console.log("deleted like - decrementing count");
-  query = new Parse.Query("AnimalTimelineEntry");
-  query.equalTo("objectId", request.object.get("entry").id);
-  console.log("finding entry: " + request.object.get("entry").id);
-  return query.find({
-    useMasterKey: true,
-    success: function(results) {
-      var entry, likeCount;
-      console.log("found - decrementing count: " + JSON.stringify(results));
-      if (results.length > 0) {
-        entry = results[0];
-        if (entry.get("likeCount")) {
-          likeCount = parseInt(entry.get("likeCount"), 10);
-        } else {
-          likeCount = 0;
-        }
-        console.log("likeCount before: " + likeCount);
-        entry.set("likeCount", likeCount - 1);
-        return entry.save(null, {
-          useMasterKey: true,
-          success: function(result) {
-            return console.log("entry saved: " + result);
-          }
-        });
-      }
-    }
-  });
-});
-
 Parse.Cloud.afterSave("Like", function(request, response) {
   var query;
   console.log("new like - incrementing count");
@@ -354,6 +323,37 @@ Parse.Cloud.afterSave("Like", function(request, response) {
   });
 });
 
+Parse.Cloud.afterDelete("Like", function(request, response) {
+  var query;
+  console.log("deleted like - decrementing count");
+  query = new Parse.Query("AnimalTimelineEntry");
+  query.equalTo("objectId", request.object.get("entry").id);
+  console.log("finding entry: " + request.object.get("entry").id);
+  return query.find({
+    useMasterKey: true,
+    success: function(results) {
+      var entry, likeCount;
+      console.log("found - decrementing count: " + JSON.stringify(results));
+      if (results.length > 0) {
+        entry = results[0];
+        if (entry.get("likeCount")) {
+          likeCount = parseInt(entry.get("likeCount"), 10);
+        } else {
+          likeCount = 0;
+        }
+        console.log("likeCount before: " + likeCount);
+        entry.set("likeCount", likeCount - 1);
+        return entry.save(null, {
+          useMasterKey: true,
+          success: function(result) {
+            return console.log("entry saved: " + result);
+          }
+        });
+      }
+    }
+  });
+});
+
 Parse.Cloud.afterSave("Comment", function(request, response) {
   var query;
   console.log("new comment - incrementing count");
@@ -372,6 +372,37 @@ Parse.Cloud.afterSave("Comment", function(request, response) {
           likeCount = 0;
         }
         entry.set("commentCount", likeCount + 1);
+        return entry.save(null, {
+          useMasterKey: true,
+          success: function(result) {
+            return console.log("entry saved: " + result);
+          }
+        });
+      }
+    }
+  });
+});
+
+Parse.Cloud.afterDelete("Comment", function(request, response) {
+  var query;
+  console.log("deleted like - decrementing count");
+  query = new Parse.Query("AnimalTimelineEntry");
+  query.equalTo("objectId", request.object.get("entry").id);
+  console.log("finding entry: " + request.object.get("entry").id);
+  return query.find({
+    useMasterKey: true,
+    success: function(results) {
+      var entry, likeCount;
+      console.log("found - decrementing count: " + JSON.stringify(results));
+      if (results.length > 0) {
+        entry = results[0];
+        if (entry.get("commentCount")) {
+          likeCount = parseInt(entry.get("commentCount"), 10);
+        } else {
+          likeCount = 0;
+        }
+        console.log("commentCount before: " + commentCount);
+        entry.set("commentCount", commentCount - 1);
         return entry.save(null, {
           useMasterKey: true,
           success: function(result) {
