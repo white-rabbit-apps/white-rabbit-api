@@ -283,3 +283,57 @@ Parse.Cloud.afterSave "Animal", (request, response) ->
         )
       error: (error) ->
         return response.error(error.message)
+
+
+Parse.Cloud.afterSave "Like", (request, response) ->
+  console.log("new like - incrementing count")
+
+  query = new Parse.Query("AnimalTimelineEntry")
+  query.equalTo("objectId", request.object.get("entry").id)
+  console.log("finding entry: " + request.object.get("entry").id)
+  query.find
+    useMasterKey: true
+    success: (results) ->
+      console.log("found - incrementing count: " + JSON.stringify(results))
+      if results.length > 0
+        entry = results[0]
+        if entry.get("likeCount")
+          likeCount = parseInt(entry.get("likeCount"), 10)
+        else
+          likeCount = 0
+
+        entry.set("likeCount", likeCount + 1)
+
+        entry.save(null,
+          useMasterKey: true
+          success: (result) ->
+            console.log("entry saved: " + result)
+            # return response.success()
+        )
+
+
+
+Parse.Cloud.afterSave "Comment", (request, response) ->
+  console.log("new comment - incrementing count")
+
+  query = new Parse.Query("AnimalTimelineEntry")
+  query.equalTo("objectId", request.object.get("entry").id)
+  query.find
+    useMasterKey: true
+    success: (results) ->
+      console.log("found - incrementing count: " + JSON.stringify(results))
+      if results.length > 0
+        entry = results[0]
+        if entry.get("commentCount")
+          likeCount = parseInt(entry.get("commentCount"), 10)
+        else
+          likeCount = 0
+
+        entry.set("commentCount", likeCount + 1)
+
+        entry.save(null,
+          useMasterKey: true
+          success: (result) ->
+            console.log("entry saved: " + result)
+            # return response.success()
+        )
