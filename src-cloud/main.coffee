@@ -302,6 +302,8 @@ Parse.Cloud.afterSave "Like", (request, response) ->
         else
           likeCount = 0
 
+        console.log("likeCount before: " + likeCount)
+
         entry.set("likeCount", likeCount + 1)
 
         entry.save(null,

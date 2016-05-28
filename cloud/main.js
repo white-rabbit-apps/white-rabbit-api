@@ -310,6 +310,7 @@ Parse.Cloud.afterSave("Like", function(request, response) {
         } else {
           likeCount = 0;
         }
+        console.log("likeCount before: " + likeCount);
         entry.set("likeCount", likeCount + 1);
         return entry.save(null, {
           useMasterKey: true,
