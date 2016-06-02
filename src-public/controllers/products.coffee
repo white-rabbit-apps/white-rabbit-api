@@ -1,5 +1,22 @@
 app.controller 'ProductsCtrl', ($scope, Product) ->
 
+  $scope.duplicateProduct = (product) ->
+    newProduct = new Product
+    attrsJson = JSON.stringify(product.attributes())
+    attrs = JSON.parse(attrsJson)
+
+    for key in Object.keys(attrs)
+      newProduct[key] = attrs[key]
+
+    newProduct["variationOf"] = {
+      __type: 'Pointer'
+      className: 'Product'
+      objectId: product.objectId
+    }
+
+    newProduct.save().then () ->
+      $scope.fetchProducts()
+
   $scope.addProduct = ->
     $scope.newProduct.save().then (product) ->
       $scope.fetchProducts()

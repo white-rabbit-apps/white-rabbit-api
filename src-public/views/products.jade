@@ -6,45 +6,60 @@ h1 Products ({{products.length}})
       .input-group
         span.input-group-addon {{ product.random }}
           img.image(ng-src="{{product.mainPhoto.file || product.mainPhoto.url || '/img/avatar_blank.png'}}")
-        input.form-control.name(ng-model="product.name", ng-dblclick="editingProduct(product)", readonly)
-        textarea.form-control.description(ng-model="product.description", ng-dblclick="editingProduct(product)", readonly)
+        
+        .entry.head
+          .name {{product.name}}
+          .description {{product.description}}
+        
+        .entry
+          label Color
+          .value {{product.color}}
 
         .entry
+          label Size
+          .value {{product.size}}
+
+        
+        .entry
           label Price
-          input.form-control(ng-model="product.price", ng-dblclick="editingProduct(product)", readonly)
+          .value {{product.price}}
 
         .entry
           label Active
-          input.form-control(ng-model="product.active", ng-dblclick="editingProduct(product)", readonly)
+          .value  {{product.active}}
 
         .entry
           label Manufacturer Name
-          input.form-control(ng-model="product.manufacturerName", ng-dblclick="editingProduct(product)", readonly)
+          .value  {{product.manufacturerName}}
+          
         .entry
           label Manufacturer URL
-          input.form-control(ng-model="product.manufacturerUrl", ng-dblclick="editingProduct(product)", readonly)
+          .value {{product.manufacturerUrl}}
 
         .entry
           label Supplier Part Name
-          input.form-control(ng-model="product.supplierPartName", ng-dblclick="editingProduct(product)", readonly)
+          .value {{product.supplierPartName}}
         .entry
           label Supplier URL
-          input.form-control(ng-model="product.supplierUrl", ng-dblclick="editingProduct(product)", readonly)
+          .value {{product.supplierUrl}}
 
         .entry
           label Amazon URL
-          input.form-control(ng-model="product.amazonUrl", ng-dblclick="editingProduct(product)", readonly)
+          .value {{product.amazonUrl}}
 
         span.input-group-btn(style="width: 70px;")
           .button.edit(ng-click="editingProduct(product)")
+          .button.add(ng-click="duplicateProduct(product)")
           .button.close(ng-click="removeProduct(product)")
     form(ng-submit="editProduct(product)", ng-show="product.editing")
       .input-group
         .input-group-addon
           div.image(file-dropzone='[image/png, image/jpeg, image/gif]', file='product.mainPhoto.file', file-name='product.mainPhoto.filename', data-max-file-size='5', style='width:150px;height:150px;')
             img.image(ng-src="{{product.mainPhoto.file || product.mainPhoto.url || '/img/avatar_blank.png'}}")
-        input.form-control(ng-model="product.name")
-        textarea.form-control.description(ng-model="product.description", placeholder="Description")
+            
+        .entry.head
+          input.form-control(ng-model="product.name")
+          textarea.form-control.description(ng-model="product.description", placeholder="Description")
 
         .entry
           label Price
@@ -55,8 +70,17 @@ h1 Products ({{products.length}})
           input.form-control(ng-model="product.active", type="checkbox")
 
         .entry
+          label Color
+          input.form-control(ng-model="product.color", placeholder="Color")
+
+        .entry
+          label Size
+          input.form-control(ng-model="product.size", placeholder="Size")
+
+        .entry
           label Manufacturer Name
           input.form-control(ng-model="product.manufacturerName", placeholder="Name")
+          
         .entry
           label Manufacturer URL
           input.form-control(ng-model="product.manufacturerUrl", placeholder="Url")

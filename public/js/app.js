@@ -759,6 +759,25 @@ app.controller('LocationsCtrl', function($scope, Location, Upload) {
 });
 
 app.controller('ProductsCtrl', function($scope, Product) {
+  $scope.duplicateProduct = function(product) {
+    var attrs, attrsJson, key, newProduct, _i, _len, _ref;
+    newProduct = new Product;
+    attrsJson = JSON.stringify(product.attributes());
+    attrs = JSON.parse(attrsJson);
+    _ref = Object.keys(attrs);
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      key = _ref[_i];
+      newProduct[key] = attrs[key];
+    }
+    newProduct["variationOf"] = {
+      __type: 'Pointer',
+      className: 'Product',
+      objectId: product.objectId
+    };
+    return newProduct.save().then(function() {
+      return $scope.fetchProducts();
+    });
+  };
   $scope.addProduct = function() {
     $scope.newProduct.save().then(function(product) {
       return $scope.fetchProducts();
@@ -1007,7 +1026,7 @@ app.factory('Product', function(Parse) {
       return Product.__super__.constructor.apply(this, arguments);
     }
 
-    Product.configure("Product", "name", "active", "price", "description", "mainPhoto", "amazonUrl", "manufacturerName", "manufacturerUrl", "supplierPartName", "supplierUrl");
+    Product.configure("Product", "name", "active", "price", "description", "mainPhoto", "amazonUrl", "manufacturerName", "manufacturerUrl", "supplierPartName", "supplierUrl", "variationOf", "color", "size");
 
     return Product;
 

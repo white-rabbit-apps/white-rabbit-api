@@ -9048,7 +9048,9 @@ body.no-nav .location .location-header .info .name {
 .products .breed,
 .breeds .product,
 .products .product {
+  color: white;
   margin: 15px;
+  margin-bottom: 80px;
 }
 .breeds .breed img.image,
 .products .breed img.image,
@@ -9076,6 +9078,14 @@ body.no-nav .location .location-header .info .name {
   font-weight: bold;
   width: 180px;
   float: left;
+}
+.breeds .entry .name,
+.products .entry .name {
+  margin-bottom: 10px;
+}
+.breeds .entry.head,
+.products .entry.head {
+  margin-bottom: 15px;
 }
 .breeds .entry input,
 .products .entry input {
