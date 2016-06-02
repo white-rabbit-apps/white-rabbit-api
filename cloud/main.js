@@ -415,11 +415,11 @@ Parse.Cloud.afterSave("Comment", function(request, response) {
                     "className": "_User",
                     "objectId": owner.id
                   });
-                  console.log("saving activity");
+                  console.log("saving activity for owner: " + owner.id);
                   _results.push(activity.save(null, {
                     useMasterKey: true,
                     success: function(result) {
-                      return console.log("activity saved: " + result);
+                      return console.log("for user: " + owner.id + "activity saved: " + result);
                     }
                   }));
                 }
