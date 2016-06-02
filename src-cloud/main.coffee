@@ -349,6 +349,70 @@ Parse.Cloud.afterDelete "Like", (request, response) ->
 
 
 Parse.Cloud.afterSave "Comment", (request, response) ->
+  console.log("new comment")
+
+  query = new Parse.Query("AnimalTimelineEntry")
+  query.equalTo("objectId", request.object.get("entry").id)
+  query.include("createdBy")
+  query.include("animal")
+  query.find
+    useMasterKey: true
+    success: (results) ->
+      console.log("found: " + results)
+      if results.length > 0
+        entry = results[0]
+
+        console.log("entry: " + JSON.stringify(entry))
+
+        ownerId = ""
+        if entry.get("createdBy")
+          ownerId = entry.get("createdBy").id
+
+        console.log("ownerId: " + ownerId)
+
+        activity = new Parse.Object("Activity")
+        activity.set("action", "comment")
+
+        animalId = request.object.get("animal").id
+
+        activity.set("actingAnimal", {
+          "__type": "Pointer",
+          "className": "Animal",
+          "objectId": animalId
+        })
+
+        animalQuery = new Parse.Query("Animal")
+        animalQuery.get animalId,
+          useMasterKey: true
+          success: (animal) ->
+            activity.set("actingAnimalName", animal.get('username'))
+
+            activity.set("entryActedOn", {
+              "__type": "Pointer",
+              "className": "AnimalTimelineEntry",
+              "objectId": request.object.get("entry").id
+            })
+
+            activity.set("commentMade", request.object)
+            activity.set("commentMadeText", request.object.get("text"))
+
+            activity.set("forUser", {
+              "__type": "Pointer",
+              "className": "_User",
+              "objectId": ownerId
+            })
+
+            console.log("saving activity")
+            activity.save(null,
+              useMasterKey: true
+              success: (result) ->
+                console.log("activity saved: " + result)
+                # return response.success()
+            )
+          error: (error) ->
+            console.log 'ERROR: ' + error
+
+
   console.log("new comment - incrementing count")
 
   query = new Parse.Query("AnimalTimelineEntry")
@@ -370,9 +434,9 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
           useMasterKey: true
           success: (result) ->
             console.log("entry saved: " + result)
-            return response.success()
+            # return response.success()
         )
-  return response.success()
+  # return response.success()
 
 
 # After deleting a like, decrement the likeCount on the entry

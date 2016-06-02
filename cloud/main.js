@@ -360,10 +360,68 @@ Parse.Cloud.afterDelete("Like", function(request, response) {
 
 Parse.Cloud.afterSave("Comment", function(request, response) {
   var query;
+  console.log("new comment");
+  query = new Parse.Query("AnimalTimelineEntry");
+  query.equalTo("objectId", request.object.get("entry").id);
+  query.include("createdBy");
+  query.include("animal");
+  query.find({
+    useMasterKey: true,
+    success: function(results) {
+      var activity, animalId, animalQuery, entry, ownerId;
+      console.log("found: " + results);
+      if (results.length > 0) {
+        entry = results[0];
+        console.log("entry: " + JSON.stringify(entry));
+        ownerId = "";
+        if (entry.get("createdBy")) {
+          ownerId = entry.get("createdBy").id;
+        }
+        console.log("ownerId: " + ownerId);
+        activity = new Parse.Object("Activity");
+        activity.set("action", "comment");
+        animalId = request.object.get("animal").id;
+        activity.set("actingAnimal", {
+          "__type": "Pointer",
+          "className": "Animal",
+          "objectId": animalId
+        });
+        animalQuery = new Parse.Query("Animal");
+        return animalQuery.get(animalId, {
+          useMasterKey: true,
+          success: function(animal) {
+            activity.set("actingAnimalName", animal.get('username'));
+            activity.set("entryActedOn", {
+              "__type": "Pointer",
+              "className": "AnimalTimelineEntry",
+              "objectId": request.object.get("entry").id
+            });
+            activity.set("commentMade", request.object);
+            activity.set("commentMadeText", request.object.get("text"));
+            activity.set("forUser", {
+              "__type": "Pointer",
+              "className": "_User",
+              "objectId": ownerId
+            });
+            console.log("saving activity");
+            return activity.save(null, {
+              useMasterKey: true,
+              success: function(result) {
+                return console.log("activity saved: " + result);
+              }
+            });
+          },
+          error: function(error) {
+            return console.log('ERROR: ' + error);
+          }
+        });
+      }
+    }
+  });
   console.log("new comment - incrementing count");
   query = new Parse.Query("AnimalTimelineEntry");
   query.equalTo("objectId", request.object.get("entry").id);
-  query.find({
+  return query.find({
     useMasterKey: true,
     success: function(results) {
       var entry, likeCount;
@@ -379,14 +437,12 @@ Parse.Cloud.afterSave("Comment", function(request, response) {
         return entry.save(null, {
           useMasterKey: true,
           success: function(result) {
-            console.log("entry saved: " + result);
-            return response.success();
+            return console.log("entry saved: " + result);
           }
         });
       }
     }
   });
-  return response.success();
 });
 
 Parse.Cloud.afterDelete("Comment", function(request, response) {
