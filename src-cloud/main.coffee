@@ -398,8 +398,6 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
             activity.set("commentMade", request.object)
             activity.set("commentMadeText", request.object.get("text"))
 
-            # console.log("creating activity for owner: " + ownerId)
-
             actedOnAnimalQuery = new Parse.Query("Animal")
             actedOnAnimalQuery.get actedOnAnimalId,
               useMasterKey: true
@@ -421,11 +419,11 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
                     "objectId": owner.id
                   })
 
-                  console.log("saving activity")
+                  console.log("saving activity for owner: " + owner.id)
                   activity.save(null,
                     useMasterKey: true
                     success: (result) ->
-                      console.log("activity saved: " + result)
+                      console.log("for user: " + owner.id + "activity saved: " + result)
                       # return response.success()
                   )
           error: (error) ->
