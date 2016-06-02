@@ -364,27 +364,18 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
 
         console.log("entry: " + JSON.stringify(entry))
 
-        # owners = []
-        # if animal.get("owners")
-        #   owners = animal.get("owners")
-        # else if animal.get("foster")
-        #   owners = [animal.get("foster")]
+        # ownerId = ""
+        # if entry.get("createdBy")
+        #   ownerId = entry.get("createdBy").id
         #
-        # console.log("owners: " + owners)
-        #
-        # for owner in owners
-
-
-        ownerId = ""
-        if entry.get("createdBy")
-          ownerId = entry.get("createdBy").id
-
-        console.log("ownerId: " + ownerId)
+        # console.log("ownerId: " + ownerId)
 
         activity = new Parse.Object("Activity")
         activity.set("action", "comment")
 
         animalId = request.object.get("animal").id
+
+        actedOnAnimalId = entry.get("animal").id
 
         activity.set("actingAnimal", {
           "__type": "Pointer",
@@ -409,19 +400,34 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
 
             console.log("creating activity for owner: " + ownerId)
 
-            activity.set("forUser", {
-              "__type": "Pointer",
-              "className": "_User",
-              "objectId": owner.id
-            })
-
-            console.log("saving activity")
-            activity.save(null,
+            actedOnAnimalQuery = new Parse.Query("Animal")
+            actedOnAnimalQuery.get actedOnAnimalId,
               useMasterKey: true
-              success: (result) ->
-                console.log("activity saved: " + result)
-                # return response.success()
-            )
+              success: (actedOnAnimal) ->
+
+                owners = []
+                if actedOnAnimal.get("owners")
+                  owners = actedOnAnimal.get("owners")
+                else if actedOnAnimal.get("foster")
+                  owners = [actedOnAnimal.get("foster")]
+
+                console.log("owners: " + owners)
+
+                for owner in owners
+
+                  activity.set("forUser", {
+                    "__type": "Pointer",
+                    "className": "_User",
+                    "objectId": owner.id
+                  })
+
+                  console.log("saving activity")
+                  activity.save(null,
+                    useMasterKey: true
+                    success: (result) ->
+                      console.log("activity saved: " + result)
+                      # return response.success()
+                  )
           error: (error) ->
             console.log 'ERROR: ' + error
 

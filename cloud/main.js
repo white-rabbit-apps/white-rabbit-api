@@ -368,19 +368,15 @@ Parse.Cloud.afterSave("Comment", function(request, response) {
   query.find({
     useMasterKey: true,
     success: function(results) {
-      var activity, animalId, animalQuery, entry, ownerId;
+      var actedOnAnimalId, activity, animalId, animalQuery, entry;
       console.log("found: " + results);
       if (results.length > 0) {
         entry = results[0];
         console.log("entry: " + JSON.stringify(entry));
-        ownerId = "";
-        if (entry.get("createdBy")) {
-          ownerId = entry.get("createdBy").id;
-        }
-        console.log("ownerId: " + ownerId);
         activity = new Parse.Object("Activity");
         activity.set("action", "comment");
         animalId = request.object.get("animal").id;
+        actedOnAnimalId = entry.get("animal").id;
         activity.set("actingAnimal", {
           "__type": "Pointer",
           "className": "Animal",
@@ -390,6 +386,7 @@ Parse.Cloud.afterSave("Comment", function(request, response) {
         return animalQuery.get(animalId, {
           useMasterKey: true,
           success: function(animal) {
+            var actedOnAnimalQuery;
             activity.set("actingAnimalName", animal.get('username'));
             activity.set("entryActedOn", {
               "__type": "Pointer",
@@ -399,16 +396,35 @@ Parse.Cloud.afterSave("Comment", function(request, response) {
             activity.set("commentMade", request.object);
             activity.set("commentMadeText", request.object.get("text"));
             console.log("creating activity for owner: " + ownerId);
-            activity.set("forUser", {
-              "__type": "Pointer",
-              "className": "_User",
-              "objectId": owner.id
-            });
-            console.log("saving activity");
-            return activity.save(null, {
+            actedOnAnimalQuery = new Parse.Query("Animal");
+            return actedOnAnimalQuery.get(actedOnAnimalId, {
               useMasterKey: true,
-              success: function(result) {
-                return console.log("activity saved: " + result);
+              success: function(actedOnAnimal) {
+                var owner, owners, _i, _len, _results;
+                owners = [];
+                if (actedOnAnimal.get("owners")) {
+                  owners = actedOnAnimal.get("owners");
+                } else if (actedOnAnimal.get("foster")) {
+                  owners = [actedOnAnimal.get("foster")];
+                }
+                console.log("owners: " + owners);
+                _results = [];
+                for (_i = 0, _len = owners.length; _i < _len; _i++) {
+                  owner = owners[_i];
+                  activity.set("forUser", {
+                    "__type": "Pointer",
+                    "className": "_User",
+                    "objectId": owner.id
+                  });
+                  console.log("saving activity");
+                  _results.push(activity.save(null, {
+                    useMasterKey: true,
+                    success: function(result) {
+                      return console.log("activity saved: " + result);
+                    }
+                  }));
+                }
+                return _results;
               }
             });
           },
