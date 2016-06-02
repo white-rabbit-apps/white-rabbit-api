@@ -399,7 +399,7 @@ Parse.Cloud.afterSave("Comment", function(request, response) {
             return actedOnAnimalQuery.get(actedOnAnimalId, {
               useMasterKey: true,
               success: function(actedOnAnimal) {
-                var owner, owners, _i, _len, _results;
+                var owner, ownerId, owners, _i, _len, _results;
                 owners = [];
                 if (actedOnAnimal.get("owners")) {
                   owners = actedOnAnimal.get("owners");
@@ -410,16 +410,17 @@ Parse.Cloud.afterSave("Comment", function(request, response) {
                 _results = [];
                 for (_i = 0, _len = owners.length; _i < _len; _i++) {
                   owner = owners[_i];
+                  ownerId = owner.id;
                   activity.set("forUser", {
                     "__type": "Pointer",
                     "className": "_User",
-                    "objectId": owner.id
+                    "objectId": ownerId
                   });
-                  console.log("saving activity for owner: " + owner.id);
+                  console.log("saving activity for owner: " + ownerId);
                   _results.push(activity.save(null, {
                     useMasterKey: true,
                     success: function(result) {
-                      return console.log("for user: " + owner.id + "activity saved: " + result);
+                      return console.log("for user: " + ownerId + ", activity saved: " + result);
                     }
                   }));
                 }

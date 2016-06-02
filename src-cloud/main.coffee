@@ -413,17 +413,19 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
 
                 for owner in owners
 
+                  ownerId = owner.id
+
                   activity.set("forUser", {
                     "__type": "Pointer",
                     "className": "_User",
-                    "objectId": owner.id
+                    "objectId": ownerId
                   })
 
-                  console.log("saving activity for owner: " + owner.id)
+                  console.log("saving activity for owner: " + ownerId)
                   activity.save(null,
                     useMasterKey: true
                     success: (result) ->
-                      console.log("for user: " + owner.id + "activity saved: " + result)
+                      console.log("for user: " + ownerId + ", activity saved: " + result)
                       # return response.success()
                   )
           error: (error) ->
