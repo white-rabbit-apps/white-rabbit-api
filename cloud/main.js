@@ -298,7 +298,7 @@ Parse.Cloud.afterSave("Like", function(request, response) {
   query = new Parse.Query("AnimalTimelineEntry");
   query.equalTo("objectId", request.object.get("entry").id);
   console.log("finding entry: " + request.object.get("entry").id);
-  return query.find({
+  query.find({
     useMasterKey: true,
     success: function(results) {
       var entry, likeCount;
@@ -322,6 +322,7 @@ Parse.Cloud.afterSave("Like", function(request, response) {
       }
     }
   });
+  return response.success();
 });
 
 Parse.Cloud.afterDelete("Like", function(request, response) {
@@ -330,7 +331,7 @@ Parse.Cloud.afterDelete("Like", function(request, response) {
   query = new Parse.Query("AnimalTimelineEntry");
   query.equalTo("objectId", request.object.get("entry").id);
   console.log("finding entry: " + request.object.get("entry").id);
-  return query.find({
+  query.find({
     useMasterKey: true,
     success: function(results) {
       var entry, likeCount;
@@ -354,6 +355,7 @@ Parse.Cloud.afterDelete("Like", function(request, response) {
       }
     }
   });
+  return response.success();
 });
 
 Parse.Cloud.afterSave("Comment", function(request, response) {
@@ -361,7 +363,7 @@ Parse.Cloud.afterSave("Comment", function(request, response) {
   console.log("new comment - incrementing count");
   query = new Parse.Query("AnimalTimelineEntry");
   query.equalTo("objectId", request.object.get("entry").id);
-  return query.find({
+  query.find({
     useMasterKey: true,
     success: function(results) {
       var entry, likeCount;
@@ -384,6 +386,7 @@ Parse.Cloud.afterSave("Comment", function(request, response) {
       }
     }
   });
+  return response.success();
 });
 
 Parse.Cloud.afterDelete("Comment", function(request, response) {
@@ -392,7 +395,7 @@ Parse.Cloud.afterDelete("Comment", function(request, response) {
   query = new Parse.Query("AnimalTimelineEntry");
   query.equalTo("objectId", request.object.get("entry").id);
   console.log("finding entry: " + request.object.get("entry").id);
-  return query.find({
+  query.find({
     useMasterKey: true,
     success: function(results) {
       var commentCount, entry;
@@ -416,4 +419,5 @@ Parse.Cloud.afterDelete("Comment", function(request, response) {
       }
     }
   });
+  return response.success();
 });
