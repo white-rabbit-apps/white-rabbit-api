@@ -398,7 +398,7 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
             activity.set("commentMade", request.object)
             activity.set("commentMadeText", request.object.get("text"))
 
-            console.log("creating activity for owner: " + ownerId)
+            # console.log("creating activity for owner: " + ownerId)
 
             actedOnAnimalQuery = new Parse.Query("Animal")
             actedOnAnimalQuery.get actedOnAnimalId,
