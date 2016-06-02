@@ -364,11 +364,11 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
 
         console.log("entry: " + JSON.stringify(entry))
 
-        ownerId = ""
-        if entry.get("createdBy")
-          ownerId = entry.get("createdBy").id
-
-        console.log("ownerId: " + ownerId)
+        # ownerId = ""
+        # if entry.get("createdBy")
+        #   ownerId = entry.get("createdBy").id
+        #
+        # console.log("ownerId: " + ownerId)
 
         activity = new Parse.Object("Activity")
         activity.set("action", "comment")
@@ -396,21 +396,33 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
             activity.set("commentMade", request.object)
             activity.set("commentMadeText", request.object.get("text"))
 
-            activity.set("forUser", {
-              "__type": "Pointer",
-              "className": "_User",
-              "objectId": ownerId
-            })
+            owners = []
+            if animal.get("owners")
+              owners = animal.get("owners")
+            else if animal.get("foster")
+              owners = [animal.get("foster")]
 
-            console.log("saving activity")
-            activity.save(null,
-              useMasterKey: true
-              success: (result) ->
-                console.log("activity saved: " + result)
-                # return response.success()
-            )
-          error: (error) ->
-            console.log 'ERROR: ' + error
+            console.log("owners: " + owners)
+
+            for owner in owners
+
+              console.log("creating activity for owner: " + owner.id)
+
+              activity.set("forUser", {
+                "__type": "Pointer",
+                "className": "_User",
+                "objectId": owner.id
+              })
+
+              console.log("saving activity")
+              activity.save(null,
+                useMasterKey: true
+                success: (result) ->
+                  console.log("activity saved: " + result)
+                  # return response.success()
+              )
+            error: (error) ->
+              console.log 'ERROR: ' + error
 
 
   console.log("new comment - incrementing count")
