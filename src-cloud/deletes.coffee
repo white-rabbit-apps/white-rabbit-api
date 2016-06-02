@@ -30,56 +30,10 @@ Parse.Cloud.afterDelete "Follow", (request, response) ->
           useMasterKey: true
 
 # Cascading deletes
-Parse.Cloud.afterDelete "Comment", (request, response) ->
-  query = new Parse.Query("Activity")
-  query.equalTo("actingAnimal", request.object.get("animal"))
-  query.equalTo("entryActedOn", request.object.get("entry"))
-  query.equalTo("entryActedOn", request.object.get("entry"))
-  query.equalTo("commentMade", request.object)
-  console.log("finding activities to destroy")
-  query.find
-    useMasterKey: true
-    success: (results) ->
-      for result in results
-        console.log("destroying activity")
-        result.destroy
-          useMasterKey: true
+# Parse.Cloud.afterDelete "Comment", (request, response) ->
 
 
-
-
-Parse.Cloud.afterDelete "Like", (request, response) ->
-  # query = new Parse.Query("AnimalTimelineEntry")
-  # query.equalTo("objectId", request.object.get("entry").id)
-  # console.log("finding entry: " + request.object.get("entry").id)
-  # query.find
-  #   success: (results) ->
-  #     console.log("found: " + JSON.stringify(results))
-  #     if results.length > 0
-  #       entry = results[0]
-  #
-  #       count = entry.get("likeCount")
-  #       if count == null || count == undefined
-  #         count = 0
-  #       entry.set("likeCount", count - 1)
-  #       entry.save(null,
-  #         success: (result) ->
-  #           console.log("entry saved with like count: " + (count - 1))
-  #           # return response.success()
-  #       )
-
-  query = new Parse.Query("Activity")
-  query.equalTo("actingUser", request.object.get("actingUser"))
-  query.equalTo("entryActedOn", request.object.get("entry"))
-  query.equalTo("action", "like")
-  console.log("finding activities to destroy")
-  query.find
-    useMasterKey: true
-    success: (results) ->
-      for result in results
-        console.log("destroying activity")
-        result.destroy
-          useMasterKey: true
+# Parse.Cloud.afterDelete "Like", (request, response) ->
 
 
 Parse.Cloud.afterDelete "Animal", (request, response) ->

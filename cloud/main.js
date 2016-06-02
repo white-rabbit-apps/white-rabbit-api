@@ -417,6 +417,26 @@ Parse.Cloud.afterDelete("Like", function(request, response) {
       }
     }
   });
+  query = new Parse.Query("Activity");
+  query.equalTo("actingUser", request.object.get("actingUser"));
+  query.equalTo("entryActedOn", request.object.get("entry"));
+  query.equalTo("action", "like");
+  console.log("finding activities to destroy");
+  query.find({
+    useMasterKey: true,
+    success: function(results) {
+      var result, _i, _len, _results;
+      _results = [];
+      for (_i = 0, _len = results.length; _i < _len; _i++) {
+        result = results[_i];
+        console.log("destroying activity");
+        _results.push(result.destroy({
+          useMasterKey: true
+        }));
+      }
+      return _results;
+    }
+  });
   return response.success();
 });
 
@@ -536,11 +556,30 @@ Parse.Cloud.afterDelete("Comment", function(request, response) {
         return entry.save(null, {
           useMasterKey: true,
           success: function(result) {
-            console.log("entry saved: " + result);
-            return response.success();
+            return console.log("entry saved: " + result);
           }
         });
       }
+    }
+  });
+  query = new Parse.Query("Activity");
+  query.equalTo("actingAnimal", request.object.get("animal"));
+  query.equalTo("entryActedOn", request.object.get("entry"));
+  query.equalTo("commentMade", request.object);
+  console.log("finding activities to destroy");
+  query.find({
+    useMasterKey: true,
+    success: function(results) {
+      var result, _i, _len, _results;
+      _results = [];
+      for (_i = 0, _len = results.length; _i < _len; _i++) {
+        result = results[_i];
+        console.log("destroying activity");
+        _results.push(result.destroy({
+          useMasterKey: true
+        }));
+      }
+      return _results;
     }
   });
   return response.success();

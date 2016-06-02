@@ -419,6 +419,21 @@ Parse.Cloud.afterDelete "Like", (request, response) ->
             console.log("entry saved: " + result)
             return response.success()
         )
+
+  ## Delete the activities associated with this like
+  query = new Parse.Query("Activity")
+  query.equalTo("actingUser", request.object.get("actingUser"))
+  query.equalTo("entryActedOn", request.object.get("entry"))
+  query.equalTo("action", "like")
+  console.log("finding activities to destroy")
+  query.find
+    useMasterKey: true
+    success: (results) ->
+      for result in results
+        console.log("destroying activity")
+        result.destroy
+          useMasterKey: true
+
   return response.success()
 
 
@@ -546,6 +561,7 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
 Parse.Cloud.afterDelete "Comment", (request, response) ->
   console.log("afterDelete: Comment")
 
+  ## Decrement the commentCount for the associated timeline entry
   query = new Parse.Query("AnimalTimelineEntry")
   query.equalTo("objectId", request.object.get("entry").id)
   console.log("finding entry: " + request.object.get("entry").id)
@@ -568,6 +584,22 @@ Parse.Cloud.afterDelete "Comment", (request, response) ->
           useMasterKey: true
           success: (result) ->
             console.log("entry saved: " + result)
-            return response.success()
+            # return response.success()
         )
+
+  ## Delete the activities associated with this comment
+  query = new Parse.Query("Activity")
+  query.equalTo("actingAnimal", request.object.get("animal"))
+  query.equalTo("entryActedOn", request.object.get("entry"))
+  query.equalTo("commentMade", request.object)
+  console.log("finding activities to destroy")
+  query.find
+    useMasterKey: true
+    success: (results) ->
+      for result in results
+        console.log("destroying activity")
+        result.destroy
+          useMasterKey: true
+
+
   return response.success()

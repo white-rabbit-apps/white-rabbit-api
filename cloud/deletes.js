@@ -44,55 +44,6 @@ Parse.Cloud.afterDelete("Follow", function(request, response) {
   });
 });
 
-Parse.Cloud.afterDelete("Comment", function(request, response) {
-  var query;
-  query = new Parse.Query("Activity");
-  query.equalTo("actingAnimal", request.object.get("animal"));
-  query.equalTo("entryActedOn", request.object.get("entry"));
-  query.equalTo("entryActedOn", request.object.get("entry"));
-  query.equalTo("commentMade", request.object);
-  console.log("finding activities to destroy");
-  return query.find({
-    useMasterKey: true,
-    success: function(results) {
-      var result, _i, _len, _results;
-      _results = [];
-      for (_i = 0, _len = results.length; _i < _len; _i++) {
-        result = results[_i];
-        console.log("destroying activity");
-        _results.push(result.destroy({
-          useMasterKey: true
-        }));
-      }
-      return _results;
-    }
-  });
-});
-
-Parse.Cloud.afterDelete("Like", function(request, response) {
-  var query;
-  query = new Parse.Query("Activity");
-  query.equalTo("actingUser", request.object.get("actingUser"));
-  query.equalTo("entryActedOn", request.object.get("entry"));
-  query.equalTo("action", "like");
-  console.log("finding activities to destroy");
-  return query.find({
-    useMasterKey: true,
-    success: function(results) {
-      var result, _i, _len, _results;
-      _results = [];
-      for (_i = 0, _len = results.length; _i < _len; _i++) {
-        result = results[_i];
-        console.log("destroying activity");
-        _results.push(result.destroy({
-          useMasterKey: true
-        }));
-      }
-      return _results;
-    }
-  });
-});
-
 Parse.Cloud.afterDelete("Animal", function(request, response) {
   var query;
   query = new Parse.Query("AnimalTimelineEntry");
