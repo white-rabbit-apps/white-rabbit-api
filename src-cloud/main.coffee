@@ -364,11 +364,11 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
 
         console.log("entry: " + JSON.stringify(entry))
 
-        # ownerId = ""
-        # if entry.get("createdBy")
-        #   ownerId = entry.get("createdBy").id
-        #
-        # console.log("ownerId: " + ownerId)
+        ownerId = ""
+        if entry.get("createdBy")
+          ownerId = entry.get("createdBy").id
+
+        console.log("saving activity for ownerId: " + ownerId)
 
         animalId = request.object.get("animal").id
 
@@ -379,56 +379,56 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
           useMasterKey: true
           success: (animal) ->
 
-            actedOnAnimalQuery = new Parse.Query("Animal")
-            actedOnAnimalQuery.get actedOnAnimalId,
+            # actedOnAnimalQuery = new Parse.Query("Animal")
+            # actedOnAnimalQuery.get actedOnAnimalId,
+            #   useMasterKey: true
+            #   success: (actedOnAnimal) ->
+            #
+            #     owners = []
+            #     if actedOnAnimal.get("owners")
+            #       owners = actedOnAnimal.get("owners")
+            #     else if actedOnAnimal.get("foster")
+            #       owners = [actedOnAnimal.get("foster")]
+            #
+            #     console.log("owners: " + owners)
+            #
+            #     for owner in owners
+            #
+            #       ownerId = owner.id
+
+            activity = new Parse.Object("Activity")
+            activity.set("action", "comment")
+
+            activity.set("actingAnimal", {
+              "__type": "Pointer",
+              "className": "Animal",
+              "objectId": animalId
+            })
+
+            activity.set("actingAnimalName", animal.get('username'))
+
+            activity.set("entryActedOn", {
+              "__type": "Pointer",
+              "className": "AnimalTimelineEntry",
+              "objectId": request.object.get("entry").id
+            })
+
+            activity.set("commentMade", request.object)
+            activity.set("commentMadeText", request.object.get("text"))
+
+            activity.set("forUser", {
+              "__type": "Pointer",
+              "className": "_User",
+              "objectId": ownerId
+            })
+
+            console.log("saving activity for owner: " + ownerId)
+            activity.save(null,
               useMasterKey: true
-              success: (actedOnAnimal) ->
-
-                owners = []
-                if actedOnAnimal.get("owners")
-                  owners = actedOnAnimal.get("owners")
-                else if actedOnAnimal.get("foster")
-                  owners = [actedOnAnimal.get("foster")]
-
-                console.log("owners: " + owners)
-
-                for owner in owners
-
-                  ownerId = owner.id
-
-                  activity = new Parse.Object("Activity")
-                  activity.set("action", "comment")
-
-                  activity.set("actingAnimal", {
-                    "__type": "Pointer",
-                    "className": "Animal",
-                    "objectId": animalId
-                  })
-
-                  activity.set("actingAnimalName", animal.get('username'))
-
-                  activity.set("entryActedOn", {
-                    "__type": "Pointer",
-                    "className": "AnimalTimelineEntry",
-                    "objectId": request.object.get("entry").id
-                  })
-
-                  activity.set("commentMade", request.object)
-                  activity.set("commentMadeText", request.object.get("text"))
-
-                  activity.set("forUser", {
-                    "__type": "Pointer",
-                    "className": "_User",
-                    "objectId": ownerId
-                  })
-
-                  console.log("saving activity for owner: " + ownerId)
-                  activity.save(null,
-                    useMasterKey: true
-                    success: (result) ->
-                      console.log("for user: " + result.get("forUser").id + ", activity saved: " + result)
-                      # return response.success()
-                  )
+              success: (result) ->
+                console.log("for user: " + result.get("forUser").id + ", activity saved: " + result)
+                # return response.success()
+            )
           error: (error) ->
             console.log 'ERROR: ' + error
 
