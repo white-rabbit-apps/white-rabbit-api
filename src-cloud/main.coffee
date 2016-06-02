@@ -370,33 +370,14 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
         #
         # console.log("ownerId: " + ownerId)
 
-        activity = new Parse.Object("Activity")
-        activity.set("action", "comment")
-
         animalId = request.object.get("animal").id
 
         actedOnAnimalId = entry.get("animal").id
-
-        activity.set("actingAnimal", {
-          "__type": "Pointer",
-          "className": "Animal",
-          "objectId": animalId
-        })
 
         animalQuery = new Parse.Query("Animal")
         animalQuery.get animalId,
           useMasterKey: true
           success: (animal) ->
-            activity.set("actingAnimalName", animal.get('username'))
-
-            activity.set("entryActedOn", {
-              "__type": "Pointer",
-              "className": "AnimalTimelineEntry",
-              "objectId": request.object.get("entry").id
-            })
-
-            activity.set("commentMade", request.object)
-            activity.set("commentMadeText", request.object.get("text"))
 
             actedOnAnimalQuery = new Parse.Query("Animal")
             actedOnAnimalQuery.get actedOnAnimalId,
@@ -415,6 +396,26 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
 
                   ownerId = owner.id
 
+                  activity = new Parse.Object("Activity")
+                  activity.set("action", "comment")
+
+                  activity.set("actingAnimal", {
+                    "__type": "Pointer",
+                    "className": "Animal",
+                    "objectId": animalId
+                  })
+
+                  activity.set("actingAnimalName", animal.get('username'))
+
+                  activity.set("entryActedOn", {
+                    "__type": "Pointer",
+                    "className": "AnimalTimelineEntry",
+                    "objectId": request.object.get("entry").id
+                  })
+
+                  activity.set("commentMade", request.object)
+                  activity.set("commentMadeText", request.object.get("text"))
+
                   activity.set("forUser", {
                     "__type": "Pointer",
                     "className": "_User",
@@ -425,7 +426,7 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
                   activity.save(null,
                     useMasterKey: true
                     success: (result) ->
-                      console.log("for user: " + ownerId + ", activity saved: " + result)
+                      console.log("for user: " + result.get("forUser").id + ", activity saved: " + result)
                       # return response.success()
                   )
           error: (error) ->

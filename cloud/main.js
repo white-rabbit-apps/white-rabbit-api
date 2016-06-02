@@ -368,38 +368,23 @@ Parse.Cloud.afterSave("Comment", function(request, response) {
   query.find({
     useMasterKey: true,
     success: function(results) {
-      var actedOnAnimalId, activity, animalId, animalQuery, entry;
+      var actedOnAnimalId, animalId, animalQuery, entry;
       console.log("found: " + results);
       if (results.length > 0) {
         entry = results[0];
         console.log("entry: " + JSON.stringify(entry));
-        activity = new Parse.Object("Activity");
-        activity.set("action", "comment");
         animalId = request.object.get("animal").id;
         actedOnAnimalId = entry.get("animal").id;
-        activity.set("actingAnimal", {
-          "__type": "Pointer",
-          "className": "Animal",
-          "objectId": animalId
-        });
         animalQuery = new Parse.Query("Animal");
         return animalQuery.get(animalId, {
           useMasterKey: true,
           success: function(animal) {
             var actedOnAnimalQuery;
-            activity.set("actingAnimalName", animal.get('username'));
-            activity.set("entryActedOn", {
-              "__type": "Pointer",
-              "className": "AnimalTimelineEntry",
-              "objectId": request.object.get("entry").id
-            });
-            activity.set("commentMade", request.object);
-            activity.set("commentMadeText", request.object.get("text"));
             actedOnAnimalQuery = new Parse.Query("Animal");
             return actedOnAnimalQuery.get(actedOnAnimalId, {
               useMasterKey: true,
               success: function(actedOnAnimal) {
-                var owner, ownerId, owners, _i, _len, _results;
+                var activity, owner, ownerId, owners, _i, _len, _results;
                 owners = [];
                 if (actedOnAnimal.get("owners")) {
                   owners = actedOnAnimal.get("owners");
@@ -411,6 +396,21 @@ Parse.Cloud.afterSave("Comment", function(request, response) {
                 for (_i = 0, _len = owners.length; _i < _len; _i++) {
                   owner = owners[_i];
                   ownerId = owner.id;
+                  activity = new Parse.Object("Activity");
+                  activity.set("action", "comment");
+                  activity.set("actingAnimal", {
+                    "__type": "Pointer",
+                    "className": "Animal",
+                    "objectId": animalId
+                  });
+                  activity.set("actingAnimalName", animal.get('username'));
+                  activity.set("entryActedOn", {
+                    "__type": "Pointer",
+                    "className": "AnimalTimelineEntry",
+                    "objectId": request.object.get("entry").id
+                  });
+                  activity.set("commentMade", request.object);
+                  activity.set("commentMadeText", request.object.get("text"));
                   activity.set("forUser", {
                     "__type": "Pointer",
                     "className": "_User",
@@ -420,7 +420,7 @@ Parse.Cloud.afterSave("Comment", function(request, response) {
                   _results.push(activity.save(null, {
                     useMasterKey: true,
                     success: function(result) {
-                      return console.log("for user: " + ownerId + ", activity saved: " + result);
+                      return console.log("for user: " + result.get("forUser").id + ", activity saved: " + result);
                     }
                   }));
                 }
