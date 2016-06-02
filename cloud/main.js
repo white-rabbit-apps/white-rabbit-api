@@ -376,7 +376,7 @@ Parse.Cloud.afterSave("Like", function(request, response) {
         return entry.save(null, {
           useMasterKey: true,
           success: function(result) {
-            console.log("entry saved: " + result);
+            console.log("Entry saved after incrementing likeCount: " + result);
             return response.success();
           }
         });
@@ -410,7 +410,7 @@ Parse.Cloud.afterDelete("Like", function(request, response) {
         return entry.save(null, {
           useMasterKey: true,
           success: function(result) {
-            console.log("entry saved: " + result);
+            console.log("Entry saved after decrementing likeCount: " + result);
             return response.success();
           }
         });
@@ -525,7 +525,7 @@ Parse.Cloud.afterSave("Comment", function(request, response) {
         return entry.save(null, {
           useMasterKey: true,
           success: function(result) {
-            return console.log("entry saved: " + result);
+            return console.log("Entry saved after incrementing commentCount: " + result);
           }
         });
       }
@@ -556,7 +556,7 @@ Parse.Cloud.afterDelete("Comment", function(request, response) {
         return entry.save(null, {
           useMasterKey: true,
           success: function(result) {
-            return console.log("entry saved: " + result);
+            return console.log("Entry saved after decrementing commentCount: " + result);
           }
         });
       }
