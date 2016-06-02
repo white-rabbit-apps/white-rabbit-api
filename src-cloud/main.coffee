@@ -286,8 +286,78 @@ Parse.Cloud.afterSave "Animal", (request, response) ->
 
 
 
-# After creating a like, increment the likeCount on the entry
+## After creating a like:
+## - create activity items for the owners of the entry
+## - increment the likeCount on the entry
 Parse.Cloud.afterSave "Like", (request, response) ->
+  console.log("afterSave: Like")
+
+  query = new Parse.Query("AnimalTimelineEntry")
+  query.equalTo("objectId", request.object.get("entry").id)
+  query.include("createdBy")
+  query.include("animal")
+  console.log("finding entry: " + request.object.get("entry").id)
+  query.find
+    useMasterKey: true
+    success: (results) ->
+      console.log("found: " + JSON.stringify(results))
+      if results.length > 0
+        entry = results[0]
+        animal = entry.get("animal")
+
+        owners = []
+        if animal.get("owners")
+          owners = animal.get("owners")
+        else if animal.get("foster")
+          owners = [animal.get("foster")]
+
+        console.log("owners: " + owners)
+
+        for owner in owners
+          ownerId = owner.id
+
+          console.log("creating activity for owner: " + ownerId)
+
+          if ownerId != request.object.get("actingUser").id
+            activity = new Parse.Object("Activity")
+            activity.set("action", "like")
+            activity.set("likeAction", request.object.get("action"))
+
+            userId = request.object.get("actingUser").id
+            activity.set("actingUser", {
+              "__type": "Pointer",
+              "className": "_User",
+              "objectId": userId
+            })
+
+            userQuery = new Parse.Query("_User")
+            userQuery.get userId,
+              useMasterKey: true
+              success: (user) ->
+
+                activity.set("actingUserName", user.get('username'))
+
+                activity.set("entryActedOn", {
+                  "__type": "Pointer",
+                  "className": "AnimalTimelineEntry",
+                  "objectId": request.object.get("entry").id
+                })
+
+                activity.set("forUser", {
+                  "__type": "Pointer",
+                  "className": "_User",
+                  "objectId": ownerId
+                })
+
+                console.log("saving activity")
+                activity.save(null,
+                  useMasterKey: true
+                  success: (result) ->
+                    console.log("activity saved: " + result)
+                    # return response.success()
+                )
+
+
   console.log("new like - incrementing count")
 
   query = new Parse.Query("AnimalTimelineEntry")
@@ -317,8 +387,11 @@ Parse.Cloud.afterSave "Like", (request, response) ->
   return response.success()
 
 
-# After deleting a like, decrement the likeCount on the entry
+# After deleting a like:
+# - decrement the likeCount on the entry
 Parse.Cloud.afterDelete "Like", (request, response) ->
+  console.log("afterDelete: Like")
+
   console.log("deleted like - decrementing count")
   query = new Parse.Query("AnimalTimelineEntry")
   query.equalTo("objectId", request.object.get("entry").id)
@@ -347,9 +420,101 @@ Parse.Cloud.afterDelete "Like", (request, response) ->
   return response.success()
 
 
-
+## After saving a Comment:
+## - create activity items for the user that created the entry
+## - increment the commentCount for the entry
 Parse.Cloud.afterSave "Comment", (request, response) ->
-  console.log("new comment - incrementing count")
+  console.log("afterSave: Comment")
+
+  ## Create an activity item for the user that created the entry
+  console.log("Creating activity items for comment: " + request.object.get("text"))
+
+  ## Find the timeline entry that was commented on
+  console.log("Finding timeline entry: " + request.object.get("entry").id)
+  query = new Parse.Query("AnimalTimelineEntry")
+  query.equalTo("objectId", request.object.get("entry").id)
+  query.include("createdBy")
+  query.include("animal")
+  query.find
+    useMasterKey: true
+    success: (results) ->
+      console.log("found: " + results)
+      if results.length > 0
+        entry = results[0]
+
+        console.log("Timeline entry found: " + entry)
+
+
+        ## Find who created the entry
+        ownerId = ""
+        if entry.get("createdBy")
+          ownerId = entry.get("createdBy").id
+          console.log("Timeline entry creator: " + ownerId)
+        else
+          console.log("Timeline entry creator not found")
+          return
+
+        ## Find the acting animal to get its name
+        actingAnimalId = request.object.get("animal").id
+        actingAnimalQuery = new Parse.Query("Animal")
+        console.log("Finding acting animal: " + actingAnimalId)
+        actingAnimalQuery.get actingAnimalId,
+          useMasterKey: true
+          success: (actingAnimal) ->
+
+            ## Find the animal acted on so we can find the owners and fosters
+            # actedOnAnimalId = entry.get("animal").id
+            # actedOnAnimalQuery = new Parse.Query("Animal")
+            # actedOnAnimalQuery.get actedOnAnimalId,
+            #   useMasterKey: true
+            #   success: (actedOnAnimal) ->
+            #
+            #     owners = []
+            #     if actedOnAnimal.get("owners")
+            #       owners = actedOnAnimal.get("owners")
+            #     else if actedOnAnimal.get("foster")
+            #       owners = [actedOnAnimal.get("foster")]
+            #
+            #     console.log("Found owners for the acted on: " + owners)
+            #
+            #     for owner in owners
+            #       ownerId = owner.id
+
+            activity = new Parse.Object("Activity")
+            activity.set("action", "comment")
+
+            activity.set("actingAnimal", {
+              "__type": "Pointer",
+              "className": "Animal",
+              "objectId": actingAnimalId
+            })
+
+            activity.set("actingAnimalName", actingAnimal.get('username'))
+
+            activity.set("entryActedOn", {
+              "__type": "Pointer",
+              "className": "AnimalTimelineEntry",
+              "objectId": request.object.get("entry").id
+            })
+
+            activity.set("commentMade", request.object)
+            activity.set("commentMadeText", request.object.get("text"))
+
+            activity.set("forUser", {
+              "__type": "Pointer",
+              "className": "_User",
+              "objectId": ownerId
+            })
+
+            console.log("Saving activity for owner: " + ownerId)
+            activity.save(null,
+              useMasterKey: true
+              success: (result) ->
+                console.log("for user: " + result.get("forUser").id + ", activity saved: " + result)
+            )
+          error: (error) ->
+            console.log 'ERROR: ' + error
+
 
   query = new Parse.Query("AnimalTimelineEntry")
   query.equalTo("objectId", request.object.get("entry").id)
@@ -377,7 +542,8 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
 
 # After deleting a like, decrement the likeCount on the entry
 Parse.Cloud.afterDelete "Comment", (request, response) ->
-  console.log("deleted comment - decrementing count")
+  console.log("afterDelete: Comment")
+
   query = new Parse.Query("AnimalTimelineEntry")
   query.equalTo("objectId", request.object.get("entry").id)
   console.log("finding entry: " + request.object.get("entry").id)
