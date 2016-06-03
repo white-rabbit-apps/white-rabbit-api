@@ -338,21 +338,22 @@ Parse.Cloud.afterSave "Like", (request, response) ->
               ownerId = owner.id
 
               if ownerId != request.object.get("actingUser").id
-                activity = new Parse.Object("Activity")
-                activity.set("action", "like")
-                activity.set("likeAction", request.object.get("action"))
 
                 userId = request.object.get("actingUser").id
-                activity.set("actingUser", {
-                  "__type": "Pointer",
-                  "className": "_User",
-                  "objectId": userId
-                })
 
                 userQuery = new Parse.Query("_User")
                 userQuery.get userId,
                   useMasterKey: true
                   success: (user) ->
+                    activity = new Parse.Object("Activity")
+                    activity.set("action", "like")
+                    activity.set("likeAction", request.object.get("action"))
+
+                    activity.set("actingUser", {
+                      "__type": "Pointer",
+                      "className": "_User",
+                      "objectId": userId
+                    })
 
                     activity.set("actingUserName", user.get('username'))
 

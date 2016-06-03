@@ -314,7 +314,7 @@ Parse.Cloud.afterSave("Like", function(request, response) {
         return actedOnAnimalQuery.get(actedOnAnimalId, {
           useMasterKey: true,
           success: function(actedOnAnimal) {
-            var activity, owner, ownerId, owners, userId, userQuery, _i, _len, _results;
+            var owner, ownerId, owners, userId, userQuery, _i, _len, _results;
             owners = [];
             if (actedOnAnimal.get("owners")) {
               owners = actedOnAnimal.get("owners");
@@ -327,19 +327,20 @@ Parse.Cloud.afterSave("Like", function(request, response) {
               owner = owners[_i];
               ownerId = owner.id;
               if (ownerId !== request.object.get("actingUser").id) {
-                activity = new Parse.Object("Activity");
-                activity.set("action", "like");
-                activity.set("likeAction", request.object.get("action"));
                 userId = request.object.get("actingUser").id;
-                activity.set("actingUser", {
-                  "__type": "Pointer",
-                  "className": "_User",
-                  "objectId": userId
-                });
                 userQuery = new Parse.Query("_User");
                 _results.push(userQuery.get(userId, {
                   useMasterKey: true,
                   success: function(user) {
+                    var activity;
+                    activity = new Parse.Object("Activity");
+                    activity.set("action", "like");
+                    activity.set("likeAction", request.object.get("action"));
+                    activity.set("actingUser", {
+                      "__type": "Pointer",
+                      "className": "_User",
+                      "objectId": userId
+                    });
                     activity.set("actingUserName", user.get('username'));
                     activity.set("entryActedOn", {
                       "__type": "Pointer",
