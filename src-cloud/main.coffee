@@ -329,22 +329,22 @@ Parse.Cloud.afterSave "Like", (request, response) ->
             owners = []
             if actedOnAnimal.get("owners")
               owners = actedOnAnimal.get("owners")
-            else if actedOnAnimal.get("foster")
-              owners = [actedOnAnimal.get("foster")]
+            else if actedOnAnimal.get("fosters")
+              owners = actedOnAnimal.get("fosters")
 
             console.log("Found owners for the acted on: " + owners)
 
-            for owner in owners
-              ownerId = owner.id
+            userId = request.object.get("actingUser").id
 
-              if ownerId != request.object.get("actingUser").id
+            userQuery = new Parse.Query("_User")
+            userQuery.get userId,
+              useMasterKey: true
+              success: (user) ->
 
-                userId = request.object.get("actingUser").id
+                for owner in owners
+                  ownerId = owner.id
 
-                userQuery = new Parse.Query("_User")
-                userQuery.get userId,
-                  useMasterKey: true
-                  success: (user) ->
+                  if ownerId != request.object.get("actingUser").id
                     activity = new Parse.Object("Activity")
                     activity.set("action", "like")
                     activity.set("likeAction", request.object.get("action"))
@@ -507,8 +507,8 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
                 owners = []
                 if actedOnAnimal.get("owners")
                   owners = actedOnAnimal.get("owners")
-                else if actedOnAnimal.get("foster")
-                  owners = [actedOnAnimal.get("foster")]
+                else if actedOnAnimal.get("fosters")
+                  owners = actedOnAnimal.get("fosters")
 
                 console.log("Found owners for the acted on: " + owners)
 

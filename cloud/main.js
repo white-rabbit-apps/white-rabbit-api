@@ -314,25 +314,25 @@ Parse.Cloud.afterSave("Like", function(request, response) {
         return actedOnAnimalQuery.get(actedOnAnimalId, {
           useMasterKey: true,
           success: function(actedOnAnimal) {
-            var owner, ownerId, owners, userId, userQuery, _i, _len, _results;
+            var owners, userId, userQuery;
             owners = [];
             if (actedOnAnimal.get("owners")) {
               owners = actedOnAnimal.get("owners");
-            } else if (actedOnAnimal.get("foster")) {
-              owners = [actedOnAnimal.get("foster")];
+            } else if (actedOnAnimal.get("fosters")) {
+              owners = actedOnAnimal.get("fosters");
             }
             console.log("Found owners for the acted on: " + owners);
-            _results = [];
-            for (_i = 0, _len = owners.length; _i < _len; _i++) {
-              owner = owners[_i];
-              ownerId = owner.id;
-              if (ownerId !== request.object.get("actingUser").id) {
-                userId = request.object.get("actingUser").id;
-                userQuery = new Parse.Query("_User");
-                _results.push(userQuery.get(userId, {
-                  useMasterKey: true,
-                  success: function(user) {
-                    var activity;
+            userId = request.object.get("actingUser").id;
+            userQuery = new Parse.Query("_User");
+            return userQuery.get(userId, {
+              useMasterKey: true,
+              success: function(user) {
+                var activity, owner, ownerId, _i, _len, _results;
+                _results = [];
+                for (_i = 0, _len = owners.length; _i < _len; _i++) {
+                  owner = owners[_i];
+                  ownerId = owner.id;
+                  if (ownerId !== request.object.get("actingUser").id) {
                     activity = new Parse.Object("Activity");
                     activity.set("action", "like");
                     activity.set("likeAction", request.object.get("action"));
@@ -353,19 +353,19 @@ Parse.Cloud.afterSave("Like", function(request, response) {
                       "objectId": ownerId
                     });
                     console.log("saving activity for owner: " + ownerId);
-                    return activity.save(null, {
+                    _results.push(activity.save(null, {
                       useMasterKey: true,
                       success: function(result) {
                         return console.log("for user: " + result.get("forUser").id + ", activity saved: " + result);
                       }
-                    });
+                    }));
+                  } else {
+                    _results.push(void 0);
                   }
-                }));
-              } else {
-                _results.push(void 0);
+                }
+                return _results;
               }
-            }
-            return _results;
+            });
           }
         });
       }
@@ -489,8 +489,8 @@ Parse.Cloud.afterSave("Comment", function(request, response) {
                 owners = [];
                 if (actedOnAnimal.get("owners")) {
                   owners = actedOnAnimal.get("owners");
-                } else if (actedOnAnimal.get("foster")) {
-                  owners = [actedOnAnimal.get("foster")];
+                } else if (actedOnAnimal.get("fosters")) {
+                  owners = actedOnAnimal.get("fosters");
                 }
                 console.log("Found owners for the acted on: " + owners);
                 _results = [];
