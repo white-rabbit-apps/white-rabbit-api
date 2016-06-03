@@ -369,11 +369,11 @@ Parse.Cloud.afterSave "Like", (request, response) ->
                       "objectId": ownerId
                     })
 
-                    console.log("saving activity")
+                    console.log("saving activity for owner: " + ownerId)
                     activity.save(null,
                       useMasterKey: true
                       success: (result) ->
-                        console.log("activity saved: " + result)
+                        console.log("for user: " + result.get("forUser").id + ", activity saved: " + result)
                         # return response.success()
                     )
 

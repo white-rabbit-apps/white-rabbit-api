@@ -352,11 +352,11 @@ Parse.Cloud.afterSave("Like", function(request, response) {
                       "className": "_User",
                       "objectId": ownerId
                     });
-                    console.log("saving activity");
+                    console.log("saving activity for owner: " + ownerId);
                     return activity.save(null, {
                       useMasterKey: true,
                       success: function(result) {
-                        return console.log("activity saved: " + result);
+                        return console.log("for user: " + result.get("forUser").id + ", activity saved: " + result);
                       }
                     });
                   }
