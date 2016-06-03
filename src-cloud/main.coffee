@@ -310,53 +310,71 @@ Parse.Cloud.afterSave "Like", (request, response) ->
 
         console.log("Timeline entry found: " + entry)
 
-        ## Find who created the entry
-        ownerId = ""
-        if entry.get("createdBy")
-          ownerId = entry.get("createdBy").id
-          console.log("Timeline entry creator: " + ownerId)
-        else
-          console.log("Timeline entry creator not found")
-          return
+        # ## Find who created the entry
+        # ownerId = ""
+        # if entry.get("createdBy")
+        #   ownerId = entry.get("createdBy").id
+        #   console.log("Timeline entry creator: " + ownerId)
+        # else
+        #   console.log("Timeline entry creator not found")
+        #   return
 
-        if ownerId != request.object.get("actingUser").id
-          activity = new Parse.Object("Activity")
-          activity.set("action", "like")
-          activity.set("likeAction", request.object.get("action"))
+        ## Find the animal acted on so we can find the owners and fosters
+        actedOnAnimalId = entry.get("animal").id
+        actedOnAnimalQuery = new Parse.Query("Animal")
+        actedOnAnimalQuery.get actedOnAnimalId,
+          useMasterKey: true
+          success: (actedOnAnimal) ->
 
-          userId = request.object.get("actingUser").id
-          activity.set("actingUser", {
-            "__type": "Pointer",
-            "className": "_User",
-            "objectId": userId
-          })
+            owners = []
+            if actedOnAnimal.get("owners")
+              owners = actedOnAnimal.get("owners")
+            else if actedOnAnimal.get("foster")
+              owners = [actedOnAnimal.get("foster")]
 
-          userQuery = new Parse.Query("_User")
-          userQuery.get userId,
-            useMasterKey: true
-            success: (user) ->
+            console.log("Found owners for the acted on: " + owners)
 
-              activity.set("actingUserName", user.get('username'))
+            for owner in owners
+              ownerId = owner.id
 
-              activity.set("entryActedOn", {
-                "__type": "Pointer",
-                "className": "AnimalTimelineEntry",
-                "objectId": request.object.get("entry").id
-              })
+              if ownerId != request.object.get("actingUser").id
+                activity = new Parse.Object("Activity")
+                activity.set("action", "like")
+                activity.set("likeAction", request.object.get("action"))
 
-              activity.set("forUser", {
-                "__type": "Pointer",
-                "className": "_User",
-                "objectId": ownerId
-              })
+                userId = request.object.get("actingUser").id
+                activity.set("actingUser", {
+                  "__type": "Pointer",
+                  "className": "_User",
+                  "objectId": userId
+                })
 
-              console.log("saving activity")
-              activity.save(null,
-                useMasterKey: true
-                success: (result) ->
-                  console.log("activity saved: " + result)
-                  # return response.success()
-              )
+                userQuery = new Parse.Query("_User")
+                userQuery.get userId,
+                  useMasterKey: true
+                  success: (user) ->
+
+                    activity.set("actingUserName", user.get('username'))
+
+                    activity.set("entryActedOn", {
+                      "__type": "Pointer",
+                      "className": "AnimalTimelineEntry",
+                      "objectId": request.object.get("entry").id
+                    })
+
+                    activity.set("forUser", {
+                      "__type": "Pointer",
+                      "className": "_User",
+                      "objectId": ownerId
+                    })
+
+                    console.log("saving activity")
+                    activity.save(null,
+                      useMasterKey: true
+                      success: (result) ->
+                        console.log("activity saved: " + result)
+                        # return response.success()
+                    )
 
 
   ## Increment the like count on the entry
@@ -461,15 +479,14 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
 
         console.log("Timeline entry found: " + entry)
 
-
         ## Find who created the entry
-        ownerId = ""
-        if entry.get("createdBy")
-          ownerId = entry.get("createdBy").id
-          console.log("Timeline entry creator: " + ownerId)
-        else
-          console.log("Timeline entry creator not found")
-          return
+        # ownerId = ""
+        # if entry.get("createdBy")
+        #   ownerId = entry.get("createdBy").id
+        #   console.log("Timeline entry creator: " + ownerId)
+        # else
+        #   console.log("Timeline entry creator not found")
+        #   return
 
         ## Find the acting animal to get its name
         actingAnimalId = request.object.get("animal").id
@@ -480,55 +497,55 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
           success: (actingAnimal) ->
 
             ## Find the animal acted on so we can find the owners and fosters
-            # actedOnAnimalId = entry.get("animal").id
-            # actedOnAnimalQuery = new Parse.Query("Animal")
-            # actedOnAnimalQuery.get actedOnAnimalId,
-            #   useMasterKey: true
-            #   success: (actedOnAnimal) ->
-            #
-            #     owners = []
-            #     if actedOnAnimal.get("owners")
-            #       owners = actedOnAnimal.get("owners")
-            #     else if actedOnAnimal.get("foster")
-            #       owners = [actedOnAnimal.get("foster")]
-            #
-            #     console.log("Found owners for the acted on: " + owners)
-            #
-            #     for owner in owners
-            #       ownerId = owner.id
-
-            activity = new Parse.Object("Activity")
-            activity.set("action", "comment")
-
-            activity.set("actingAnimal", {
-              "__type": "Pointer",
-              "className": "Animal",
-              "objectId": actingAnimalId
-            })
-
-            activity.set("actingAnimalName", actingAnimal.get('username'))
-
-            activity.set("entryActedOn", {
-              "__type": "Pointer",
-              "className": "AnimalTimelineEntry",
-              "objectId": request.object.get("entry").id
-            })
-
-            activity.set("commentMade", request.object)
-            activity.set("commentMadeText", request.object.get("text"))
-
-            activity.set("forUser", {
-              "__type": "Pointer",
-              "className": "_User",
-              "objectId": ownerId
-            })
-
-            console.log("Saving activity for owner: " + ownerId)
-            activity.save(null,
+            actedOnAnimalId = entry.get("animal").id
+            actedOnAnimalQuery = new Parse.Query("Animal")
+            actedOnAnimalQuery.get actedOnAnimalId,
               useMasterKey: true
-              success: (result) ->
-                console.log("for user: " + result.get("forUser").id + ", activity saved: " + result)
-            )
+              success: (actedOnAnimal) ->
+
+                owners = []
+                if actedOnAnimal.get("owners")
+                  owners = actedOnAnimal.get("owners")
+                else if actedOnAnimal.get("foster")
+                  owners = [actedOnAnimal.get("foster")]
+
+                console.log("Found owners for the acted on: " + owners)
+
+                for owner in owners
+                  ownerId = owner.id
+
+                  activity = new Parse.Object("Activity")
+                  activity.set("action", "comment")
+
+                  activity.set("actingAnimal", {
+                    "__type": "Pointer",
+                    "className": "Animal",
+                    "objectId": actingAnimalId
+                  })
+
+                  activity.set("actingAnimalName", actingAnimal.get('username'))
+
+                  activity.set("entryActedOn", {
+                    "__type": "Pointer",
+                    "className": "AnimalTimelineEntry",
+                    "objectId": request.object.get("entry").id
+                  })
+
+                  activity.set("commentMade", request.object)
+                  activity.set("commentMadeText", request.object.get("text"))
+
+                  activity.set("forUser", {
+                    "__type": "Pointer",
+                    "className": "_User",
+                    "objectId": ownerId
+                  })
+
+                  console.log("Saving activity for owner: " + ownerId)
+                  activity.save(null,
+                    useMasterKey: true
+                    success: (result) ->
+                      console.log("for user: " + result.get("forUser").id + ", activity saved: " + result)
+                  )
           error: (error) ->
             console.log 'ERROR: ' + error
 

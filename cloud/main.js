@@ -304,54 +304,69 @@ Parse.Cloud.afterSave("Like", function(request, response) {
   query.find({
     useMasterKey: true,
     success: function(results) {
-      var activity, entry, ownerId, userId, userQuery;
+      var actedOnAnimalId, actedOnAnimalQuery, entry;
       console.log("found: " + results);
       if (results.length > 0) {
         entry = results[0];
         console.log("Timeline entry found: " + entry);
-        ownerId = "";
-        if (entry.get("createdBy")) {
-          ownerId = entry.get("createdBy").id;
-          console.log("Timeline entry creator: " + ownerId);
-        } else {
-          console.log("Timeline entry creator not found");
-          return;
-        }
-        if (ownerId !== request.object.get("actingUser").id) {
-          activity = new Parse.Object("Activity");
-          activity.set("action", "like");
-          activity.set("likeAction", request.object.get("action"));
-          userId = request.object.get("actingUser").id;
-          activity.set("actingUser", {
-            "__type": "Pointer",
-            "className": "_User",
-            "objectId": userId
-          });
-          userQuery = new Parse.Query("_User");
-          return userQuery.get(userId, {
-            useMasterKey: true,
-            success: function(user) {
-              activity.set("actingUserName", user.get('username'));
-              activity.set("entryActedOn", {
-                "__type": "Pointer",
-                "className": "AnimalTimelineEntry",
-                "objectId": request.object.get("entry").id
-              });
-              activity.set("forUser", {
-                "__type": "Pointer",
-                "className": "_User",
-                "objectId": ownerId
-              });
-              console.log("saving activity");
-              return activity.save(null, {
-                useMasterKey: true,
-                success: function(result) {
-                  return console.log("activity saved: " + result);
-                }
-              });
+        actedOnAnimalId = entry.get("animal").id;
+        actedOnAnimalQuery = new Parse.Query("Animal");
+        return actedOnAnimalQuery.get(actedOnAnimalId, {
+          useMasterKey: true,
+          success: function(actedOnAnimal) {
+            var activity, owner, ownerId, owners, userId, userQuery, _i, _len, _results;
+            owners = [];
+            if (actedOnAnimal.get("owners")) {
+              owners = actedOnAnimal.get("owners");
+            } else if (actedOnAnimal.get("foster")) {
+              owners = [actedOnAnimal.get("foster")];
             }
-          });
-        }
+            console.log("Found owners for the acted on: " + owners);
+            _results = [];
+            for (_i = 0, _len = owners.length; _i < _len; _i++) {
+              owner = owners[_i];
+              ownerId = owner.id;
+              if (ownerId !== request.object.get("actingUser").id) {
+                activity = new Parse.Object("Activity");
+                activity.set("action", "like");
+                activity.set("likeAction", request.object.get("action"));
+                userId = request.object.get("actingUser").id;
+                activity.set("actingUser", {
+                  "__type": "Pointer",
+                  "className": "_User",
+                  "objectId": userId
+                });
+                userQuery = new Parse.Query("_User");
+                _results.push(userQuery.get(userId, {
+                  useMasterKey: true,
+                  success: function(user) {
+                    activity.set("actingUserName", user.get('username'));
+                    activity.set("entryActedOn", {
+                      "__type": "Pointer",
+                      "className": "AnimalTimelineEntry",
+                      "objectId": request.object.get("entry").id
+                    });
+                    activity.set("forUser", {
+                      "__type": "Pointer",
+                      "className": "_User",
+                      "objectId": ownerId
+                    });
+                    console.log("saving activity");
+                    return activity.save(null, {
+                      useMasterKey: true,
+                      success: function(result) {
+                        return console.log("activity saved: " + result);
+                      }
+                    });
+                  }
+                }));
+              } else {
+                _results.push(void 0);
+              }
+            }
+            return _results;
+          }
+        });
       }
     }
   });
@@ -452,51 +467,64 @@ Parse.Cloud.afterSave("Comment", function(request, response) {
   query.find({
     useMasterKey: true,
     success: function(results) {
-      var actingAnimalId, actingAnimalQuery, entry, ownerId;
+      var actingAnimalId, actingAnimalQuery, entry;
       console.log("found: " + results);
       if (results.length > 0) {
         entry = results[0];
         console.log("Timeline entry found: " + entry);
-        ownerId = "";
-        if (entry.get("createdBy")) {
-          ownerId = entry.get("createdBy").id;
-          console.log("Timeline entry creator: " + ownerId);
-        } else {
-          console.log("Timeline entry creator not found");
-          return;
-        }
         actingAnimalId = request.object.get("animal").id;
         actingAnimalQuery = new Parse.Query("Animal");
         console.log("Finding acting animal: " + actingAnimalId);
         return actingAnimalQuery.get(actingAnimalId, {
           useMasterKey: true,
           success: function(actingAnimal) {
-            var activity;
-            activity = new Parse.Object("Activity");
-            activity.set("action", "comment");
-            activity.set("actingAnimal", {
-              "__type": "Pointer",
-              "className": "Animal",
-              "objectId": actingAnimalId
-            });
-            activity.set("actingAnimalName", actingAnimal.get('username'));
-            activity.set("entryActedOn", {
-              "__type": "Pointer",
-              "className": "AnimalTimelineEntry",
-              "objectId": request.object.get("entry").id
-            });
-            activity.set("commentMade", request.object);
-            activity.set("commentMadeText", request.object.get("text"));
-            activity.set("forUser", {
-              "__type": "Pointer",
-              "className": "_User",
-              "objectId": ownerId
-            });
-            console.log("Saving activity for owner: " + ownerId);
-            return activity.save(null, {
+            var actedOnAnimalId, actedOnAnimalQuery;
+            actedOnAnimalId = entry.get("animal").id;
+            actedOnAnimalQuery = new Parse.Query("Animal");
+            return actedOnAnimalQuery.get(actedOnAnimalId, {
               useMasterKey: true,
-              success: function(result) {
-                return console.log("for user: " + result.get("forUser").id + ", activity saved: " + result);
+              success: function(actedOnAnimal) {
+                var activity, owner, ownerId, owners, _i, _len, _results;
+                owners = [];
+                if (actedOnAnimal.get("owners")) {
+                  owners = actedOnAnimal.get("owners");
+                } else if (actedOnAnimal.get("foster")) {
+                  owners = [actedOnAnimal.get("foster")];
+                }
+                console.log("Found owners for the acted on: " + owners);
+                _results = [];
+                for (_i = 0, _len = owners.length; _i < _len; _i++) {
+                  owner = owners[_i];
+                  ownerId = owner.id;
+                  activity = new Parse.Object("Activity");
+                  activity.set("action", "comment");
+                  activity.set("actingAnimal", {
+                    "__type": "Pointer",
+                    "className": "Animal",
+                    "objectId": actingAnimalId
+                  });
+                  activity.set("actingAnimalName", actingAnimal.get('username'));
+                  activity.set("entryActedOn", {
+                    "__type": "Pointer",
+                    "className": "AnimalTimelineEntry",
+                    "objectId": request.object.get("entry").id
+                  });
+                  activity.set("commentMade", request.object);
+                  activity.set("commentMadeText", request.object.get("text"));
+                  activity.set("forUser", {
+                    "__type": "Pointer",
+                    "className": "_User",
+                    "objectId": ownerId
+                  });
+                  console.log("Saving activity for owner: " + ownerId);
+                  _results.push(activity.save(null, {
+                    useMasterKey: true,
+                    success: function(result) {
+                      return console.log("for user: " + result.get("forUser").id + ", activity saved: " + result);
+                    }
+                  }));
+                }
+                return _results;
               }
             });
           },
