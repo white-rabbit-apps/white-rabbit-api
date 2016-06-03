@@ -392,8 +392,7 @@ Parse.Cloud.afterSave("Like", function(request, response) {
         return entry.save(null, {
           useMasterKey: true,
           success: function(result) {
-            console.log("Entry saved after incrementing likeCount: " + result);
-            return response.success();
+            return console.log("Entry saved after incrementing likeCount: " + result);
           }
         });
       }
@@ -426,8 +425,7 @@ Parse.Cloud.afterDelete("Like", function(request, response) {
         return entry.save(null, {
           useMasterKey: true,
           success: function(result) {
-            console.log("Entry saved after decrementing likeCount: " + result);
-            return response.success();
+            return console.log("Entry saved after decrementing likeCount: " + result);
           }
         });
       }
@@ -538,7 +536,7 @@ Parse.Cloud.afterSave("Comment", function(request, response) {
   });
   query = new Parse.Query("AnimalTimelineEntry");
   query.equalTo("objectId", request.object.get("entry").id);
-  return query.find({
+  query.find({
     useMasterKey: true,
     success: function(results) {
       var entry, likeCount;
@@ -560,6 +558,7 @@ Parse.Cloud.afterSave("Comment", function(request, response) {
       }
     }
   });
+  return response.success();
 });
 
 Parse.Cloud.afterDelete("Comment", function(request, response) {

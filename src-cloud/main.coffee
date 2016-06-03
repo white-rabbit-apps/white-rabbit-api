@@ -377,7 +377,6 @@ Parse.Cloud.afterSave "Like", (request, response) ->
                         # return response.success()
                     )
 
-
   ## Increment the like count on the entry
   console.log("Incrementing like count")
 
@@ -403,8 +402,8 @@ Parse.Cloud.afterSave "Like", (request, response) ->
           useMasterKey: true
           success: (result) ->
             console.log("Entry saved after incrementing likeCount: " + result)
-            return response.success()
         )
+
   return response.success()
 
 
@@ -436,7 +435,6 @@ Parse.Cloud.afterDelete "Like", (request, response) ->
           useMasterKey: true
           success: (result) ->
             console.log("Entry saved after decrementing likeCount: " + result)
-            return response.success()
         )
 
   ## Delete the activities associated with this like
@@ -570,9 +568,9 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
           useMasterKey: true
           success: (result) ->
             console.log("Entry saved after incrementing commentCount: " + result)
-            # return response.success()
         )
-  # return response.success()
+        
+  return response.success()
 
 
 # After deleting a like, decrement the likeCount on the entry
