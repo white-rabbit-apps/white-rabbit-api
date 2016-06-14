@@ -42,7 +42,8 @@
     "webdriver-manager": "0.0.4"
   },
   "engines": {
-    "node": "5.4.1"
+    "node": "5.4.1",
+    "npm": "3.9.5"
   },
   "devDependencies": {
 
