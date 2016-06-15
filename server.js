@@ -13,15 +13,24 @@ if (!process.env.DATABASE_URI) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
 }
 
+var ios_bundle_id = 'net.whiterabbitapps.WhiteRabbit'
+var apns_certificate = __dirname + '/certs/dev.p12'
+var apns_production = false
+
+if (process.env.ENV == 'production') {
+  apns_certificate = __dirname + '/certs/production.p12'
+  apns_production = true
+}
+
 var api = new ParseServer({
-  serverURL: 'http://www.whiterabbitapps.net/api/',
+  serverURL: process.env.DATABASE_URI || 'http://localhost:5000/api/',
   databaseURI: process.env.DATABASE_URI || 'mongodb://localhost:27017/dev',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
-  appId: process.env.PARSE_APP_ID || 'IWr9xzTirLbjXH80mbTCtT9lWB73ggQe3PhA6nPg',
-  masterKey: process.env.PARSE_MASTER_KEY || 'OAfKo4xeECdDiUHFXHgctp8HZv7teJT0fUkqMnwQ',
-  clientKey: process.env.CLIENT_KEY || 'Yxdst3hz76abMoAwG7FLh0NwDmPvYHFDUPao9WJJ',
-  restAPIKEY: process.env.RESTAPI_KEY || 'SkDTdS8SBGzO9BkRHR3H8kwxCLJSvKsAe1jeOTnW',
-  fileKey: process.env.FILE_KEY || '76b6cc17-92eb-4048-be57-afbc6cb6e77d',
+  appId: process.env.PARSE_APP_ID,
+  masterKey: process.env.PARSE_MASTER_KEY,
+  clientKey: process.env.CLIENT_KEY,
+  restAPIKEY: process.env.RESTAPI_KEY,
+  fileKey: process.env.FILE_KEY,
   filesAdapter: new S3Adapter(
     process.env.AWS_ACCESS_KEY,
     process.env.AWS_SECRET_ACCESS_KEY,
@@ -30,9 +39,9 @@ var api = new ParseServer({
   ),
   push: {
     ios: {
-      pfx: __dirname + '/certs/dev.p12',
-      bundleId: 'net.whiterabbitapps.WhiteRabbit',
-      production: false
+      pfx: apns_certificate,
+      bundleId: ios_bundle_id,
+      production: apns_production
     }
   }
 });
