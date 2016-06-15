@@ -1,13 +1,12 @@
 // Require Node Modules
 var http = require('http'),
+    // auth = require('basic-auth'),
     express = require('express'),
     bodyParser = require('body-parser'),
     Parse = require('parse/node'),
     ParseServer = require('parse-server').ParseServer,
     S3Adapter = require('parse-server').S3Adapter,
     SNSAdapter = require('parse-server').SNSAdapter,
-    // parseAdaptor = require('./cloud/prerender-parse.js'),
-    // prerender = require("./cloud/prerenderio.js").setAdaptor(parseAdaptor(Parse)).set("prerenderToken", "2ymS1B3grxMTCzfud9D6"),
     connect_s4a = require('connect-s4a'),
     cors = require('cors');
 
@@ -16,14 +15,14 @@ if (!process.env.DATABASE_URI) {
 }
 
 var api = new ParseServer({
-  serverURL: 'http://www.whiterabbitapps.net/api/',
+  serverURL: process.env.SERVER_API_URL || 'http://www.whiterabbitapps.net/api/',
   databaseURI: process.env.DATABASE_URI || 'mongodb://localhost:27017/dev',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
-  appId: process.env.PARSE_APP_ID || 'IWr9xzTirLbjXH80mbTCtT9lWB73ggQe3PhA6nPg',
-  masterKey: process.env.PARSE_MASTER_KEY || 'OAfKo4xeECdDiUHFXHgctp8HZv7teJT0fUkqMnwQ',
-  clientKey: process.env.CLIENT_KEY || 'Yxdst3hz76abMoAwG7FLh0NwDmPvYHFDUPao9WJJ',
-  restAPIKEY: process.env.RESTAPI_KEY || 'SkDTdS8SBGzO9BkRHR3H8kwxCLJSvKsAe1jeOTnW',
-  fileKey: process.env.FILE_KEY || '76b6cc17-92eb-4048-be57-afbc6cb6e77d',
+  appId: process.env.PARSE_APP_ID,
+  masterKey: process.env.PARSE_MASTER_KEY,
+  clientKey: process.env.CLIENT_KEY,
+  restAPIKEY: process.env.RESTAPI_KEY,
+  fileKey: process.env.FILE_KEY,
   filesAdapter: new S3Adapter(
     process.env.AWS_ACCESS_KEY,
     process.env.AWS_SECRET_ACCESS_KEY,
@@ -32,9 +31,11 @@ var api = new ParseServer({
   ),
   push: {
     ios: {
-      pfx: __dirname + '/certs/Certificates.p12',
+      // pfx: __dirname + '/certs/production.p12',
+      pfx: __dirname + '/certs/dev.p12',
       bundleId: 'net.whiterabbitapps.WhiteRabbit',
-      production: true
+      // production: true
+      production: false
     }
   }
 });
@@ -54,11 +55,6 @@ var api = new ParseServer({
 
 var app = express();
 
-// Import your cloud code (which configures the routes)
-// require('./cloud/main.js');
-// Mount the webhooks app to a specific path (must match what is used in scripts/register-webhooks.js)
-// app.use('/webhooks', ParseCloud.app);
-
 app.set("view engine", "jade");
 
 app.use(cors());
@@ -67,7 +63,7 @@ app.use(cors());
 app.use(express.static(__dirname + '/public'));
 
 app.use(connect_s4a("d3c44980d364f87184334d863759dbe7"));
-// app.use(prerender);
+
 
 app.get('/*', function(request, response, next) {
   if (request.url.includes('/api/')) return next();
@@ -88,17 +84,37 @@ app.get('/*', function(request, response, next) {
         username = parts[0],
         password = parts[1];
     if(username != un || password != pw){
-        response.writeHead(401, {'WWW-Authenticate': 'Basic realm="Secure Area"', 'Content-Type': 'text/plain'});
+        response.statusCode = 401
 		    response.end("Incorrect username or password");
     }
     else {
     	response.statusCode = 200;
-    	// responsesController.index(req, res);
     }
   }
 
   response.sendFile(__dirname + '/public/index.html');
 });
+
+// var auth = function (request, response, next) {
+//   function unauthorized(res) {
+//     response.set('WWW-Authenticate', 'Basic realm=Authorization Required');
+//     return response.send(401);
+//   };
+//
+//   var user = basicAuth(req);
+//
+//   if (!user || !user.name || !user.pass) {
+//     return unauthorized(res);
+//   } else if (user.name === 'foo' && user.pass === 'bar') {
+//     return next();
+//   } else {
+//     return unauthorized(res);
+//   };
+// };
+//
+// app.get('/admin/', auth, function (req, res) {
+//   res.send(200, 'Authenticated');
+// });
 
 // app.all('/api/*', function(req, res, next){
 //     console.log('General Validations');
