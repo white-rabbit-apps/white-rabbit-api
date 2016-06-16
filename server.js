@@ -9,7 +9,7 @@ var http = require('http'),
     connect_s4a = require('connect-s4a'),
     cors = require('cors');
 
-var ios_bundle_id = 'net.whiterabbitapps.WhiteRabbit-dev'
+var ios_bundle_id = 'net.whiterabbitapps.WhiteRabbit'
 var apns_certificate = __dirname + '/certs/dev.p12'
 var apns_production = false
 
