@@ -31,7 +31,7 @@ var api = new ParseServer({
   filesAdapter: new S3Adapter(
     process.env.AWS_ACCESS_KEY,
     process.env.AWS_SECRET_ACCESS_KEY,
-    'whiterabbitapps',
+    process.env.AWS_BUCKET_NAME,
     {directAccess: true}
   ),
   push: {
