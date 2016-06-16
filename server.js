@@ -13,11 +13,12 @@ if (!process.env.DATABASE_URI) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
 }
 
-var ios_bundle_id = 'net.whiterabbitapps.WhiteRabbit'
+var ios_bundle_id = 'net.whiterabbitapps.WhiteRabbit-dev'
 var apns_certificate = __dirname + '/certs/dev.p12'
 var apns_production = false
 
 if (process.env.ENV == 'production') {
+  ios_bundle_id = 'net.whiterabbitapps.WhiteRabbit'
   apns_certificate = __dirname + '/certs/production.p12'
   apns_production = true
 }
