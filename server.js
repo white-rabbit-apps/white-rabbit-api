@@ -9,19 +9,15 @@ var http = require('http'),
     connect_s4a = require('connect-s4a'),
     cors = require('cors');
 
-if (!process.env.DATABASE_URI) {
-  console.log('DATABASE_URI not specified, falling back to localhost.');
-}
-
 var ios_bundle_id = 'net.whiterabbitapps.WhiteRabbit-dev'
 var apns_certificate = __dirname + '/certs/dev.p12'
 var apns_production = false
 
-if (process.env.ENV == 'production') {
-  ios_bundle_id = 'net.whiterabbitapps.WhiteRabbit'
-  apns_certificate = __dirname + '/certs/production.p12'
-  apns_production = true
-}
+// if (process.env.ENV == 'production') {
+//   ios_bundle_id = 'net.whiterabbitapps.WhiteRabbit'
+//   apns_certificate = __dirname + '/certs/production.p12'
+//   apns_production = true
+// }
 
 var api = new ParseServer({
   serverURL: process.env.SERVER_API_URL || 'http://localhost:5000/api/',
