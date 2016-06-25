@@ -64,6 +64,8 @@ app.use(cors());
 
 app.use(connect_s4a("d3c44980d364f87184334d863759dbe7"));
 
+// Host static files from public/
+app.use(express.static('public'));
 
 app.get('/*', function(request, response, next) {
   if (request.url.includes('/api/')) return next();
@@ -123,10 +125,6 @@ app.get('/*', function(request, response, next) {
 
 var mountPath = process.env.PARSE_MOUNT || '/api';
 app.use(mountPath, api);
-
-// Host static files from public/
-app.use(express.static('public'));
-
 
 // Catch all unknown routes.
 // app.all('/', function(request, response) {
