@@ -62,14 +62,10 @@ app.set("view engine", "jade");
 
 app.use(cors());
 
-// Host static files from public/
-app.use(express.static(__dirname + '/public'));
-
 app.use(connect_s4a("d3c44980d364f87184334d863759dbe7"));
 
 
 app.get('/*', function(request, response, next) {
-  if (request.url.includes('/img/')) return next();
   if (request.url.includes('/api/')) return next();
 
   if (request.url.includes('/admin/')) {
@@ -96,7 +92,7 @@ app.get('/*', function(request, response, next) {
     }
   }
 
-  response.sendFile(__dirname + '/public/index.html');
+  // response.sendFile(__dirname + '/public/index.html');
 });
 
 // var auth = function (request, response, next) {
@@ -127,6 +123,10 @@ app.get('/*', function(request, response, next) {
 
 var mountPath = process.env.PARSE_MOUNT || '/api';
 app.use(mountPath, api);
+
+// Host static files from public/
+app.use(express.static(__dirname + '/public'));
+
 
 // Catch all unknown routes.
 // app.all('/', function(request, response) {
