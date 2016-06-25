@@ -4,15 +4,15 @@ Made with love by Creative Tim (http://www.creative-tim.com)
 
 */
 
-@import url(https://fonts.googleapis.com/css?family=Varela+Round);
+@import url(https://fonts.googleapis.com/css?family=Nunito:400,300,700);
+// @import url(https://fonts.googleapis.com/css?family=Varela+Round);
 // @import url(https://fonts.googleapis.com/css?family=Copse);
 // @import url(https://fonts.googleapis.com/css?family=Calligraffitti);
 
 body{
   background-color: #000033;
-  // font-family: 'Copse', sans-serif;
   font-weight: 100;
-  // position: fixed;
+  color: #FFFFFF;
 }
 
 div.spacer {
@@ -20,12 +20,8 @@ div.spacer {
 }
 
 form {
-  // height: 50px;
-  // left: 50%;
-  // margin-left: -200px;
-  margin-top: 20px;
+  margin-top: 0px;
   position: relative;
-  // width: 400px;
 }
 
 .signup {
@@ -401,110 +397,101 @@ h1 small, h2 small, h3 small, h1 .small, h2 .small, h3 .small {
 }
 
 
-.main{
-    background-position: center center;
-    background-size: cover;
-    height: auto;
-    left: 0;
-    min-height: 100%;
-    min-width: 100%;
-    position: absolute;
-    top: 0;
-    width: auto;
+.main {
+  background-position: center center;
+  background-size: cover;
+  height: auto;
+  left: 0;
+  min-height: 100%;
+  min-width: 100%;
+  position: absolute;
+  top: 0;
+  width: auto;
 }
-.cover{
-    position: fixed;
-    opacity: 1;
-    background-color: rgba(0,0,0,.6);
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
+.cover {
+  position: fixed;
+  opacity: 1;
+  background-color: rgba(0,0,0,.6);
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
-.cover.black{
-    background-color: rgba(0,0,0,.6);
-}
-.cover.blue{
-    background-color: rgba(5, 31, 60, 0.6);
-}
-.cover.green{
-    background-color: rgba(3, 28, 7, 0.6);
-}
-.cover.orange{
-    background-color: rgba(37, 28, 5, 0.6);
-}
-.cover.red{
-    background-color: rgba(35, 3, 2, 0.66);
+.cover.black {
+  background-color: rgba(0,0,0,.6);
 }
 
-.blur{
-  opacity:0;
+.main .logo {
+  font-size: 18px;
+  color: #FFFFFF;
+  position: relative;
+  text-align: center;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.33);
+  margin-top: 85px;
+  z-index: 3;
 }
 
-.logo-container{
-    left: 50px;
-    position: absolute;
-    top: 20px;
-     z-index: 3;
+.main .logo .title {
+  margin-top: 10px;
+  font-weight: 400;
 }
-.logo-container .logo{
-    overflow: hidden;
-    border-radius: 50%;
-    border: 1px solid #333333;
-    width: 60px;
-    float: left;
-}
-.logo-container .brand{
-    font-size: 18px;
-    color: #FFFFFF;
-    line-height: 20px;
-    float: left;
-    margin-left: 10px;
-    margin-top: 10px;
-    width: 60px
-}
-.main .logo{
-    // font-family: 'Calligraffitti', sans-serif;
-    font-size: 50px;
-    color: #FFFFFF;
-    font-weight: 300;
-    position: relative;
-    text-align: center;
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.33);
-    margin-top: 100px;
-    z-index: 3;
-}
-.main .logo.cursive{
-    // font-family: 'Varela Round',sans-serif;
-    font-size: 82px;
-}
-.main .content{
-    position: relative;
-    z-index: 4;
-}
-.main .motto{
-    min-height: 80px;
-}
-.main .motto, .main .subscribe .info-text{
-    font-size: 28px;
-    color: #FFFFFF;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.33);
-    text-align: center;
-    margin-top: 50px;
 
+.main .logo .presents {
+  font-size: 12px;
+  margin-top: 6px;
 }
+
+.main .logo img {
+  max-height: 100px;
+  max-width: 100px;
+  text-align: center;
+}
+
+.main .content {
+  position: relative;
+  z-index: 4;
+  text-align: center;
+}
+
+.main .app-title {
+  min-height: 80px;
+  font-weight: 700;
+}
+
+.main .app-title {
+  font-size: 64px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.33);
+  text-align: center;
+  margin-top: 10px;
+}
+
+.main .motto {
+  font-weight: 100;
+  margin: 0 auto;
+  width: 320px;
+  font-size: 24px;
+  margin-bottom: 80px;
+}
+
 .main .subscribe .info-text{
     font-size: 16px;
     margin-bottom: 30px;
     b {
-      font-weight: 700;
+      font-weight: 400;
       font-size: 20px;
     }
 }
+
+.main .signup-row {
+  margin: 0 auto;
+  width: 386px;
+}
+
 #gif_background {
   display: none;
 }
+
 #video_background, #gif_background {
     position: fixed;
     top: 0px;
@@ -569,130 +556,9 @@ h1 small, h2 small, h3 small, h1 .small, h2 .small, h3 .small {
         bottom: 20px;
     }
 }
-@media (min-width:1200px){
-    .main .subscribe .form-group{
-        // width: 250px;
-    }
-}
 
-
-
-
-/*          For demo purpose         */
-
-
-
-.fixed-plugin{
-    position: fixed;
-    top:0px;
-    right: 50px;
-    z-index: 1031;
-}
-.fixed-plugin .fa-cog{
-    color: #FFFFFF;
-    background-color: rgba(0,0,0,.2);
-    padding: 10px;
-    border-radius: 0 0 6px 6px;
-}
-.fixed-plugin .dropdown-menu{
-    right: 0;
-    left: auto;
-}
-.fixed-plugin .dropdown-menu:after, .fixed-plugin .dropdown-menu:before{
-    right: 10px;
-    margin-left: auto;
-    left: auto;
-}
-.fixed-plugin .fa-circle-thin{
-    color: #FFFFFF;
-}
-.fixed-plugin .active .fa-circle-thin{
-    color: #00bbff;
-}
-.fixed-plugin .dropdown-menu > li > a{
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.fixed-plugin .dropdown-menu > .active > a, .fixed-plugin .dropdown-menu > .active > a:hover, .fixed-plugin .dropdown-menu > .active > a:focus{
-    background: none;
-    color: #777777;
-}
-.fixed-plugin img{
-    border-radius: 6px;
-    width: 150px;
-    max-height: 65px;
-    border: 4px solid #FFFFFF;
-
-}
-.fixed-plugin .active img, .fixed-plugin a:hover img{
-    border-color: #00bbff;
-}
-
-.fixed-plugin .btn{
-    margin: 10px 15px 0;
-    color: #FFFFFF;
-}
-.fixed-plugin .btn:hover{
-    color: #FFFFFF;
-}
-.fixed-plugin .badge{
-    border: 3px solid #FFFFFF;
-    border-radius: 50%;
-    cursor: pointer;
-    display: inline-block;
-    height: 23px;
-    margin-right: 5px;
-    position: relative;
-    top: 5px;
-    width: 23px;
-}
-.fixed-plugin .badge.active, .fixed-plugin .badge:hover{
-    border-color: #00bbff;
-}
-.fixed-plugin .badge-black{
-    background-color: #333333;
-}
-.fixed-plugin .badge-blue{
-    background-color: #2C93FF;
-}
-.fixed-plugin .badge-green{
-    background-color: #05AE0E;
-}
-.fixed-plugin .badge-orange{
-    background-color: #FF9500;
-}
-.fixed-plugin .badge-red{
-    background-color: #FF3B30;
-}
-
-// @media (max-width:768px){
-//     .fixed-plugin{
-//         top: 80px;
-//         right: 0px;
-//     }
-//     .main .container{
-//         margin-bottom: 50px;
-//     }
-//     #video_background{
-//         display: none;
-//     }
-//
-// }
 
 @media (min-width:1198px){
-  // .form-group {
-  //   width:auto;
-  //   margin-left:60px;
-  // }
-  //
-  // button {
-  //   position:relative;
-  //   left:-10px;
-  //   height:38px;
-  //   width: 100px !important;
-  // }
-
   .form-inline {
     position: relative;
   }
@@ -727,7 +593,7 @@ input {
 ul.social {
   width: 425px;
   margin: 0 auto;
-  margin-top: 75px;
+  margin-top: 120px;
   margin-bottom: 40px;
   float: none;
 

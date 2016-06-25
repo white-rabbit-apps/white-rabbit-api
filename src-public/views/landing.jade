@@ -8,9 +8,17 @@
   // You can change the black color for the filter with those colors: blue, green, red, orange
   .container
     h1.logo
-      | White Rabbit Apps
+      img(src='/img/white_rabbit_logo.png')
+      .title
+        | White Rabbit Apps
+      .presents
+        | presents
     .content
-      h4.motto Hooman, meet kitteh.
+      h1.app-title
+        | CommuniKitty
+        
+      h5.motto
+        | The ultimate app for kittehs and their hoomans.
 
       .subscribe(ng-show="betaConfirm")
         .info-text
@@ -39,17 +47,15 @@
             | Wanna beta?
           .sub
             | Sign up and we'll meow when we're ready for ya.
-        .row
-          .col-md-4.col-md-offset-4.col-sm6-6
-            
-            form.form-inline(role='form', action='http://whiterabbitapps.us10.list-manage.com/subscribe/post', method='POST')
-              input(type='hidden', name='u', value='d20d913e91337e167e12a139d')
-              input(type='hidden', name='id', value='330df4fbbf')
-              input(type='hidden', name='orig-lang', value='1')
-              input(type='text', name='b_d20d913e91337e167e12a139d_330df4fbbf', tabindex='-1', value='', style="display:none;")
+        .signup-row
+          form(role='form', action='http://whiterabbitapps.us10.list-manage.com/subscribe/post', method='POST')
+            input(type='hidden', name='u', value='d20d913e91337e167e12a139d')
+            input(type='hidden', name='id', value='330df4fbbf')
+            input(type='hidden', name='orig-lang', value='1')
+            input(type='text', name='b_d20d913e91337e167e12a139d_330df4fbbf', tabindex='-1', value='', style="display:none;")
 
-              input(type='email', name='MERGE0', placeholder='Your email address', autocapitalize='off', autocorrect='off', size='25', value='')
-              input.signup(type='submit', name='submit', value='Sign Up')
+            input(type='email', name='MERGE0', placeholder='Your email address', autocapitalize='off', autocorrect='off', size='25', value='')
+            input.signup(type='submit', name='submit', value='Sign Up')
               
               
       ul.social
