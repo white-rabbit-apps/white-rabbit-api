@@ -69,6 +69,7 @@ app.use(connect_s4a("d3c44980d364f87184334d863759dbe7"));
 
 
 app.get('/*', function(request, response, next) {
+  if (request.url.includes('/img/')) return next();
   if (request.url.includes('/api/')) return next();
 
   if (request.url.includes('/admin/')) {
