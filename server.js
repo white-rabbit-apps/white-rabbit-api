@@ -43,19 +43,6 @@ var api = new ParseServer({
   }
 });
 
-// facebookAppIds : '417687371726647',
-
-// filesAdapter: new S3Adapter(
-//   process.env.AWS_ACCESS_KEY,
-//   process.env.AWS_SECRET_ACCESS_KEY,
-//   {bucket: process.env.AWS_BUCKET_NAME, bucketPrefix: "", directAccess: true}
-// )
-// pushAdapter: new SNSAdapter(
-//   process.env.AWS_ACCESS_KEY,
-//   process.env.AWS_SECRET_ACCESS_KEY,
-//   {region: "us-east-1"}
-// )
-
 var app = express();
 
 app.set("view engine", "jade");
@@ -65,7 +52,7 @@ app.use(cors());
 app.use(connect_s4a("d3c44980d364f87184334d863759dbe7"));
 
 // Host static files from public/
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 
 app.get('/*', function(request, response, next) {
   if (request.url.includes('/api/')) return next();
@@ -94,7 +81,7 @@ app.get('/*', function(request, response, next) {
     }
   }
 
-  // response.sendFile(__dirname + '/public/index.html');
+  response.sendFile(__dirname + '/public/index.html');
 });
 
 // var auth = function (request, response, next) {
