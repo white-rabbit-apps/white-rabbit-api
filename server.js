@@ -21,7 +21,7 @@ if (process.env.ENV == 'production') {
 
 var api = new ParseServer({
   serverURL: process.env.SERVER_API_URL || 'http://localhost:5000/api/',
-  databaseURI: process.env.MONGODB_URI || 'mongodb://localhost:27017/dev',
+  databaseURI: process.env.DATABASE_URI || 'mongodb://localhost:27017/dev',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
   appId: process.env.PARSE_APP_ID,
   masterKey: process.env.PARSE_MASTER_KEY,
