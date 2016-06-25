@@ -125,7 +125,7 @@ var mountPath = process.env.PARSE_MOUNT || '/api';
 app.use(mountPath, api);
 
 // Host static files from public/
-app.use(express.static(__dirname + '/public'));
+app.use(express.static('public'));
 
 
 // Catch all unknown routes.
