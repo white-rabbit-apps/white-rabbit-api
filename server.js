@@ -9,12 +9,12 @@ var http = require('http'),
     connect_s4a = require('connect-s4a'),
     cors = require('cors');
 
-var ios_bundle_id = 'net.whiterabbitapps.WhiteRabbit'
+var ios_bundle_id = 'net.whiterabbitapps.communikitty-dev'
 var apns_certificate = __dirname + '/certs/dev.p12'
 var apns_production = false
 
 if (process.env.ENV == 'production') {
-  ios_bundle_id = 'net.whiterabbitapps.WhiteRabbit'
+  ios_bundle_id = 'net.whiterabbitapps.communikitty'
   apns_certificate = __dirname + '/certs/production.p12'
   apns_production = true
 }
