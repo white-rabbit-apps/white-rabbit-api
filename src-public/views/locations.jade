@@ -77,6 +77,12 @@
         label
           | Email:
         {{location.email}}
+
+      .googlePlaceId
+        label
+          | Google Place ID:
+        {{location.googlePlaceId}}
+
       .web(ng-show="location.website")
         a(ng-href="{{location.website}}" target="_blank")
           | {{location.website}}
@@ -207,6 +213,11 @@
       label
         | Facebook Page ID
       input.form-control.facebookPageId(ng-model="location.facebookPageId", placeholder="Facebook Page Id")
+
+    .form-row
+      label
+        | Google Place ID
+      input.form-control.googlePlaceId(ng-model="location.googlePlaceId", placeholder="Google Place Id")
 
     .form-row
       label
