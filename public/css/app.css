@@ -9888,7 +9888,7 @@ input {
   border-color: #000049 !important;
 }
 ul.social {
-  width: 425px;
+  width: 245px;
   margin: 0 auto;
   margin-top: 120px;
   margin-bottom: 20px;
@@ -9901,5 +9901,5 @@ ul.social i {
 }
 ul.social li {
   float: left;
-  margin-right: 20px;
+  margin-right: 35px;
 }
