@@ -1,24 +1,25 @@
 .main
-  #gif_background
-  video#video_background(preload='auto', loop='loop', autoplay='true')
-    source(src='/video/kittens1.mp4', type='video/mp4')
-    source(src='/video/kittens1.webm', type='video/webm')
-    | Video not supported
+  //- #gif_background
+  //- video#video_background(preload='auto', loop='loop', autoplay='true')
+  //-   source(src='/video/kittens1.mp4', type='video/mp4')
+  //-   source(src='/video/kittens1.webm', type='video/webm')
+  //-   | Video not supported
   .cover.black(data-color='black')
   // You can change the black color for the filter with those colors: blue, green, red, orange
   .container
-    h1.logo
-      img(src='/img/white_rabbit_logo.png')
-      .title
-        | White Rabbit Apps
-      .presents
-        | presents
+    //- h1.logo
+    //-   img(src='/img/white_rabbit_logo.png')
+    //-   .title
+    //-     | White Rabbit Apps
+    //-   .presents
+    //-     | presents
     .content
       h1.app-title
-        | CommuniKitty
+        img(src='/img/main_title.png')
+        //- | CommuniKitty
         
-      h5.motto
-        | The ultimate app for kittehs and their hoomans.
+      //- h5.motto
+      //-   | The ultimate app for kittehs and their hoomans.
         
       .subscribe(ng-show="betaConfirm")
         .info-text
