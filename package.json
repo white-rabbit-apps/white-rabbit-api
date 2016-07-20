@@ -24,7 +24,7 @@
     "lolspeak": "git+https://github.com/white-rabbit-apps/lolspeak.git#cd95c3bdc9a1739dcf737d362f9b9a861d357df6",
     "mongodb": "2.1.21",
     "multer": "~0.1.8",
-    "parse": "1.8.5",
+    "parse": "1.9.0",
     "parse-server": "2.2.16",
     "prerender-node": "^2.1.0",
     "run-sequence": "0.3.x",

@@ -9,16 +9,6 @@ var http = require('http'),
     connect_s4a = require('connect-s4a'),
     cors = require('cors');
 
-var ios_bundle_id = 'net.whiterabbitapps.communikitty-dev'
-var apns_certificate = __dirname + '/certs/dev.p12'
-var apns_production = false
-
-if (process.env.ENV == 'production') {
-  ios_bundle_id = 'net.whiterabbitapps.communikitty'
-  apns_certificate = __dirname + '/certs/production.p12'
-  apns_production = true
-}
-
 var api = new ParseServer({
   serverURL: process.env.SERVER_API_URL || 'http://localhost:5000/api/',
   databaseURI: process.env.DATABASE_URI || 'mongodb://localhost:27017/dev',
@@ -35,11 +25,17 @@ var api = new ParseServer({
     {directAccess: true}
   ),
   push: {
-    ios: {
-      pfx: apns_certificate,
-      bundleId: ios_bundle_id,
-      production: apns_production
-    }
+    ios: [
+      {
+        pfx: __dirname + '/certs/dev.p12',
+        bundleId: 'net.whiterabbitapps.communikitty-dev',
+        production: false
+      },{
+        pfx: __dirname + '/certs/prod.p12',
+        bundleId: 'net.whiterabbitapps.communikitty',
+        production: true
+      }
+    ]
   }
 });
 
