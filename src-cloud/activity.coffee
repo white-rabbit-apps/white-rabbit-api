@@ -73,7 +73,7 @@ sendPushNotification = (userToSendTo, message, sound) ->
     when "lick"
       soundFilename = 'lick2.caf'
 
-  uriPrefix = "communikitty-dev://"
+  uriPrefix = "communikittydev://"
   if (process.env.ENV == 'production')
     uriPrefix = "communikitty://"
 

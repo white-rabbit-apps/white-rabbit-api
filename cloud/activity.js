@@ -74,7 +74,7 @@ sendPushNotification = function(userToSendTo, message, sound) {
     case "lick":
       soundFilename = 'lick2.caf';
   }
-  uriPrefix = "communikitty-dev://";
+  uriPrefix = "communikittydev://";
   if (process.env.ENV === 'production') {
     uriPrefix = "communikitty://";
   }
