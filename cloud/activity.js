@@ -1,4 +1,23 @@
-var generateActivityString, sendPushNotification;
+var generateActivityString, generateRelativeUri, sendPushNotification;
+
+generateRelativeUri = function(action, info) {
+  var uriString;
+  uriString = "notifications";
+  switch (action) {
+    case "follow":
+      uriString = "human/" + info['actingUserName'];
+      break;
+    case "like":
+      uriString = "notifications";
+      break;
+    case "poke":
+      uriString = "human/" + info['actingUserName'];
+      break;
+    case "comment":
+      uriString = "cat/" + info['actingAnimalName'];
+  }
+  return uriString;
+};
 
 generateActivityString = function(action, info) {
   var activityString;
@@ -51,7 +70,7 @@ generateActivityString = function(action, info) {
   return activityString;
 };
 
-sendPushNotification = function(userToSendTo, message, sound) {
+sendPushNotification = function(userToSendTo, message, sound, relativeUri) {
   var pushQuery, soundFilename, soundsDirectory, uriPrefix;
   console.log("Sending push notification");
   pushQuery = new Parse.Query(Parse.Installation);
@@ -83,7 +102,7 @@ sendPushNotification = function(userToSendTo, message, sound) {
     data: {
       alert: message,
       sound: soundFilename,
-      uri: uriPrefix + "notifications"
+      uri: uriPrefix + relativeUri
     }
   }, {
     useMasterKey: true,
@@ -97,7 +116,7 @@ sendPushNotification = function(userToSendTo, message, sound) {
 };
 
 Parse.Cloud.afterSave("Activity", function(request, response) {
-  var action, info, message, sound, targetUser;
+  var action, info, message, relativeUri, sound, targetUser;
   console.log("new activity");
   targetUser = request.object.get("forUser");
   action = request.object.get("action");
@@ -109,8 +128,9 @@ Parse.Cloud.afterSave("Activity", function(request, response) {
     'likeAction': request.object.get('likeAction')
   };
   message = generateActivityString(action, info);
+  relativeUri = generateRelativeUri(action, info);
   sound = info['likeAction'];
-  return sendPushNotification(targetUser, message, sound);
+  return sendPushNotification(targetUser, message, sound, relativeUri);
 });
 
 Parse.Cloud.afterSave("Poke", function(request, response) {

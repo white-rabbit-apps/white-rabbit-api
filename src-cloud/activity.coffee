@@ -15,6 +15,22 @@
 #         console.log("destroying previous installation")
 #         result.destroy()
 
+generateRelativeUri = (action, info) ->
+  uriString = "notifications"
+
+  switch action
+    when "follow"
+      uriString = "human/#{info['actingUserName']}"
+    when "like"
+      # uriString = "cat/#{info['actingUserName']}"
+      uriString = "notifications"
+    when "poke"
+      uriString = "human/#{info['actingUserName']}"
+    when "comment"
+      uriString = "cat/#{info['actingAnimalName']}"
+
+  return uriString
+
 generateActivityString = (action, info) ->
   activityString = "Made a new #{action}"
 
@@ -53,7 +69,7 @@ generateActivityString = (action, info) ->
   return activityString
 
 
-sendPushNotification = (userToSendTo, message, sound) ->
+sendPushNotification = (userToSendTo, message, sound, relativeUri) ->
   console.log("Sending push notification")
 
   pushQuery = new Parse.Query(Parse.Installation)
@@ -82,7 +98,7 @@ sendPushNotification = (userToSendTo, message, sound) ->
     data:
       alert: message
       sound: soundFilename
-      uri: uriPrefix + "notifications"
+      uri: uriPrefix + relativeUri
       # content-available: 1
       # badge: "Increment"
   },
@@ -108,9 +124,10 @@ Parse.Cloud.afterSave "Activity", (request, response) ->
     'likeAction': request.object.get('likeAction')
 
   message = generateActivityString(action, info)
+  relativeUri = generateRelativeUri(action, info)
   sound = info['likeAction']
 
-  sendPushNotification(targetUser, message, sound)
+  sendPushNotification(targetUser, message, sound, relativeUri)
 
 Parse.Cloud.afterSave "Poke", (request, response) ->
   console.log("new poke")
