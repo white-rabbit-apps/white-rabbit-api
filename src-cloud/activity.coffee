@@ -73,12 +73,16 @@ sendPushNotification = (userToSendTo, message, sound) ->
     when "lick"
       soundFilename = 'lick2.caf'
 
+  uriPrefix = "communikitty-dev://"
+  if (process.env.ENV == 'production')
+    uriPrefix = "communikitty://"
+
   Parse.Push.send {
     where: pushQuery
     data:
       alert: message
       sound: soundFilename
-      uri: "whiterabbit://notifications"
+      uri: uriPrefix + "notifications"
       # content-available: 1
       # badge: "Increment"
   },

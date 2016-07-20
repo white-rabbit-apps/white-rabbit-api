@@ -52,7 +52,7 @@ generateActivityString = function(action, info) {
 };
 
 sendPushNotification = function(userToSendTo, message, sound) {
-  var pushQuery, soundFilename, soundsDirectory;
+  var pushQuery, soundFilename, soundsDirectory, uriPrefix;
   console.log("Sending push notification");
   pushQuery = new Parse.Query(Parse.Installation);
   pushQuery.equalTo('user', userToSendTo);
@@ -74,12 +74,16 @@ sendPushNotification = function(userToSendTo, message, sound) {
     case "lick":
       soundFilename = 'lick2.caf';
   }
+  uriPrefix = "communikitty-dev://";
+  if (process.env.ENV === 'production') {
+    uriPrefix = "communikitty://";
+  }
   return Parse.Push.send({
     where: pushQuery,
     data: {
       alert: message,
       sound: soundFilename,
-      uri: "whiterabbit://notifications"
+      uri: uriPrefix + "notifications"
     }
   }, {
     useMasterKey: true,
