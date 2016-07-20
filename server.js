@@ -45,7 +45,7 @@ app.set("view engine", "jade");
 
 app.use(cors());
 
-app.use(connect_s4a("d3c44980d364f87184334d863759dbe7"));
+app.use(connect_s4a("53362e02257fb59598457d5948c587b7"));
 
 // Host static files from public/
 app.use(express.static(__dirname + '/public'));
