@@ -8,13 +8,13 @@ generateRelativeUri = function(action, info) {
       uriString = "human/" + info['actingUserName'];
       break;
     case "like":
-      uriString = "notifications";
+      uriString = "moment/" + info['entryId'];
       break;
     case "poke":
       uriString = "human/" + info['actingUserName'];
       break;
     case "comment":
-      uriString = "cat/" + info['actingAnimalName'];
+      uriString = "moment/" + info['entryId'];
   }
   return uriString;
 };
@@ -125,7 +125,8 @@ Parse.Cloud.afterSave("Activity", function(request, response) {
     'actingAnimalName': request.object.get('actingAnimalName'),
     'animalActedOnName': request.object.get('animalActedOnName'),
     'commentMadeText': request.object.get('commentMadeText'),
-    'likeAction': request.object.get('likeAction')
+    'likeAction': request.object.get('likeAction'),
+    'entryId': request.object.id
   };
   message = generateActivityString(action, info);
   relativeUri = generateRelativeUri(action, info);

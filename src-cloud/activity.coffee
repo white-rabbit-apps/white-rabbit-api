@@ -23,11 +23,12 @@ generateRelativeUri = (action, info) ->
       uriString = "human/#{info['actingUserName']}"
     when "like"
       # uriString = "cat/#{info['actingUserName']}"
-      uriString = "notifications"
+      # uriString = "notifications"
+      uriString = "moment/#{info['entryId']}"
     when "poke"
       uriString = "human/#{info['actingUserName']}"
     when "comment"
-      uriString = "cat/#{info['actingAnimalName']}"
+      uriString = "moment/#{info['entryId']}"
 
   return uriString
 
@@ -122,6 +123,7 @@ Parse.Cloud.afterSave "Activity", (request, response) ->
     'animalActedOnName': request.object.get('animalActedOnName')
     'commentMadeText': request.object.get('commentMadeText')
     'likeAction': request.object.get('likeAction')
+    'entryId': request.object.id
 
   message = generateActivityString(action, info)
   relativeUri = generateRelativeUri(action, info)
