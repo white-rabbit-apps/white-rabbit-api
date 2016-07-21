@@ -126,7 +126,7 @@ Parse.Cloud.afterSave("Activity", function(request, response) {
     'animalActedOnName': request.object.get('animalActedOnName'),
     'commentMadeText': request.object.get('commentMadeText'),
     'likeAction': request.object.get('likeAction'),
-    'entryId': request.object.get('entryActedOn')
+    'entryId': request.object.get('entryActedOn').get('objectId')
   };
   message = generateActivityString(action, info);
   relativeUri = generateRelativeUri(action, info);
