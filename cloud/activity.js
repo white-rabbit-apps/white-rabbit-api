@@ -1,16 +1,12 @@
-var generateActivityString, generateRelativeUri, sendPushNotification,
-  __slice = [].slice;
+var extend, generateActivityString, generateRelativeUri, sendPushNotification;
 
-Object.prototype.extend = function() {
-  var key, object, objects, value, _i, _len;
-  objects = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-  for (_i = 0, _len = objects.length; _i < _len; _i++) {
-    object = objects[_i];
-    for (key in object) {
-      value = object[key];
-      this[key] = value;
-    }
+extend = exports.extend = function(object, properties) {
+  var key, val;
+  for (key in properties) {
+    val = properties[key];
+    object[key] = val;
   }
+  return object;
 };
 
 generateRelativeUri = function(action, info) {
@@ -141,7 +137,7 @@ Parse.Cloud.afterSave("Activity", function(request, response) {
     'likeAction': request.object.get('likeAction')
   };
   if (request.object.get('entryActedOn')) {
-    info.extend({
+    extend(info, {
       'entryId': request.object.get('entryActedOn').id
     });
   }

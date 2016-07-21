@@ -15,11 +15,10 @@
 #         console.log("destroying previous installation")
 #         result.destroy()
 
-Object::extend = (objects...) ->
-    for object in objects
-        for key, value of object
-            @[key] = value
-    return
+extend = exports.extend = (object, properties) ->
+  for key, val of properties
+    object[key] = val
+  object
 
 generateRelativeUri = (action, info) ->
   uriString = "notifications"
@@ -131,9 +130,7 @@ Parse.Cloud.afterSave "Activity", (request, response) ->
     'likeAction': request.object.get('likeAction')
 
   if request.object.get('entryActedOn')
-    info.extend(
-      'entryId': request.object.get('entryActedOn').id
-    )
+    extend info, 'entryId': request.object.get('entryActedOn').id
 
   message = generateActivityString(action, info)
   relativeUri = generateRelativeUri(action, info)
