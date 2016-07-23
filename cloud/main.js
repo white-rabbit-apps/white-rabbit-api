@@ -172,7 +172,7 @@ Parse.Cloud.afterSave("AnimalTimelineEntry", function(request, response) {
       var link, username;
       console.log('Animal: ' + JSON.stringify(animal));
       username = animal.get("username");
-      link = "http://www.whiterabbitapps.net/cat/" + username + "/" + entryId;
+      link = "http://www.communikitty.com/cat/" + username + "/" + entryId;
       return shareToFacebook(user, entryText, link);
     });
   }

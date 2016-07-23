@@ -341,7 +341,7 @@ angular.module("ui.bootstrap",["ui.bootstrap.tpls","ui.bootstrap.transition","ui
   module.factory('ParseUtils', function($http, $window) {
     var Parse;
     return Parse = {
-      BaseUrl: "http://www.whiterabbitapps.net/api",
+      BaseUrl: "http://www.communikitty.com/api",
       _request: function(method, path, data, params) {
         var headers, id, klass, _ref;
         if (angular.isArray(path)) {

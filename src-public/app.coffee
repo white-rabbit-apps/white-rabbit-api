@@ -94,8 +94,8 @@ app.config (
 #    "SkDTdS8SBGzO9BkRHR3H8kwxCLJSvKsAe1jeOTnW"  # REST API Key
   )
 
-  Parse.initialize("IWr9xzTirLbjXH80mbTCtT9lWB73ggQe3PhA6nPg", "8iUoJovKQkhCcpOaMPZ3r9Ii3thLsuvLfHViXLrK")
-  Parse.serverURL = "http://www.whiterabbitapps.net/api"
+  Parse.initialize("IWr9xzTirLbjXH80mbTCtT9lWB73ggQe3PhA6nPg", "Yxdst3hz76abMoAwG7FLh0NwDmPvYHFDUPao9WJJ")
+  Parse.serverURL = "http://www.communikitty.com/api"
 
 app.filter 'unsafe', ($sce) ->
   $sce.trustAsHtml
@@ -175,7 +175,7 @@ app.run ($rootScope, $state, $location) ->
   $rootScope.title = 'White Rabbit Apps'
   $rootScope.description = 'Follow the white rabbit...'
 
-  $rootScope.serverDomain = 'http://www.whiterabbitapps.net'
+  $rootScope.serverDomain = 'http://www.communikitty.com'
   $rootScope.url = $location.url()
   $rootScope.mainImage = 'http://files.parsetfss.com/76b6cc17-92eb-4048-be57-afbc6cb6e77d/tfss-64d0f007-06e1-4c7f-b2a2-6d558b87361f-file'
 

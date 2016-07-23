@@ -115,10 +115,10 @@ Parse.Cloud.afterSave "AnimalTransfer", (request, response) ->
   console.log 'attempting email for animal transfer'
   # sendgrid.sendEmail(
   #   to: [ 'michaelbina@icloud.com' ]
-  #   from: 'support@whiterabbitapps.net'
+  #   from: 'support@communikitty.com'
   #   subject: 'You\'ve been invited to take over'
   #   text: 'Congratulations on your new family member!'
-  #   replyto: 'support@whiterabbitapps.net').then ((httpResponse) ->
+  #   replyto: 'support@communikitty.com').then ((httpResponse) ->
   #   console.log httpResponse
   # ), (httpResponse) ->
   #   console.error httpResponse
@@ -175,7 +175,7 @@ Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
       console.log 'Animal: ' + JSON.stringify(animal)
 
       username = animal.get("username")
-      link = "http://www.whiterabbitapps.net/cat/" + username + "/" + entryId
+      link = "http://www.communikitty.com/cat/" + username + "/" + entryId
 
       shareToFacebook(user, entryText, link)
     )

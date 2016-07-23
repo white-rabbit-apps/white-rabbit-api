@@ -29,7 +29,7 @@ module.factory 'persist', ($q, $window) ->
 
 module.factory 'ParseUtils', ($http, $window) ->
   Parse =
-    BaseUrl: "http://www.whiterabbitapps.net/api"
+    BaseUrl: "http://www.communikitty.com/api"
 
     _request: (method, path, data, params) ->
 
