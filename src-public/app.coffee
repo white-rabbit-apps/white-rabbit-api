@@ -104,8 +104,12 @@ app.filter 'hashtagFilter', ($sce) ->
   hashtagPattern = /(^|\s)(#([a-z\d-]+))/ig
   mentionPattern = /(^|\s)(@([a-z0-9_-]+))/ig
   (text) ->
-    newText = text.replace(hashtagPattern, '$1<a href="/hashtag/$3">$&</a>')
-    newText = newText.replace(mentionPattern, '$1<a href="/cat/$3">$&</a>')
+    if text
+      newText = text.replace(hashtagPattern, '$1<a href="/hashtag/$3">$&</a>')
+      newText = newText.replace(mentionPattern, '$1<a href="/cat/$3">$&</a>')
+    else
+      newText = text
+
     return $sce.trustAsHtml(newText)
 
 
@@ -172,8 +176,8 @@ app.run ($rootScope, $state, $location) ->
   $rootScope.$state = $state
   $rootScope.hideNavigation = false
   $rootScope.bodyClass = 'with-nav'
-  $rootScope.title = 'White Rabbit Apps'
-  $rootScope.description = 'Follow the white rabbit...'
+  $rootScope.title = 'CommuniKitty'
+  $rootScope.description = 'The ultimate app for kitties and their humans'
 
   $rootScope.serverDomain = 'http://www.communikitty.com'
   $rootScope.url = $location.url()

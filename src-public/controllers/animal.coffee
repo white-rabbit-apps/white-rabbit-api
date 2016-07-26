@@ -68,14 +68,14 @@ app.controller 'AnimalCtrl', ($scope, Animal, AnimalTimelineEntry, $stateParams,
             entry = entries[0]
 
             $rootScope.title = $scope.animal.name + "'s photo on " + $rootScope.title
-            $rootScope.description = 'Check out ' + $scope.animal.name + '\'s photo on White Rabbit Apps'
+            $rootScope.description = 'Check out ' + $scope.animal.name + '\'s photo on CommuniKitty'
             $rootScope.mainImage = entry.image.url
             $scope.createNewEntry()
             $scope.fetchEntries()
 
       else
         $rootScope.title = $scope.animal.name + ' on ' + $rootScope.title
-        $rootScope.description = 'Check out ' + $scope.animal.name + '\'s profile on White Rabbit Apps'
+        $rootScope.description = 'Check out ' + $scope.animal.name + '\'s profile on CommuniKitty'
         $rootScope.mainImage = $scope.animal.profilePhoto.url
         $scope.createNewEntry()
         $scope.fetchEntries()

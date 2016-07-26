@@ -78,8 +78,12 @@ app.filter('hashtagFilter', function($sce) {
   mentionPattern = /(^|\s)(@([a-z0-9_-]+))/ig;
   return function(text) {
     var newText;
-    newText = text.replace(hashtagPattern, '$1<a href="/hashtag/$3">$&</a>');
-    newText = newText.replace(mentionPattern, '$1<a href="/cat/$3">$&</a>');
+    if (text) {
+      newText = text.replace(hashtagPattern, '$1<a href="/hashtag/$3">$&</a>');
+      newText = newText.replace(mentionPattern, '$1<a href="/cat/$3">$&</a>');
+    } else {
+      newText = text;
+    }
     return $sce.trustAsHtml(newText);
   };
 });
@@ -151,8 +155,8 @@ app.run(function($rootScope, $state, $location) {
   $rootScope.$state = $state;
   $rootScope.hideNavigation = false;
   $rootScope.bodyClass = 'with-nav';
-  $rootScope.title = 'White Rabbit Apps';
-  $rootScope.description = 'Follow the white rabbit...';
+  $rootScope.title = 'CommuniKitty';
+  $rootScope.description = 'The ultimate app for kitties and their humans';
   $rootScope.serverDomain = 'http://www.communikitty.com';
   $rootScope.url = $location.url();
   $rootScope.mainImage = 'http://files.parsetfss.com/76b6cc17-92eb-4048-be57-afbc6cb6e77d/tfss-64d0f007-06e1-4c7f-b2a2-6d558b87361f-file';
@@ -283,7 +287,7 @@ app.controller('AnimalCtrl', function($scope, Animal, AnimalTimelineEntry, $stat
           if (entries.length > 0) {
             entry = entries[0];
             $rootScope.title = $scope.animal.name + "'s photo on " + $rootScope.title;
-            $rootScope.description = 'Check out ' + $scope.animal.name + '\'s photo on White Rabbit Apps';
+            $rootScope.description = 'Check out ' + $scope.animal.name + '\'s photo on CommuniKitty';
             $rootScope.mainImage = entry.image.url;
             $scope.createNewEntry();
             return $scope.fetchEntries();
@@ -291,7 +295,7 @@ app.controller('AnimalCtrl', function($scope, Animal, AnimalTimelineEntry, $stat
         });
       } else {
         $rootScope.title = $scope.animal.name + ' on ' + $rootScope.title;
-        $rootScope.description = 'Check out ' + $scope.animal.name + '\'s profile on White Rabbit Apps';
+        $rootScope.description = 'Check out ' + $scope.animal.name + '\'s profile on CommuniKitty';
         $rootScope.mainImage = $scope.animal.profilePhoto.url;
         $scope.createNewEntry();
         return $scope.fetchEntries();
@@ -548,7 +552,7 @@ app.controller('BreedsCtrl', function($scope, Breed) {
 app.controller('HashtagCtrl', function($scope, AnimalTimelineEntry, $stateParams, $rootScope) {
   $scope.hashtag = $stateParams.hashtag;
   $rootScope.title = '#' + $scope.hashtag + ' on ' + $rootScope.title;
-  $rootScope.description = 'Check out posts tagged #' + $scope.hashtag + ' on White Rabbit Apps';
+  $rootScope.description = 'Check out posts tagged #' + $scope.hashtag + ' on CommuniKitty';
   $rootScope.hideNavigation = false;
   $rootScope.bodyClass = 'no-nav';
   $scope.fetchEntries = function() {
@@ -597,7 +601,7 @@ app.controller('LocationCtrl', function($scope, $rootScope, $stateParams, Locati
       $scope.location = locations[0];
       console.log($scope.location);
       $rootScope.title = $scope.location.name + ' on ' + $rootScope.title;
-      $rootScope.description = 'Check out ' + $scope.location.name + ' on White Rabbit Apps';
+      $rootScope.description = 'Check out ' + $scope.location.name + ' on CommuniKitty';
       $rootScope.mainImage = $scope.location.logo.url;
       $scope.fetchAnimals();
       return $scope.fetchAlumni();

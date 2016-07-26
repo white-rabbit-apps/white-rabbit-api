@@ -30,3 +30,29 @@ Parse.Cloud.job("setEntriesPrivate", function(request, response) {
     }
   });
 });
+
+Parse.Cloud.job("removeNewFromLocationTypes", function(request, response) {
+  var query;
+  console.log('setting entries private');
+  Parse.Cloud.useMasterKey();
+  query = new Parse.Query("Location");
+  query.whereKey("types", "_new");
+  query.doesNotExist("name");
+  return query.find({
+    success: function(results) {
+      var entry, _i, _len;
+      for (_i = 0, _len = results.length; _i < _len; _i++) {
+        entry = results[_i];
+        if (entry.get("name") === "") {
+          console.log("location with no name");
+        } else {
+          console.log("location with name");
+        }
+      }
+      return response.success("Migration completed successfully.");
+    },
+    error: function(error) {
+      return response.error("Uh oh, something went wrong.");
+    }
+  });
+});

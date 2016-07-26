@@ -8712,6 +8712,7 @@ body.no-nav .entries .entry p {
   margin-top: 10px;
   margin-bottom: 0px;
   text-align: left;
+  color: black;
 }
 body.no-nav .entries .entry .type {
   background-size: 60px 60px;
@@ -8747,6 +8748,7 @@ body.no-nav .hashtag .header {
   padding: 20px;
   padding-top: 0px;
   text-align: center;
+  color: black;
 }
 body.no-nav .hashtag .entries {
   padding-top: 90px;
@@ -8839,7 +8841,7 @@ body.no-nav .location .location-header .info .name {
 }
 .navbar-header {
   padding-top: 30px;
-  padding-left: 40px;
+  padding-left: 30px;
 }
 .header label {
   width: 90px;

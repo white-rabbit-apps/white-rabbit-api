@@ -1,4 +1,4 @@
-# require __dirname + '/app.js'
+adfgsa# require __dirname + '/app.js'
 # require __dirname + '/../server.js'
 
 # Parse.Cloud.afterSave Parse.Installation, (request, response) ->
