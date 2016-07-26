@@ -6,6 +6,8 @@ require(__dirname + '/deletes.js');
 
 require(__dirname + '/activity.js');
 
+require(__dirname + '/jobs.js');
+
 lolspeak = require('lolspeak');
 
 ig = require('instagram-node').instagram();

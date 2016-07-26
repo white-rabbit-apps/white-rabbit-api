@@ -1,6 +1,7 @@
 require __dirname + '/validations.js'
 require __dirname + '/deletes.js'
 require __dirname + '/activity.js'
+require __dirname + '/jobs.js'
 
 lolspeak = require('lolspeak')
 
@@ -569,7 +570,7 @@ Parse.Cloud.afterSave "Comment", (request, response) ->
           success: (result) ->
             console.log("Entry saved after incrementing commentCount: " + result)
         )
-        
+
   return response.success()
 
 
