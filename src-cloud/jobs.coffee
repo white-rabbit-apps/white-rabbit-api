@@ -32,7 +32,7 @@ Parse.Cloud.define "removeNewFromLocationTypes", (request, response) ->
   Parse.Cloud.useMasterKey()
 
   query = new Parse.Query("Location")
-  query.whereKey("types", "_new")
+  query.contains("types", "_new")
   query.doesNotExist("name")
   query.find
     success: (results) ->

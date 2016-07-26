@@ -36,7 +36,7 @@ Parse.Cloud.define("removeNewFromLocationTypes", function(request, response) {
   console.log('setting entries private');
   Parse.Cloud.useMasterKey();
   query = new Parse.Query("Location");
-  query.whereKey("types", "_new");
+  query.contains("types", "_new");
   query.doesNotExist("name");
   return query.find({
     success: function(results) {
