@@ -38,7 +38,7 @@ Parse.Cloud.define("removeNewFromLocationTypes", function(request, response) {
   query = new Parse.Query("Location");
   query.contains("types", "_new");
   query.exists("name");
-  query.limit(50);
+  query.limit(100);
   return query.find({
     success: function(results) {
       var entry, _i, _len;
@@ -47,7 +47,16 @@ Parse.Cloud.define("removeNewFromLocationTypes", function(request, response) {
         if (!entry.get("name")) {
           console.log("location with no name");
         } else {
-          console.log("location with name");
+          console.log("location with name: " + entry.get("name"));
+          entry.remove("types", "_new");
+          entry.save({
+            success: function() {
+              return console.log("finished saving entry");
+            },
+            error: function() {
+              return console.log("problem saving entry");
+            }
+          });
         }
       }
       return response.success("Migration completed successfully.");

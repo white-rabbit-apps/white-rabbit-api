@@ -34,7 +34,7 @@ Parse.Cloud.define "removeNewFromLocationTypes", (request, response) ->
   query = new Parse.Query("Location")
   query.contains("types", "_new")
   query.exists("name")
-  query.limit(50)
+  query.limit(100)
   query.find
     success: (results) ->
       for entry in results
@@ -42,14 +42,14 @@ Parse.Cloud.define "removeNewFromLocationTypes", (request, response) ->
           console.log("location with no name")
           # entry.set("private", false)
         else
-          console.log("location with name")
-          # entry.set("private", true)
+          console.log("location with name: " + entry.get("name"))
+          entry.remove("types", "_new")
 
-        # entry.save
-        #   success: () ->
-        #     console.log("finished saving entry")
-        #   error: () ->
-        #     console.log("problem saving entry")
+          entry.save
+            success: () ->
+              console.log("finished saving entry")
+            error: () ->
+              console.log("problem saving entry")
       response.success("Migration completed successfully.")
     error: (error) ->
       response.error("Uh oh, something went wrong.")
