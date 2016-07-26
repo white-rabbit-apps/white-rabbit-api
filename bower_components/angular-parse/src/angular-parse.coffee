@@ -47,7 +47,7 @@ module.factory 'ParseUtils', ($http, $window) ->
         "Content-Type" : "application/json"
 
       if $window.localStorage.key('PARSE_SESSION_TOKEN')
-        headers["X-Parse-Session-Token"] = $window.localStorage.getItem('PARSE_SESSION_TOKEN')
+        # headers["X-Parse-Session-Token"] = $window.localStorage.getItem('PARSE_SESSION_TOKEN')
 
       $http
         method: method
