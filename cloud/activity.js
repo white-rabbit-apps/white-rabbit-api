@@ -1,4 +1,3 @@
-adfgsa;
 var extend, generateActivityString, generateRelativeUri, sendPushNotification;
 
 extend = exports.extend = function(object, properties) {
