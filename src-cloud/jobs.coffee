@@ -33,11 +33,11 @@ Parse.Cloud.define "removeNewFromLocationTypes", (request, response) ->
 
   query = new Parse.Query("Location")
   query.contains("types", "_new")
-  query.doesNotExist("name")
+  query.exists("name")
   query.find
     success: (results) ->
       for entry in results
-        if(entry.get("name") == "")
+        if(!entry.get("name"))
           console.log("location with no name")
           # entry.set("private", false)
         else

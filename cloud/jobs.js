@@ -37,13 +37,13 @@ Parse.Cloud.define("removeNewFromLocationTypes", function(request, response) {
   Parse.Cloud.useMasterKey();
   query = new Parse.Query("Location");
   query.contains("types", "_new");
-  query.doesNotExist("name");
+  query.exists("name");
   return query.find({
     success: function(results) {
       var entry, _i, _len;
       for (_i = 0, _len = results.length; _i < _len; _i++) {
         entry = results[_i];
-        if (entry.get("name") === "") {
+        if (!entry.get("name")) {
           console.log("location with no name");
         } else {
           console.log("location with name");
