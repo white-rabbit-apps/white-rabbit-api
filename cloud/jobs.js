@@ -1,4 +1,4 @@
-Parse.Cloud.job("setEntriesPrivate", function(request, response) {
+Parse.Cloud.define("setEntriesPrivate", function(request, response) {
   var query;
   console.log('setting entries private');
   Parse.Cloud.useMasterKey();
