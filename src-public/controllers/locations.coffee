@@ -64,7 +64,6 @@ app.controller 'LocationsCtrl', ($scope, Location, Upload) ->
         (error) ->
           console.log("error saving location")
       )
-    location.save()
     location.editing = false
 
   $scope.cancelEditing = (location) ->

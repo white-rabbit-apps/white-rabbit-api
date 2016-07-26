@@ -710,7 +710,6 @@ app.controller('LocationsCtrl', function($scope, Location, Upload) {
         return console.log("error saving location");
       });
     }
-    location.save();
     return location.editing = false;
   };
   $scope.cancelEditing = function(location) {
