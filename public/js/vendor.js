@@ -948,7 +948,7 @@ angular.module('angulartics.google.analytics', ['angulartics'])
   // to wrap these inside angulartics.waitForVendorApi
 
   $analyticsProvider.settings.trackRelativePath = true;
-
+  
   // Set the default settings for this module
   $analyticsProvider.settings.ga = {
     // array of additional account names (only works for analyticsjs)
@@ -979,8 +979,8 @@ angular.module('angulartics.google.analytics', ['angulartics'])
   $analyticsProvider.registerEventTrack(function (action, properties) {
 
     // do nothing if there is no category (it's required by GA)
-    if (!properties || !properties.category) {
-		return;
+    if (!properties || !properties.category) { 
+		return; 
 	}
     // GA requires that eventValue be an integer, see:
     // https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#eventValue
@@ -20207,7 +20207,7 @@ angular.module('checklist-model', [])
           arr.push(item);
       }
     return arr;
-  }
+  }  
 
   // remove
   function remove(arr, item, comparator) {
@@ -20247,7 +20247,7 @@ angular.module('checklist-model', [])
         comparator = function (a, b) {
           return a[comparatorExpression] === b[comparatorExpression];
         };
-
+        
       } else {
         comparator = $parse(attrs.checklistComparator)(scope.$parent);
       }
@@ -20255,7 +20255,7 @@ angular.module('checklist-model', [])
 
     // watch UI checked change
     scope.$watch(attrs.ngModel, function(newValue, oldValue) {
-      if (newValue === oldValue) {
+      if (newValue === oldValue) { 
         return;
       }
 
@@ -20283,7 +20283,7 @@ angular.module('checklist-model', [])
     function getChecklistValue() {
       return attrs.checklistValue ? $parse(attrs.checklistValue)(scope.$parent) : attrs.value;
     }
-
+    
     function setValueInChecklistModel(value, checked) {
       var current = checklistModelGetter(scope.$parent);
       if (angular.isFunction(checklistModelGetter.assign)) {
@@ -20293,7 +20293,7 @@ angular.module('checklist-model', [])
           checklistModelGetter.assign(scope.$parent, remove(current, value, comparator));
         }
       }
-
+      
     }
 
     // declare one function to be used for both $watch functions

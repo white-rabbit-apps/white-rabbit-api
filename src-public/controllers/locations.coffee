@@ -1,5 +1,12 @@
 app.controller 'LocationsCtrl', ($scope, Location, Upload) ->
 
+  $scope.showLoader = ->
+    $("#loader-container").show()
+
+  $scope.hideLoader = ->
+    $("#loader-container").hide()
+
+
   $scope.addLocation = ->
     $scope.newLocation = new Location
     $scope.newLocation.types = ["_new"]
@@ -20,15 +27,18 @@ app.controller 'LocationsCtrl', ($scope, Location, Upload) ->
 
   $scope.removeLocation = (location) ->
     if confirm("Are you sure?  All data will be lost.")
+      $scope.showLoader()
       location.destroy().then () ->
         _.remove $scope.locations, (location) ->
           location.objectId is null
+          $scope.hideLoader()
 
   $scope.editingLocation = (location) ->
     location.editing = true
 
   $scope.editLocation = (location) ->
     console.log("saving location")
+    $scope.showLoader()
     if(location.geo?)
       location.geo = {
         "__type": "GeoPoint",
@@ -51,18 +61,22 @@ app.controller 'LocationsCtrl', ($scope, Location, Upload) ->
             console.log("saved location")
             location.saving = false
             location.editing = false
+            $scope.hideLoader()
           ,
           (error) ->
             console.log("error saving location")
+            $scope.hideLoader()
         )
     else
       location.save().then(
         (object) ->
           console.log("saved location")
           location.editing = false
+          $scope.hideLoader()
         ,
         (error) ->
           console.log("error saving location")
+          $scope.hideLoader()
       )
     location.editing = false
 
@@ -75,6 +89,7 @@ app.controller 'LocationsCtrl', ($scope, Location, Upload) ->
     $scope.fetchLocations()
 
   $scope.searchLocations = () ->
+    $scope.showLoader()
     Location.query(
       where:
         name:
@@ -83,6 +98,8 @@ app.controller 'LocationsCtrl', ($scope, Location, Upload) ->
     )
     .then (locations) ->
       $scope.locations = locations
+      $scope.hideLoader()
+
 
   $scope.fetchLocations = ->
     if $scope.selectedAnimal != null && $scope.selectedAnimal != "any"
@@ -95,9 +112,11 @@ app.controller 'LocationsCtrl', ($scope, Location, Upload) ->
         where:
           types: $scope.selectedType
 
+    $scope.showLoader()
     Location.query(params)
     .then (locations) ->
       $scope.locations = locations
+      $scope.hideLoader()
 
   $scope.searchTerm = ""
   $scope.types = ["_new", "vet", "hospital", "emergency", "shelter", "rescue", "cafe", "supplies", "grooming", "boarding", "daycare", "training", "sitting", "walking", "insurance"]

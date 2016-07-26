@@ -6,7 +6,7 @@
   div
     label
       | Search: 
-    input#searchbar(type="text", ng-model="searchTerm", ng-change="searchLocations()")
+    input#searchbar(type="text", ng-model="searchTerm", ng-blur="searchLocations()")
 
   div
     label
@@ -22,6 +22,12 @@
       option(value="{{animal}}", ng-repeat="animal in animals") {{animal}}
 
 
+
+#loader-container(style="text-align: center; position: absolute; left: 700px; top: 50px;", hidden="true")
+  img.loader(src="/img/loader.gif", width="100")
+  
+h4
+  | {{locations.length}} Locations Found
 
 .location(ng-repeat="location in locations")
   .not-editing(ng-hide="location.editing")

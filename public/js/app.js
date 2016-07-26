@@ -641,6 +641,12 @@ app.controller('LocationCtrl', function($scope, $rootScope, $stateParams, Locati
 });
 
 app.controller('LocationsCtrl', function($scope, Location, Upload) {
+  $scope.showLoader = function() {
+    return $("#loader-container").show();
+  };
+  $scope.hideLoader = function() {
+    return $("#loader-container").hide();
+  };
   $scope.addLocation = function() {
     $scope.newLocation = new Location;
     $scope.newLocation.types = ["_new"];
@@ -664,9 +670,11 @@ app.controller('LocationsCtrl', function($scope, Location, Upload) {
   };
   $scope.removeLocation = function(location) {
     if (confirm("Are you sure?  All data will be lost.")) {
+      $scope.showLoader();
       return location.destroy().then(function() {
         return _.remove($scope.locations, function(location) {
-          return location.objectId === null;
+          location.objectId === null;
+          return $scope.hideLoader();
         });
       });
     }
@@ -677,6 +685,7 @@ app.controller('LocationsCtrl', function($scope, Location, Upload) {
   $scope.editLocation = function(location) {
     var file, imageBase64, name;
     console.log("saving location");
+    $scope.showLoader();
     if ((location.geo != null)) {
       location.geo = {
         "__type": "GeoPoint",
@@ -697,17 +706,21 @@ app.controller('LocationsCtrl', function($scope, Location, Upload) {
         return location.save().then(function(object) {
           console.log("saved location");
           location.saving = false;
-          return location.editing = false;
+          location.editing = false;
+          return $scope.hideLoader();
         }, function(error) {
-          return console.log("error saving location");
+          console.log("error saving location");
+          return $scope.hideLoader();
         });
       });
     } else {
       location.save().then(function(object) {
         console.log("saved location");
-        return location.editing = false;
+        location.editing = false;
+        return $scope.hideLoader();
       }, function(error) {
-        return console.log("error saving location");
+        console.log("error saving location");
+        return $scope.hideLoader();
       });
     }
     return location.editing = false;
@@ -721,6 +734,7 @@ app.controller('LocationsCtrl', function($scope, Location, Upload) {
     return $scope.fetchLocations();
   };
   $scope.searchLocations = function() {
+    $scope.showLoader();
     return Location.query({
       where: {
         name: {
@@ -729,7 +743,8 @@ app.controller('LocationsCtrl', function($scope, Location, Upload) {
         }
       }
     }).then(function(locations) {
-      return $scope.locations = locations;
+      $scope.locations = locations;
+      return $scope.hideLoader();
     });
   };
   $scope.fetchLocations = function() {
@@ -748,8 +763,10 @@ app.controller('LocationsCtrl', function($scope, Location, Upload) {
         }
       };
     }
+    $scope.showLoader();
     return Location.query(params).then(function(locations) {
-      return $scope.locations = locations;
+      $scope.locations = locations;
+      return $scope.hideLoader();
     });
   };
   $scope.searchTerm = "";
