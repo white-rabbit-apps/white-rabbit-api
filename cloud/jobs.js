@@ -31,7 +31,7 @@ Parse.Cloud.job("setEntriesPrivate", function(request, response) {
   });
 });
 
-Parse.Cloud.job("removeNewFromLocationTypes", function(request, response) {
+Parse.Cloud.define("removeNewFromLocationTypes", function(request, response) {
   var query;
   console.log('setting entries private');
   Parse.Cloud.useMasterKey();

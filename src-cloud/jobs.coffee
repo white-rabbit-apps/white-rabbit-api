@@ -26,7 +26,7 @@ Parse.Cloud.job "setEntriesPrivate", (request, response) ->
 
 
 
-Parse.Cloud.job "removeNewFromLocationTypes", (request, response) ->
+Parse.Cloud.define "removeNewFromLocationTypes", (request, response) ->
   console.log('setting entries private')
 
   Parse.Cloud.useMasterKey()
