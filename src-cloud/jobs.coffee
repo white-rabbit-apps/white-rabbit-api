@@ -34,6 +34,7 @@ Parse.Cloud.define "removeNewFromLocationTypes", (request, response) ->
   query = new Parse.Query("Location")
   query.contains("types", "_new")
   query.exists("name")
+  query.limit(50)
   query.find
     success: (results) ->
       for entry in results

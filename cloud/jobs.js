@@ -38,6 +38,7 @@ Parse.Cloud.define("removeNewFromLocationTypes", function(request, response) {
   query = new Parse.Query("Location");
   query.contains("types", "_new");
   query.exists("name");
+  query.limit(50);
   return query.find({
     success: function(results) {
       var entry, _i, _len;
