@@ -13,8 +13,8 @@ lolspeak = require('lolspeak');
 ig = require('instagram-node').instagram();
 
 ig.use({
-  client_id: '09214a4e95494f70873ea3f8c7c82960',
-  client_secret: '18c7f3e84ee54c429364ad48f8a00146'
+  client_id: 'd10bd77c510c4e09af13763839673b0d',
+  client_secret: '4823381080a94838aa5168ff6a4936b1'
 });
 
 Parse.Cloud.define('translate', function(request, response) {
