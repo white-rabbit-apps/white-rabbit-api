@@ -27,7 +27,9 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
 
   ig.user_search(instagramUsername, (err, users, remaining, limit) ->
     console.log 'finished searching users: ' + JSON.stringify(users)
-    if(!err)
+    if(err)
+      console.log 'error searching ig: ' + err
+    else
       console.log 'no error searching users'
       user = users[0]
       for u in users

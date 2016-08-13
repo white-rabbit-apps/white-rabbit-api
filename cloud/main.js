@@ -33,7 +33,9 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
   return ig.user_search(instagramUsername, function(err, users, remaining, limit) {
     var u, user, _i, _len;
     console.log('finished searching users: ' + JSON.stringify(users));
-    if (!err) {
+    if (err) {
+      return console.log('error searching ig: ' + err);
+    } else {
       console.log('no error searching users');
       user = users[0];
       for (_i = 0, _len = users.length; _i < _len; _i++) {
