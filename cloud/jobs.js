@@ -42,7 +42,7 @@ Parse.Cloud.define("setEntriesLikeCount", function(request, response) {
   console.log('setting entries like counts');
   Parse.Cloud.useMasterKey();
   query = new Parse.Query("AnimalTimelineEntry");
-  query.limit(1500);
+  query.limit(500);
   query.equalTo("type", "image");
   return query.find({
     useMasterKey: true,
@@ -58,8 +58,8 @@ Parse.Cloud.define("setEntriesLikeCount", function(request, response) {
               success: function() {
                 return console.log("finished saving entry");
               },
-              error: function() {
-                return console.log("problem saving entry");
+              error: function(error) {
+                return console.log("problem saving entry: " + error);
               }
             });
           }
