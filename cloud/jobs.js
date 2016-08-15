@@ -12,7 +12,7 @@ Parse.Cloud.define("setEntriesLikeCount", function(request, response) {
         entry = results[_i];
         likeQuery = new Parse.Query("Like");
         likeQuery.equalTo("entry", entry);
-        likeQuery.count({
+        likeQuery.find({
           success: function(results) {
             console.log("SETTING LIKE COUNT TO: " + results.count);
             entry.set("likeCount", results.count);
