@@ -7,7 +7,7 @@ Parse.Cloud.define "setEntriesLikeCount", (request, response) ->
   Parse.Cloud.useMasterKey()
 
   query = new Parse.Query("AnimalTimelineEntry")
-  query.limit(500)
+  query.limit(1500)
   query.equalTo("type", "image")
   query.find
     useMasterKey: true
@@ -29,7 +29,7 @@ Parse.Cloud.define "setEntriesLikeCount", (request, response) ->
                 success: () ->
                   console.log("finished saving entry")
                 error: (error) ->
-                  console.log("problem saving entry: " + error)
+                  console.log("problem saving entry: " + error.message)
 
           commentQuery.find
             success: (results) ->
@@ -40,7 +40,7 @@ Parse.Cloud.define "setEntriesLikeCount", (request, response) ->
                 success: () ->
                   console.log("finished saving entry")
                 error: () ->
-                  console.log("problem saving entry")
+                  console.log("problem saving entry: " + error.message)
 
         )(entry)
 
