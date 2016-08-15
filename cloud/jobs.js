@@ -14,8 +14,8 @@ Parse.Cloud.define("setEntriesLikeCount", function(request, response) {
         likeQuery.equalTo("entry", entry);
         likeQuery.find({
           success: function(results) {
-            console.log("SETTING LIKE COUNT TO: " + results.count);
-            entry.set("likeCount", results.count);
+            console.log("SETTING LIKE COUNT TO: " + results.length);
+            entry.set("likeCount", results.length);
             return entry.save({
               success: function() {
                 return console.log("finished saving entry");
