@@ -47,17 +47,13 @@ Parse.Cloud.define("setEntriesLikeCount", function(request, response) {
   return query.find({
     useMasterKey: true,
     success: function(results) {
-      var entry, likeQuery, newEntry, _i, _len;
-      for (_i = 0, _len = results.length; _i < _len; _i++) {
-        entry = results[_i];
-        likeQuery = new Parse.Query("Like");
-        likeQuery.equalTo("entry", entry);
-        newEntry = entry;
-        likeQuery.find({
+      var entry, likeQuery, _fn, _i, _len;
+      _fn = function(lockedInEntry) {
+        return likeQuery.find({
           success: function(results) {
-            console.log("SETTING LIKE COUNT FOR " + newEntry.id + " TO: " + results.length);
-            newEntry.set("likeCount", results.length);
-            return newEntry.save({
+            console.log("SETTING LIKE COUNT FOR " + lockedInEntry.id + " TO: " + results.length);
+            lockedInEntry.set("likeCount", results.length);
+            return lockedInEntry.save({
               useMasterKey: true,
               success: function() {
                 return console.log("finished saving entry");
@@ -68,6 +64,12 @@ Parse.Cloud.define("setEntriesLikeCount", function(request, response) {
             });
           }
         });
+      };
+      for (_i = 0, _len = results.length; _i < _len; _i++) {
+        entry = results[_i];
+        likeQuery = new Parse.Query("Like");
+        likeQuery.equalTo("entry", entry);
+        _fn(entry);
       }
       return response.success("Like count setting completed successfully.");
     },
