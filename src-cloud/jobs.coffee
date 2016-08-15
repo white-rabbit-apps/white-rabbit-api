@@ -1,6 +1,38 @@
 # require __dirname + '/app.js'
 # require __dirname + '/../server.js'
 
+Parse.Cloud.define "setAnimalFollowerCount", (request, response) ->
+  console.log('setting animals follower counts')
+
+  Parse.Cloud.useMasterKey()
+
+  query = new Parse.Query("Animal")
+  query.limit(1500)
+  query.find
+    useMasterKey: true
+    success: (results) ->
+      for animal in results
+        followQuery = new Parse.Query("Follow")
+        followQuery.equalTo("following", animal)
+
+        ((lockedInAnimal) ->
+          followQuery.find
+            success: (results) ->
+              console.log("SETTING NUM FOLLOWERS FOR " + lockedInAnimal.id + " TO: " + results.length)
+              lockedInAnimal.set("followerCount", results.length)
+              lockedInAnimal.save
+                useMasterKey: true
+                success: () ->
+                  console.log("finished saving animal")
+                error: (error) ->
+                  console.log("problem saving animal: " + error.message)
+        )(animal)
+
+      response.success("Follower count setting completed successfully.")
+    error: (error) ->
+      response.error("Uh oh, something went wrong.")
+
+
 Parse.Cloud.define "setEntriesLikeCount", (request, response) ->
   console.log('setting entries like counts')
 

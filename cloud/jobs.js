@@ -1,3 +1,44 @@
+Parse.Cloud.define("setAnimalFollowerCount", function(request, response) {
+  var query;
+  console.log('setting animals follower counts');
+  Parse.Cloud.useMasterKey();
+  query = new Parse.Query("Animal");
+  query.limit(1500);
+  return query.find({
+    useMasterKey: true,
+    success: function(results) {
+      var animal, followQuery, _fn, _i, _len;
+      _fn = function(lockedInAnimal) {
+        return followQuery.find({
+          success: function(results) {
+            console.log("SETTING NUM FOLLOWERS FOR " + lockedInAnimal.id + " TO: " + results.length);
+            lockedInAnimal.set("followerCount", results.length);
+            return lockedInAnimal.save({
+              useMasterKey: true,
+              success: function() {
+                return console.log("finished saving animal");
+              },
+              error: function(error) {
+                return console.log("problem saving animal: " + error.message);
+              }
+            });
+          }
+        });
+      };
+      for (_i = 0, _len = results.length; _i < _len; _i++) {
+        animal = results[_i];
+        followQuery = new Parse.Query("Follow");
+        followQuery.equalTo("following", animal);
+        _fn(animal);
+      }
+      return response.success("Follower count setting completed successfully.");
+    },
+    error: function(error) {
+      return response.error("Uh oh, something went wrong.");
+    }
+  });
+});
+
 Parse.Cloud.define("setEntriesLikeCount", function(request, response) {
   var query;
   console.log('setting entries like counts');
