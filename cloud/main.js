@@ -102,7 +102,6 @@ Parse.Cloud.define('importInstagramPhotos', function(request, response) {
 
 Parse.Cloud.beforeSave("AnimalTimelineEntry", function(request, response) {
   var timelineEntryQuery;
-  console.log("creating timeline entry: " + JSON.stringify(request));
   if (!request.object.existed() && request.object.get("instagramId")) {
     timelineEntryQuery = new Parse.Query("AnimalTimelineEntry");
     timelineEntryQuery.equalTo("instagramId", request.object.get("instagramId"));
@@ -160,9 +159,6 @@ shareToFacebook = function(forUser, message, link) {
 
 Parse.Cloud.afterSave("AnimalTimelineEntry", function(request, response) {
   var animal, animalQuery, entryId, entryText, user;
-  console.log("timeline entry created: " + JSON.stringify(request));
-  console.log("shareToFacebook: " + request.object.get("shareToFacebook"));
-  console.log("shareToTwitter: " + request.object.get("shareToTwitter"));
   if (request.object.get("shareToFacebook")) {
     console.log("sharing to Facebook for: " + request.object.get("createdBy").id);
     user = request.object.get("createdBy");

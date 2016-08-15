@@ -89,7 +89,7 @@ Parse.Cloud.define 'importInstagramPhotos', (request, response) ->
 
 
 Parse.Cloud.beforeSave "AnimalTimelineEntry", (request, response) ->
-  console.log("creating timeline entry: " + JSON.stringify(request))
+  # console.log("creating timeline entry: " + JSON.stringify(request))
 
   ## Check if there's already a timeline entry for that instagram photo
   if !request.object.existed() && request.object.get("instagramId")
@@ -158,9 +158,9 @@ shareToFacebook = (forUser, message, link) ->
 
 
 Parse.Cloud.afterSave "AnimalTimelineEntry", (request, response) ->
-  console.log("timeline entry created: " + JSON.stringify(request))
-  console.log("shareToFacebook: " + request.object.get("shareToFacebook"))
-  console.log("shareToTwitter: " + request.object.get("shareToTwitter"))
+  # console.log("timeline entry created: " + JSON.stringify(request))
+  # console.log("shareToFacebook: " + request.object.get("shareToFacebook"))
+  # console.log("shareToTwitter: " + request.object.get("shareToTwitter"))
 
   if(request.object.get("shareToFacebook"))
     console.log("sharing to Facebook for: " + request.object.get("createdBy").id)

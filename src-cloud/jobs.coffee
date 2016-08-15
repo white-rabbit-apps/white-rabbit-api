@@ -7,7 +7,7 @@ Parse.Cloud.define "setEntriesLikeCount", (request, response) ->
   Parse.Cloud.useMasterKey()
 
   query = new Parse.Query("AnimalTimelineEntry")
-  query.limit(500)
+  query.limit(1500)
   query.equalTo("type", "image")
   query.find
     success: (results) ->
@@ -16,6 +16,7 @@ Parse.Cloud.define "setEntriesLikeCount", (request, response) ->
         likeQuery.equalTo("entry", entry)
         likeQuery.count
           success: (results) ->
+            console.log("SETTING LIKE COUNT TO: " + results.count)
             entry.set("likeCount", results.count)
             entry.save
               success: () ->
