@@ -6,6 +6,7 @@ Parse.Cloud.define("setEntriesCommentCount", function(request, response) {
   query.limit(1500);
   query.equalTo("type", "image");
   return query.find({
+    useMasterKey: true,
     success: function(results) {
       var entry, likeQuery, _i, _len;
       for (_i = 0, _len = results.length; _i < _len; _i++) {
@@ -17,6 +18,7 @@ Parse.Cloud.define("setEntriesCommentCount", function(request, response) {
             console.log("SETTING COMMENT COUNT TO: " + results.length);
             entry.set("commentCount", results.length);
             return entry.save({
+              useMasterKey: true,
               success: function() {
                 return console.log("finished saving entry");
               },
@@ -43,6 +45,7 @@ Parse.Cloud.define("setEntriesLikeCount", function(request, response) {
   query.limit(1500);
   query.equalTo("type", "image");
   return query.find({
+    useMasterKey: true,
     success: function(results) {
       var entry, likeQuery, _i, _len;
       for (_i = 0, _len = results.length; _i < _len; _i++) {
@@ -54,6 +57,7 @@ Parse.Cloud.define("setEntriesLikeCount", function(request, response) {
             console.log("SETTING LIKE COUNT TO: " + results.length);
             entry.set("likeCount", results.length);
             return entry.save({
+              useMasterKey: true,
               success: function() {
                 return console.log("finished saving entry");
               },

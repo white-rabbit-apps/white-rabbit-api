@@ -10,6 +10,7 @@ Parse.Cloud.define "setEntriesCommentCount", (request, response) ->
   query.limit(1500)
   query.equalTo("type", "image")
   query.find
+    useMasterKey: true
     success: (results) ->
       for entry in results
         likeQuery = new Parse.Query("Comment")
@@ -19,6 +20,7 @@ Parse.Cloud.define "setEntriesCommentCount", (request, response) ->
             console.log("SETTING COMMENT COUNT TO: " + results.length)
             entry.set("commentCount", results.length)
             entry.save
+              useMasterKey: true
               success: () ->
                 console.log("finished saving entry")
               error: () ->
@@ -36,6 +38,7 @@ Parse.Cloud.define "setEntriesLikeCount", (request, response) ->
   query.limit(1500)
   query.equalTo("type", "image")
   query.find
+    useMasterKey: true
     success: (results) ->
       for entry in results
         likeQuery = new Parse.Query("Like")
@@ -45,6 +48,7 @@ Parse.Cloud.define "setEntriesLikeCount", (request, response) ->
             console.log("SETTING LIKE COUNT TO: " + results.length)
             entry.set("likeCount", results.length)
             entry.save
+              useMasterKey: true
               success: () ->
                 console.log("finished saving entry")
               error: () ->
