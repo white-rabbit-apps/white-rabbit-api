@@ -1,3 +1,40 @@
+Parse.Cloud.define("setEntriesCommentCount", function(request, response) {
+  var query;
+  console.log('setting entries comment counts');
+  Parse.Cloud.useMasterKey();
+  query = new Parse.Query("AnimalTimelineEntry");
+  query.limit(1500);
+  query.equalTo("type", "image");
+  return query.find({
+    success: function(results) {
+      var entry, likeQuery, _i, _len;
+      for (_i = 0, _len = results.length; _i < _len; _i++) {
+        entry = results[_i];
+        likeQuery = new Parse.Query("Comment");
+        likeQuery.equalTo("entry", entry);
+        likeQuery.find({
+          success: function(results) {
+            console.log("SETTING COMMENT COUNT TO: " + results.length);
+            entry.set("commentCount", results.length);
+            return entry.save({
+              success: function() {
+                return console.log("finished saving entry");
+              },
+              error: function() {
+                return console.log("problem saving entry");
+              }
+            });
+          }
+        });
+      }
+      return response.success("Comment count setting completed successfully.");
+    },
+    error: function(error) {
+      return response.error("Uh oh, something went wrong.");
+    }
+  });
+});
+
 Parse.Cloud.define("setEntriesLikeCount", function(request, response) {
   var query;
   console.log('setting entries like counts');
