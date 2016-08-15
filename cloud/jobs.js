@@ -3,28 +3,28 @@ Parse.Cloud.define("setEntriesLikeCount", function(request, response) {
   console.log('setting entries like counts');
   Parse.Cloud.useMasterKey();
   query = new Parse.Query("AnimalTimelineEntry");
+  query.limit(500);
+  query.equalTo("type", "image");
   return query.find({
     success: function(results) {
       var entry, likeQuery, _i, _len;
       for (_i = 0, _len = results.length; _i < _len; _i++) {
         entry = results[_i];
-        if (entry.get("type") === "image") {
-          likeQuery = new Parse.Query("Like");
-          likeQuery.equalTo("entry", entry);
-          likeQuery.count({
-            success: function(results) {
-              entry.set("likeCount", results.count);
-              return entry.save({
-                success: function() {
-                  return console.log("finished saving entry");
-                },
-                error: function() {
-                  return console.log("problem saving entry");
-                }
-              });
-            }
-          });
-        }
+        likeQuery = new Parse.Query("Like");
+        likeQuery.equalTo("entry", entry);
+        likeQuery.count({
+          success: function(results) {
+            entry.set("likeCount", results.count);
+            return entry.save({
+              success: function() {
+                return console.log("finished saving entry");
+              },
+              error: function() {
+                return console.log("problem saving entry");
+              }
+            });
+          }
+        });
       }
       return response.success("Like count setting completed successfully.");
     },

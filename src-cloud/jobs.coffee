@@ -7,22 +7,21 @@ Parse.Cloud.define "setEntriesLikeCount", (request, response) ->
   Parse.Cloud.useMasterKey()
 
   query = new Parse.Query("AnimalTimelineEntry")
+  query.limit(500)
+  query.equalTo("type", "image")
   query.find
     success: (results) ->
       for entry in results
-        if(entry.get("type") == "image")
-
-
-          likeQuery = new Parse.Query("Like")
-          likeQuery.equalTo("entry", entry)
-          likeQuery.count
-            success: (results) ->
-              entry.set("likeCount", results.count)
-              entry.save
-                success: () ->
-                  console.log("finished saving entry")
-                error: () ->
-                  console.log("problem saving entry")
+        likeQuery = new Parse.Query("Like")
+        likeQuery.equalTo("entry", entry)
+        likeQuery.count
+          success: (results) ->
+            entry.set("likeCount", results.count)
+            entry.save
+              success: () ->
+                console.log("finished saving entry")
+              error: () ->
+                console.log("problem saving entry")
       response.success("Like count setting completed successfully.")
     error: (error) ->
       response.error("Uh oh, something went wrong.")
