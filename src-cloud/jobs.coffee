@@ -1,34 +1,6 @@
 # require __dirname + '/app.js'
 # require __dirname + '/../server.js'
 
-Parse.Cloud.define "setEntriesCommentCount", (request, response) ->
-  console.log('setting entries comment counts')
-
-  Parse.Cloud.useMasterKey()
-
-  query = new Parse.Query("AnimalTimelineEntry")
-  query.limit(1500)
-  query.equalTo("type", "image")
-  query.find
-    useMasterKey: true
-    success: (results) ->
-      for entry in results
-        likeQuery = new Parse.Query("Comment")
-        likeQuery.equalTo("entry", entry)
-        likeQuery.find
-          success: (results) ->
-            console.log("SETTING COMMENT COUNT TO: " + results.length)
-            entry.set("commentCount", results.length)
-            entry.save
-              useMasterKey: true
-              success: () ->
-                console.log("finished saving entry")
-              error: () ->
-                console.log("problem saving entry")
-      response.success("Comment count setting completed successfully.")
-    error: (error) ->
-      response.error("Uh oh, something went wrong.")
-
 Parse.Cloud.define "setEntriesLikeCount", (request, response) ->
   console.log('setting entries like counts')
 
@@ -43,6 +15,10 @@ Parse.Cloud.define "setEntriesLikeCount", (request, response) ->
       for entry in results
         likeQuery = new Parse.Query("Like")
         likeQuery.equalTo("entry", entry)
+
+        commentQuery = new Parse.Query("Comment")
+        commentQuery.equalTo("entry", entry)
+
         ((lockedInEntry) ->
           likeQuery.find
             success: (results) ->
@@ -54,6 +30,18 @@ Parse.Cloud.define "setEntriesLikeCount", (request, response) ->
                   console.log("finished saving entry")
                 error: (error) ->
                   console.log("problem saving entry: " + error)
+
+          commentQuery.find
+            success: (results) ->
+              console.log("SETTING COMMENT COUNT FOR " + lockedInEntry.id + " TO: " + results.length)
+              lockedInEntry.set("commentCount", results.length)
+              lockedInEntry.save
+                useMasterKey: true
+                success: () ->
+                  console.log("finished saving entry")
+                error: () ->
+                  console.log("problem saving entry")
+
         )(entry)
 
       response.success("Like count setting completed successfully.")
