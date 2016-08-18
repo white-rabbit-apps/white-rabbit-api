@@ -189,6 +189,20 @@ Parse.Cloud.afterSave("AnimalTimelineEntry", function(request, response) {
 Parse.Cloud.afterSave("AnimalTransfer", function(request, response) {
   var entry;
   console.log('creating activity for animal transfer');
+  if (request.object.isNew()) {
+    console.log('attempting email for animal transfer');
+    sendgrid.sendEmail({
+      to: ['michaelbina@icloud.com'],
+      from: 'support@communikitty.com',
+      subject: 'You\'ve been invited to take over',
+      text: 'Congratulations on your new family member!',
+      replyto: 'support@communikitty.com'
+    }).then((function(httpResponse) {
+      return console.log(httpResponse);
+    }), function(httpResponse) {
+      return console.error(httpResponse);
+    });
+  }
   if (request.object.get("status") === "accepted") {
     console.log('animal transfer has been accepted');
     if (request.object.get("type") === "Adopter") {
@@ -237,19 +251,6 @@ Parse.Cloud.afterSave("AnimalTransfer", function(request, response) {
         }
       });
     }
-  } else if (request.object.isNew()) {
-    console.log('attempting email for animal transfer');
-    return sendgrid.sendEmail({
-      to: ['michaelbina@icloud.com'],
-      from: 'support@communikitty.com',
-      subject: 'You\'ve been invited to take over',
-      text: 'Congratulations on your new family member!',
-      replyto: 'support@communikitty.com'
-    }).then((function(httpResponse) {
-      return console.log(httpResponse);
-    }), function(httpResponse) {
-      return console.error(httpResponse);
-    });
   }
 });
 
