@@ -117,24 +117,6 @@ Parse.Cloud.beforeSave "AnimalTimelineEntry", (request, response) ->
     return response.success()
 
 
-
-# sendgrid = require("sendgrid")
-# sendgrid.initialize("michaelbina", "m8E-gWK-tL6-zvu");
-
-
-Parse.Cloud.afterSave "AnimalTransfer", (request, response) ->
-  console.log 'attempting email for animal transfer'
-  sendgrid.sendEmail(
-    to: [ 'michaelbina@icloud.com' ]
-    from: 'support@communikitty.com'
-    subject: 'You\'ve been invited to take over'
-    text: 'Congratulations on your new family member!'
-    replyto: 'support@communikitty.com').then ((httpResponse) ->
-    console.log httpResponse
-  ), (httpResponse) ->
-    console.error httpResponse
-
-
 shareToFacebook = (forUser, message, link) ->
   console.log 'sharing to facebook'
 
@@ -247,6 +229,19 @@ Parse.Cloud.afterSave "AnimalTransfer", (request, response) ->
         error: (error) ->
           return response.error(error.message)
       )
+  else if request.object.isNew()
+    console.log 'attempting email for animal transfer'
+    sendgrid.sendEmail(
+      to: [ 'michaelbina@icloud.com' ]
+      from: 'support@communikitty.com'
+      subject: 'You\'ve been invited to take over'
+      text: 'Congratulations on your new family member!'
+      replyto: 'support@communikitty.com').then ((httpResponse) ->
+      console.log httpResponse
+    ), (httpResponse) ->
+      console.error httpResponse
+
+
 
 
 Parse.Cloud.afterSave "Animal", (request, response) ->

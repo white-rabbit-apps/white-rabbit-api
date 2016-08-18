@@ -1,4 +1,4 @@
-var ig, lolspeak, shareToFacebook;
+var SimpleSendGridAdapter, ig, lolspeak, sendgrid, shareToFacebook;
 
 require(__dirname + '/validations.js');
 
@@ -9,6 +9,14 @@ require(__dirname + '/activity.js');
 require(__dirname + '/jobs.js');
 
 lolspeak = require('lolspeak');
+
+SimpleSendGridAdapter = require('parse-server-sendgrid-adapter');
+
+sendgrid = SimpleSendGridAdapter({
+  fromAddress: 'purrfactory@communikitty.com',
+  domain: 'communikitty.com',
+  apiKey: process.env.SENDGRID_KEY
+});
 
 ig = require('instagram-node').instagram();
 
@@ -123,10 +131,6 @@ Parse.Cloud.beforeSave("AnimalTimelineEntry", function(request, response) {
   }
 });
 
-Parse.Cloud.afterSave("AnimalTransfer", function(request, response) {
-  return console.log('attempting email for animal transfer');
-});
-
 shareToFacebook = function(forUser, message, link) {
   var userQuery;
   console.log('sharing to facebook');
@@ -233,6 +237,19 @@ Parse.Cloud.afterSave("AnimalTransfer", function(request, response) {
         }
       });
     }
+  } else if (request.object.isNew()) {
+    console.log('attempting email for animal transfer');
+    return sendgrid.sendEmail({
+      to: ['michaelbina@icloud.com'],
+      from: 'support@communikitty.com',
+      subject: 'You\'ve been invited to take over',
+      text: 'Congratulations on your new family member!',
+      replyto: 'support@communikitty.com'
+    }).then((function(httpResponse) {
+      return console.log(httpResponse);
+    }), function(httpResponse) {
+      return console.error(httpResponse);
+    });
   }
 });
 
