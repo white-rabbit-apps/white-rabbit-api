@@ -7,7 +7,8 @@ var http = require('http'),
     S3Adapter = require('parse-server').S3Adapter,
     SNSAdapter = require('parse-server').SNSAdapter,
     connect_s4a = require('connect-s4a'),
-    cors = require('cors');
+    cors = require('cors'),
+    SimpleSendGridAdapter = require('parse-server-sendgrid-adapter');
 
 
 var api = new ParseServer({
@@ -28,17 +29,14 @@ var api = new ParseServer({
     process.env.AWS_BUCKET_NAME,
     {directAccess: true}
   ),
-  emailAdapter: {
-    module: 'parse-server-sendgrid-adapter',
-    options: {
-      // The address that your emails come from
-      fromAddress: 'purrfactory@communikitty.com',
-      // Your domain from mailgun.com
-      domain: 'communikitty.com',
-      // Your API key from mailgun.com
-      apiKey: process.env.SENDGRID_KEY,
-    }
-  },
+  emailAdapter: SimpleSendGridAdapter({
+    // The address that your emails come from
+    fromAddress: 'purrfactory@communikitty.com',
+    // Your domain from mailgun.com
+    domain: 'communikitty.com',
+    // Your API key from mailgun.com
+    apiKey: process.env.SENDGRID_KEY,
+  }),
   push: {
     ios: [
       {
