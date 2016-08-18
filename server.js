@@ -9,7 +9,11 @@ var http = require('http'),
     connect_s4a = require('connect-s4a'),
     cors = require('cors');
 
+
 var api = new ParseServer({
+  appName: 'CommuniKitty',
+  verifyUserEmails: true,
+  publicServerURL: 'http://www.communikitty.com',
   serverURL: process.env.SERVER_API_URL || 'http://localhost:5000/api/',
   databaseURI: process.env.DATABASE_URI || 'mongodb://localhost:27017/dev',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
@@ -24,6 +28,17 @@ var api = new ParseServer({
     process.env.AWS_BUCKET_NAME,
     {directAccess: true}
   ),
+  emailAdapter: {
+    module: 'parse-server-sendgrid-adapter',
+    options: {
+      // The address that your emails come from
+      fromAddress: 'purrfactory@communikitty.com',
+      // Your domain from mailgun.com
+      domain: 'communikitty.com',
+      // Your API key from mailgun.com
+      apiKey: process.env.SENDGRID_KEY,
+    }
+  },
   push: {
     ios: [
       {
