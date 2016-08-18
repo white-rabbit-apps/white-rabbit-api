@@ -5,6 +5,14 @@ require __dirname + '/jobs.js'
 
 lolspeak = require('lolspeak')
 
+SimpleSendGridAdapter = require('parse-server-sendgrid-adapter')
+sendgrid = SimpleSendGridAdapter({
+  fromAddress: 'purrfactory@communikitty.com',
+  domain: 'communikitty.com',
+  apiKey: process.env.SENDGRID_KEY,
+})
+
+
 ig = require('instagram-node').instagram()
 ig.use
   client_id: 'd10bd77c510c4e09af13763839673b0d'
@@ -116,15 +124,15 @@ Parse.Cloud.beforeSave "AnimalTimelineEntry", (request, response) ->
 
 Parse.Cloud.afterSave "AnimalTransfer", (request, response) ->
   console.log 'attempting email for animal transfer'
-  # sendgrid.sendEmail(
-  #   to: [ 'michaelbina@icloud.com' ]
-  #   from: 'support@communikitty.com'
-  #   subject: 'You\'ve been invited to take over'
-  #   text: 'Congratulations on your new family member!'
-  #   replyto: 'support@communikitty.com').then ((httpResponse) ->
-  #   console.log httpResponse
-  # ), (httpResponse) ->
-  #   console.error httpResponse
+  sendgrid.sendEmail(
+    to: [ 'michaelbina@icloud.com' ]
+    from: 'support@communikitty.com'
+    subject: 'You\'ve been invited to take over'
+    text: 'Congratulations on your new family member!'
+    replyto: 'support@communikitty.com').then ((httpResponse) ->
+    console.log httpResponse
+  ), (httpResponse) ->
+    console.error httpResponse
 
 
 shareToFacebook = (forUser, message, link) ->
