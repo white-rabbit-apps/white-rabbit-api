@@ -1,8 +1,8 @@
-less = require('gulp-less');
+less = require('gulp-sass');
 concat = require 'gulp-concat'
 
-gulp.task 'less', (done) ->
-  gulp.src 'src-public/styles/*.less'
+gulp.task 'sass', (done) ->
+  gulp.src 'src-public/styles/*.sass'
   .pipe less()
   .pipe concat 'app.css'
   .pipe gulp.dest 'public/css'

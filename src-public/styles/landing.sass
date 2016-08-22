@@ -1,0 +1,799 @@
+@import url(https://fonts.googleapis.com/css?family=Nunito:400,300,700)
+
+body
+  font-weight: 100
+  color: #FFFFFF
+
+div.spacer
+  height: 1px
+
+form
+  margin-top: 0px
+  position: relative
+
+.signup
+  margin-left: -4px
+
+form input
+  &[type="email"]
+    height: 50px
+    border: medium none
+    float: left
+    font-size: 18px
+    padding-left: 10px
+    width: 280px
+    background: #fff
+    -webkit-border-radius: 3px 0px 0px 3px
+    -moz-border-radius: 3px 0px 0px 3px
+    -o-border-radius: 3px 0px 0px 3px
+    -ms-border-radius: 3px 0px 0px 3px
+    border-radius: 3px 0px 0px 3px
+  &[type="submit"]
+    height: 50px
+    border: medium none
+    float: left
+    font-size: 18px
+    font-weight: 700
+    width: 110px
+    color: #fff
+    background-color: silver
+    -webkit-border-radius: 0px 3px 3px 0px
+    -moz-border-radius: 0px 3px 3px 0px
+    -o-border-radius: 0px 3px 3px 0px
+    -ms-border-radius: 0px 3px 3px 0px
+    border-radius: 0px 3px 3px 0px
+    -webkit-transition: all 0.2s ease
+    -moz-transition: all 0.2s ease
+    -o-transition: all 0.2s ease
+    -ms-transition: all 0.2s ease
+    transition: all 0.2s ease
+
+.form-control
+  &::-moz-placeholder, &:-moz-placeholder, &::-webkit-input-placeholder, &:-ms-input-placeholder
+    color: #DDDDDD
+    opacity: 1
+
+/*     General overwrite
+
+a
+  &:focus, &:active
+    outline: 0
+
+button::-moz-focus-inner
+  outline: 0
+
+input
+  &[type="reset"]::-moz-focus-inner, &[type="button"]::-moz-focus-inner, &[type="submit"]::-moz-focus-inner
+    outline: 0
+
+select::-moz-focus-inner, input[type="file"] > input[type="button"]::-moz-focus-inner
+  outline: 0
+
+/*           Font Smoothing
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .brand, .btn-simple
+  -moz-osx-font-smoothing: grayscale
+  -webkit-font-smoothing: antialiased
+
+/*           Typography
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4
+  font-weight: 400
+  margin: 30px 0 15px
+
+h2, .h2
+  font-size: 36px
+
+h3, .h3
+  font-size: 28px
+  margin: 20px 0 10px
+
+h4, .h4
+  font-size: 22px
+
+h5, .h5
+  font-size: 16px
+
+h6, .h6
+  font-size: 14px
+  font-weight: bold
+  text-transform: uppercase
+
+p
+  font-size: 16px
+  line-height: 1.6180em
+
+h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small, .h3 small, .h4 small, .h5 small, .h6 small, h1 .small, h2 .small, h3 .small, h4 .small, h5 .small, h6 .small, .h1 .small, .h2 .small, .h3 .small, .h4 .small, .h5 .small, .h6 .small
+  color: #999999
+  font-weight: 300
+  line-height: 1
+
+h1 small, h2 small, h3 small, h1 .small, h2 .small, h3 .small
+  font-size: 60%
+
+/*           Animations
+
+.form-control, .input-group-addon
+  -webkit-transition: all 300ms linear
+  -moz-transition: all 300ms linear
+  -o-transition: all 300ms linear
+  -ms-transition: all 300ms linear
+  transition: all 300ms linear
+
+.btn
+  border-width: 2px
+  background-color: transparent
+  font-weight: 400
+  opacity: 0.8
+  padding: 8px 16px
+
+.btn-round
+  border-width: 1px
+  border-radius: 30px !important
+  opacity: 0.79
+  padding: 9px 18px
+
+.btn-sm
+  border-radius: 3px
+  font-size: 12px
+  line-height: 1.5
+  padding: 5px 10px
+
+.btn-xs
+  border-radius: 3px
+  font-size: 12px
+  line-height: 1.5
+  padding: 5px 10px
+  padding: 1px 5px
+
+.btn-lg
+  border-radius: 6px
+  font-size: 18px
+  font-weight: 400
+  padding: 14px 60px
+
+.btn-wd
+  min-width: 140px
+
+.btn-default
+  color: #777777
+  border-color: #999999
+
+.btn-primary
+  color: #3472F7
+  border-color: #3472F7
+
+.btn-info
+  color: #2C93FF
+  border-color: #2C93FF
+
+.btn-success
+  color: #05AE0E
+  border-color: #05AE0E
+
+.btn-warning
+  color: #FF9500
+  border-color: #FF9500
+
+.btn-danger
+  color: #FF3B30
+  border-color: #FF3B30
+
+.btn:hover
+  background-color: transparent
+  opacity: 1
+
+.btn-primary
+  &:hover, &:focus, &:active, &.active
+    color: #1D62F0
+    border-color: #1D62F0
+    background-color: transparent
+
+.open .dropdown-toggle.btn-primary
+  color: #1D62F0
+  border-color: #1D62F0
+  background-color: transparent
+
+.btn-info
+  &:hover, &:focus, &:active, &.active
+    color: #1084FF
+    border-color: #1084FF
+    background-color: transparent
+
+.open .dropdown-toggle.btn-info
+  color: #1084FF
+  border-color: #1084FF
+  background-color: transparent
+
+.btn-success
+  &:hover, &:focus, &:active, &.active
+    color: #049F0C
+    border-color: #049F0C
+    background-color: transparent
+
+.open .dropdown-toggle.btn-success
+  color: #049F0C
+  border-color: #049F0C
+  background-color: transparent
+
+.btn-warning
+  &:hover, &:focus, &:active, &.active
+    color: #ED8D00
+    border-color: #ED8D00
+    background-color: transparent
+
+.open .dropdown-toggle.btn-warning
+  color: #ED8D00
+  border-color: #ED8D00
+  background-color: transparent
+
+.btn-danger
+  &:hover, &:focus, &:active, &.active
+    color: #EE2D20
+    border-color: #EE2D20
+    background-color: transparent
+
+.open .dropdown-toggle.btn-danger
+  color: #EE2D20
+  border-color: #EE2D20
+  background-color: transparent
+
+.btn-default
+  &:hover, &:focus, &:active, &.active
+    color: #666666
+    border-color: #888888
+    background-color: transparent
+
+.open .dropdown-toggle.btn-default
+  color: #666666
+  border-color: #888888
+  background-color: transparent
+
+.btn
+  &:active, &.active
+    background-image: none
+    box-shadow: none
+  &.disabled, &[disabled]
+    opacity: 0.45
+
+fieldset[disabled] .btn
+  opacity: 0.45
+
+.btn-primary
+  &.disabled, &[disabled]
+    background-color: transparent
+    border-color: #3472F7
+
+fieldset[disabled] .btn-primary
+  background-color: transparent
+  border-color: #3472F7
+
+.btn-primary
+  &.disabled:hover, &[disabled]:hover
+    background-color: transparent
+    border-color: #3472F7
+
+fieldset[disabled] .btn-primary:hover
+  background-color: transparent
+  border-color: #3472F7
+
+.btn-primary
+  &.disabled:focus, &[disabled]:focus
+    background-color: transparent
+    border-color: #3472F7
+
+fieldset[disabled] .btn-primary:focus
+  background-color: transparent
+  border-color: #3472F7
+
+.btn-primary
+  &.disabled:active, &[disabled]:active
+    background-color: transparent
+    border-color: #3472F7
+
+fieldset[disabled] .btn-primary:active
+  background-color: transparent
+  border-color: #3472F7
+
+.btn-primary
+  &.disabled.active, &.active[disabled]
+    background-color: transparent
+    border-color: #3472F7
+
+fieldset[disabled] .btn-primary.active
+  background-color: transparent
+  border-color: #3472F7
+
+.btn-info
+  &.disabled, &[disabled]
+    background-color: transparent
+    border-color: #2C93FF
+
+fieldset[disabled] .btn-info
+  background-color: transparent
+  border-color: #2C93FF
+
+.btn-info
+  &.disabled:hover, &[disabled]:hover
+    background-color: transparent
+    border-color: #2C93FF
+
+fieldset[disabled] .btn-info:hover
+  background-color: transparent
+  border-color: #2C93FF
+
+.btn-info
+  &.disabled:focus, &[disabled]:focus
+    background-color: transparent
+    border-color: #2C93FF
+
+fieldset[disabled] .btn-info:focus
+  background-color: transparent
+  border-color: #2C93FF
+
+.btn-info
+  &.disabled:active, &[disabled]:active
+    background-color: transparent
+    border-color: #2C93FF
+
+fieldset[disabled] .btn-info:active
+  background-color: transparent
+  border-color: #2C93FF
+
+.btn-info
+  &.disabled.active, &.active[disabled]
+    background-color: transparent
+    border-color: #2C93FF
+
+fieldset[disabled] .btn-info.active
+  background-color: transparent
+  border-color: #2C93FF
+
+.btn-success
+  &.disabled, &[disabled]
+    background-color: transparent
+    border-color: #05AE0E
+
+fieldset[disabled] .btn-success
+  background-color: transparent
+  border-color: #05AE0E
+
+.btn-success
+  &.disabled:hover, &[disabled]:hover
+    background-color: transparent
+    border-color: #05AE0E
+
+fieldset[disabled] .btn-success:hover
+  background-color: transparent
+  border-color: #05AE0E
+
+.btn-success
+  &.disabled:focus, &[disabled]:focus
+    background-color: transparent
+    border-color: #05AE0E
+
+fieldset[disabled] .btn-success:focus
+  background-color: transparent
+  border-color: #05AE0E
+
+.btn-success
+  &.disabled:active, &[disabled]:active
+    background-color: transparent
+    border-color: #05AE0E
+
+fieldset[disabled] .btn-success:active
+  background-color: transparent
+  border-color: #05AE0E
+
+.btn-success
+  &.disabled.active, &.active[disabled]
+    background-color: transparent
+    border-color: #05AE0E
+
+fieldset[disabled] .btn-success.active
+  background-color: transparent
+  border-color: #05AE0E
+
+.btn-danger
+  &.disabled, &[disabled]
+    background-color: transparent
+    border-color: #FF3B30
+
+fieldset[disabled] .btn-danger
+  background-color: transparent
+  border-color: #FF3B30
+
+.btn-danger
+  &.disabled:hover, &[disabled]:hover
+    background-color: transparent
+    border-color: #FF3B30
+
+fieldset[disabled] .btn-danger:hover
+  background-color: transparent
+  border-color: #FF3B30
+
+.btn-danger
+  &.disabled:focus, &[disabled]:focus
+    background-color: transparent
+    border-color: #FF3B30
+
+fieldset[disabled] .btn-danger:focus
+  background-color: transparent
+  border-color: #FF3B30
+
+.btn-danger
+  &.disabled:active, &[disabled]:active
+    background-color: transparent
+    border-color: #FF3B30
+
+fieldset[disabled] .btn-danger:active
+  background-color: transparent
+  border-color: #FF3B30
+
+.btn-danger
+  &.disabled.active, &.active[disabled]
+    background-color: transparent
+    border-color: #FF3B30
+
+fieldset[disabled] .btn-danger.active
+  background-color: transparent
+  border-color: #FF3B30
+
+.btn-warning
+  &.disabled, &[disabled]
+    background-color: transparent
+    border-color: #FF9500
+
+fieldset[disabled] .btn-warning
+  background-color: transparent
+  border-color: #FF9500
+
+.btn-warning
+  &.disabled:hover, &[disabled]:hover
+    background-color: transparent
+    border-color: #FF9500
+
+fieldset[disabled] .btn-warning:hover
+  background-color: transparent
+  border-color: #FF9500
+
+.btn-warning
+  &.disabled:focus, &[disabled]:focus
+    background-color: transparent
+    border-color: #FF9500
+
+fieldset[disabled] .btn-warning:focus
+  background-color: transparent
+  border-color: #FF9500
+
+.btn-warning
+  &.disabled:active, &[disabled]:active
+    background-color: transparent
+    border-color: #FF9500
+
+fieldset[disabled] .btn-warning:active
+  background-color: transparent
+  border-color: #FF9500
+
+.btn-warning
+  &.disabled.active, &.active[disabled]
+    background-color: transparent
+    border-color: #FF9500
+
+fieldset[disabled] .btn-warning.active
+  background-color: transparent
+  border-color: #FF9500
+
+/*           Buttons fill .btn-fill
+
+.btn-fill
+  color: #FFFFFF
+  opacity: 1
+  &:hover, &:active, &:focus
+    color: #FFFFFF
+
+.btn-default.btn-fill
+  background-color: #999999
+  border-color: #999999
+
+.btn-primary.btn-fill
+  background-color: #3472F7
+  border-color: #3472F7
+
+.btn-info.btn-fill
+  background-color: #2C93FF
+  border-color: #2C93FF
+
+.btn-success.btn-fill
+  background-color: #05AE0E
+  border-color: #05AE0E
+
+.btn-warning.btn-fill
+  background-color: #FF9500
+  border-color: #FF9500
+
+.btn-danger.btn-fill
+  background-color: #FF3B30
+  border-color: #FF3B30
+
+.btn-default.btn-fill
+  &:hover, &:focus, &:active, &.active
+    background-color: #888888
+    border-color: #888888
+
+.open .dropdown-toggle.btn-fill.btn-default
+  background-color: #888888
+  border-color: #888888
+
+.btn-primary.btn-fill
+  &:hover, &:focus, &:active, &.active
+    border-color: #1D62F0
+    background-color: #1D62F0
+
+.open .dropdown-toggle.btn-primary.btn-fill
+  border-color: #1D62F0
+  background-color: #1D62F0
+
+.btn-info.btn-fill
+  &:hover, &:focus, &:active, &.active
+    background-color: #1084FF
+    border-color: #1084FF
+
+.open .dropdown-toggle.btn-info.btn-fill
+  background-color: #1084FF
+  border-color: #1084FF
+
+.btn-success.btn-fill
+  &:hover, &:focus, &:active, &.active
+    background-color: #049F0C
+    border-color: #049F0C
+
+.open .dropdown-toggle.btn-fill.btn-success
+  background-color: #049F0C
+  border-color: #049F0C
+
+.btn-warning.btn-fill
+  &:hover, &:focus, &:active, &.active
+    background-color: #ED8D00
+    border-color: #ED8D00
+
+.open .dropdown-toggle.btn-fill.btn-warning
+  background-color: #ED8D00
+  border-color: #ED8D00
+
+.btn-danger.btn-fill
+  &:hover, &:focus, &:active, &.active
+    background-color: #EE2D20
+    border-color: #EE2D20
+
+.open .dropdown-toggle.btn-danger.btn-fill
+  background-color: #EE2D20
+  border-color: #EE2D20
+
+/*          End Buttons fill
+
+.btn-simple
+  font-weight: 600
+  border: 0
+  padding: 10px 18px
+  &.btn-xs
+    padding: 3px 5px
+  &.btn-sm
+    padding: 7px 10px
+  &.btn-lg
+    padding: 16px 60px
+
+.btn-round
+  &.btn-xs
+    padding: 2px 5px
+  &.btn-sm
+    padding: 6px 10px
+  &.btn-lg
+    padding: 15px 60px
+
+/*             Inputs
+
+.form-control
+  background-color: #FFFFFF
+  border: 1px solid #E3E3E3
+  border-radius: 4px
+  box-shadow: none
+  color: #444444
+  height: 38px
+  padding: 6px 16px
+  &:focus
+    background-color: #FFFFFF
+    border: 1px solid #9A9A9A
+    box-shadow: none
+    outline: 0 none
+  + .form-control-feedback
+    border-radius: 6px
+    font-size: 14px
+    padding: 0 12px 0 0
+    position: absolute
+    right: 25px
+    top: 13px
+    vertical-align: middle
+  &.transparent
+    background-color: rgba(255, 255, 255, 0.07)
+    border: 1px solid rgba(238, 238, 238, 0.27)
+    color: #FFFFFF
+    &:focus
+      border-color: #FFFFFF
+
+.input-lg
+  height: 56px
+  padding: 10px 16px
+
+.modal-backdrop.in
+  opacity: 0.25
+
+.main
+  background-position: center center
+  background-size: cover
+  height: auto
+  left: 0
+  min-height: 100%
+  min-width: 100%
+  position: absolute
+  top: 0
+  width: auto
+
+.cover
+  position: fixed
+  opacity: 1
+  background-color: rgba(0, 0, 0, 0.6)
+  left: 0px
+  top: 0px
+  width: 100%
+  height: 100%
+  z-index: 1
+  &.black
+    background-color: rgba(0, 0, 0, 0.6)
+
+.main
+  .logo
+    font-size: 18px
+    color: #FFFFFF
+    position: relative
+    text-align: center
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.33)
+    margin-top: 85px
+    z-index: 3
+    .title
+      margin-top: 10px
+      font-weight: 400
+    .presents
+      font-size: 12px
+      margin-top: 6px
+    img
+      max-height: 50px
+      max-width: 50px
+      text-align: center
+  .content
+    position: relative
+    z-index: 4
+    text-align: center
+  .app-title
+    min-height: 80px
+    font-weight: 700
+    font-size: 64px
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.33)
+    text-align: center
+    margin-top: 10px
+    img
+      max-height: 500px
+      max-width: 600px
+      text-align: center
+      margin-top: 90px
+      margin-bottom: 20px
+  .motto
+    font-weight: 100
+    margin: 0 auto
+    width: 320px
+    font-size: 24px
+    margin-bottom: 60px
+  .made-for-iphone img
+    width: 80px
+    margin-bottom: 30px
+  .subscribe .info-text
+    font-size: 16px
+    margin-bottom: 30px
+    b
+      font-weight: 400
+      font-size: 20px
+  .signup-row
+    margin: 0 auto
+    width: 386px
+
+#gif_background
+  display: none
+
+#video_background, #gif_background
+  position: fixed
+  top: 0px
+  right: 0px
+  min-width: 100%
+  min-height: 100%
+  width: auto
+  height: auto
+  z-index: 1
+  overflow: hidden
+  background-image: url("../video/kittens1.gif")
+  background-position: center center
+  background-size: cover
+
+#video_pattern
+  position: fixed
+  opacity: 0.6
+  background-color: rgba(0, 0, 0, 0.45)
+  left: 0px
+  top: 0px
+  width: 100%
+  height: 100%
+  z-index: 1
+
+.footer
+  position: relative
+  bottom: 20px
+  right: 0px
+  width: 100%
+  color: #AAAAAA
+  z-index: 4
+  text-align: right
+  margin-top: 50px
+  a
+    color: #FFFFFF
+  .heart
+    color: #FF3B30
+
+@media (min-width: 219px)
+  .main .subscribe
+    .form-group
+      width: auto
+    .form-inline .btn
+      width: 100%
+
+@media (min-width: 768px)
+  .main .subscribe .form-inline .btn
+    width: auto
+
+@media (min-width: 991px)
+  .main .subscribe .form-group
+    width: 190px
+  .footer
+    position: fixed
+    bottom: 20px
+
+@media (min-width: 1198px)
+  .form-inline
+    position: relative
+
+.subscribe
+  padding-left: 30px
+  padding-right: 30px
+  color: #fff
+  text-align: center
+  .info-text
+    line-height: 25px
+
+input
+  color: #666
+
+.btn-warning.btn-fill
+  background-color: #000033 !important
+  border-color: #000049 !important
+
+ul.social
+  width: 245px
+  margin: 0 auto
+  margin-top: 120px
+  margin-bottom: 20px
+  float: none
+  list-style-type: none
+  i
+    font-size: 40px !important
+    color: white
+  li
+    float: left
+    margin-right: 35px

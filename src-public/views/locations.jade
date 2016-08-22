@@ -41,53 +41,53 @@ h4
       .shortName 
         label
           | Short Name:
-        {{location.short_name}}
+        | {{location.short_name}}
       
       .types 
         label
           | Types:
-        {{location.types.join(", ")}}
+        | {{location.types.join(", ")}}
         
       .animals 
         label
           | Animals:
-        {{location.animals.join(", ")}}
+        | {{location.animals.join(", ")}}
 
       
       .address1 
         label
           | Address:
-        {{location.address}}
+        | {{location.address}}
         
       .address2
         label
-        {{location.city}}, {{location.state}} {{location.zip}}
+        | {{location.city}}, {{location.state}} {{location.zip}}
 
       .geo 
         label
           | Lat, Long:
-        {{location.geo.latitude}}, {{location.geo.longitude}}
+        | {{location.geo.latitude}}, {{location.geo.longitude}}
         span(ng-show="location.geoForCity")
           | &nbsp;(City)
           
       .notes(ng-show="location.notes")
         label
           | Notes:
-        {{location.notes}}
+        | {{location.notes}}
                 
       .phone 
         label
           | Phone:
-        {{location.phone}}
+        | {{location.phone}}
       .email 
         label
           | Email:
-        {{location.email}}
+        | {{location.email}}
 
       .googlePlaceId
         label
           | Google Place ID:
-        {{location.googlePlaceId}}
+        | {{location.googlePlaceId}}
 
       .web(ng-show="location.website")
         a(ng-href="{{location.website}}" target="_blank")

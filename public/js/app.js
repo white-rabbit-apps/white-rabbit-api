@@ -965,9 +965,9 @@ app.factory('Animal', function(Parse) {
         if (months === 0) {
           months = 12;
         }
-        age = months + " months old";
+        age = months + " month old";
       } else {
-        age = age + " years old";
+        age = age + " year old";
       }
       return age;
     };

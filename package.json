@@ -36,7 +36,7 @@
     "gulp-concat": "2.1.x",
     "gulp-gh-pages": "^0.3.3",
     "gulp-jade": "0.4.x",
-    "gulp-less": "*",
+    "gulp-sass": "*",
     "gulp-plug": "^0.2.4",
     "gulp-util": "2.2.x",
     "gulp-webserver": "^0.3.4",

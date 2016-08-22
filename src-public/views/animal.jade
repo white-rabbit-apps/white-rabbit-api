@@ -9,46 +9,47 @@ script.
   .header
     .cover-container
       img.cover-photo(ng-src="{{animal.coverPhoto.url || '/img/blank_cover.png'}}")
-    .profile-col
-      .profile-photo
-        img.profile(ng-src="{{animal.profilePhoto.url || '/img/avatar_blank.png'}}")
-      .share
-        //- a(href="#")
-        //-   img(src="img/share_white.png")
-
-        #share-dropdown.btn.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='true')
-          img(src="/img/share_white.png")
-          ul.dropdown-menu(aria-labelledby='share-dropdown')
-            li
-              a.fb-share(href='https://www.facebook.com/sharer/sharer.php?u={{serverDomain}}/cat/{{animal.username}}', target="_blank")
-                i.fa.fa-facebook
-                | Share on Facebook
-            li
-              a.fb-share(href='http://twitter.com/share?text={{animal.name}}%20on%20%40WhiteRabbitApps%20http%3A%2F%2Fwww.communikitty.com/cat/{{animal.username}}&amp;url=""')
-                i.fa.fa-twitter
-                | Share on Twitter
+    //- .profile-col
+    //- 
+    //-   .share
+    //-     //- a(href="#")
+    //-     //-   img(src="img/share_white.png")
+    //- 
+    //-     #share-dropdown.btn.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='true')
+    //-       img(src="/img/share_white.png")
+    //-       ul.dropdown-menu(aria-labelledby='share-dropdown')
+    //-         li
+    //-           a.fb-share(href='https://www.facebook.com/sharer/sharer.php?u={{serverDomain}}/cat/{{animal.username}}', target="_blank")
+    //-             i.fa.fa-facebook
+    //-             | Share on Facebook
+    //-         li
+    //-           a.fb-share(href='http://twitter.com/share?text={{animal.name}}%20on%20%40WhiteRabbitApps%20http%3A%2F%2Fwww.communikitty.com/cat/{{animal.username}}&amp;url=""')
+    //-             i.fa.fa-twitter
+    //-             | Share on Twitter
 
 
 
     .info
+      .profile-photo
+        img.profile(ng-src="{{animal.profilePhoto.url || '/img/avatar_blank.png'}}")
+    
       h1 {{animal.name}}
-      .username @{{animal.username}}
-      .gender {{animal.gender}}
-      .age {{animal.age()}}
-      .breed {{animal.breed.name}}
+      //- .username @{{animal.username}}
+      .gender {{animal.age()}} {{animal.gender.toLowerCase()}}
+      //- .breed {{animal.breed.name}}
       .adoptable {{animal.shelter ? (animal.adoptable ? 'Adoptable through ' : 'Adopted through ') : ''}}
       .shelter 
         a(href="/location/{{animal.shelter.short_name}}")
           | {{animal.shelter.name}}
 
   div.entries(ng-repeat="entry in entries")
-    .entry(id = "{{entry.objectId}}")
-      .date {{prettyDate(entry.date.iso)}}
-      img(ng-src="{{entry.image.url}}" ng-show="entry.image" style="width:400px; margin: 0 auto;")
-      img(ng-src="{{entry.imageUrl}}" ng-show="entry.imageUrl" style="width:400px; margin: 0 auto;")
+    .entry(id="{{entry.objectId}}" ng-class-even="'right'" ng-class-odd="'left'")
+      //- .date {{prettyDate(entry.date.iso)}}
+      img(ng-src="{{entry.image.url}}" ng-show="entry.image" style="width:207px; margin: 0 auto;")
+      img(ng-src="{{entry.imageUrl}}" ng-show="entry.imageUrl" style="width:207px; margin: 0 auto;")
       .type(class="{{entry.type}}")
       //- h3.text {{entry.text}}
-      p(ng-bind-html="entry.text | hashtagFilter")
+      //- p(ng-bind-html="entry.text | hashtagFilter")
       .shelter(ng-show="entry.shelter")
         a(href="/location/{{entry.shelter.short_name}}")
           | {{entry.shelter.name}}
