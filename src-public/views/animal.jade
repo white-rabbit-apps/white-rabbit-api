@@ -36,23 +36,72 @@ script.
       h1 {{animal.name}}
       //- .username @{{animal.username}}
       .gender {{animal.age()}} {{animal.gender.toLowerCase()}}
-      //- .breed {{animal.breed.name}}
       .adoptable {{animal.shelter ? (animal.adoptable ? 'Adoptable through ' : 'Adopted through ') : ''}}
       .shelter 
         a(href="/location/{{animal.shelter.short_name}}")
           | {{animal.shelter.name}}
 
-  div.entries(ng-repeat="entry in entries")
-    .entry(id="{{entry.objectId}}" ng-class-even="'right'" ng-class-odd="'left'")
-      //- .date {{prettyDate(entry.date.iso)}}
-      img(ng-src="{{entry.image.url}}" ng-show="entry.image" style="width:207px; margin: 0 auto;")
-      img(ng-src="{{entry.imageUrl}}" ng-show="entry.imageUrl" style="width:207px; margin: 0 auto;")
-      .type(class="{{entry.type}}")
-      //- h3.text {{entry.text}}
-      //- p(ng-bind-html="entry.text | hashtagFilter")
-      .shelter(ng-show="entry.shelter")
-        a(href="/location/{{entry.shelter.short_name}}")
-          | {{entry.shelter.name}}
+  .about
+    .field
+      .label
+        | Breed
+      .value
+        | {{animal.breed.name}}
+
+    .field
+      .label
+        | Coat
+      .value
+        | {{animal.coat.name}}
+
+    .field
+      .label
+        | Hometown
+      .value
+        | {{animal.hometown}}
+
+    .field
+      .label
+        | Traits
+      .value
+        ul
+          li(ng-repeat="trait in animal.traits")
+            | {{trait.name}}
+
+
+    .field
+      .label
+        | Loves
+      .value
+        ul
+          li(ng-repeat="love in animal.loves")
+            | {{love}}
+
+    .field
+      .label
+        | Hates
+      .value
+        ul
+          li(ng-repeat="hate in animal.hates")
+            | {{hate}}
+
+
+
+
+  .timeline
+    .line
+    .entries
+      .entry-container(ng-repeat="entry in entries" ng-class-even="'right'" ng-class-odd="'left'")
+        .entry(id="{{entry.objectId}}")
+          //- .date {{prettyDate(entry.date.iso)}}
+          img(ng-src="{{entry.image.url}}" ng-show="entry.image" style="width:187px; margin: 0 auto;")
+          img(ng-src="{{entry.imageUrl}}" ng-show="entry.imageUrl" style="width:187px; margin: 0 auto;")
+          .type(class="{{entry.type}}")
+          //- h3.text {{entry.text}}
+          //- p(ng-bind-html="entry.text | hashtagFilter")
+          .shelter(ng-show="entry.shelter")
+            a(href="/location/{{entry.shelter.short_name}}")
+              | {{entry.shelter.name}}
 
   //- .actions
   //-   .button.add(ng-click="addEntry()")

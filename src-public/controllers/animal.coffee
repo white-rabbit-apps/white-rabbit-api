@@ -49,7 +49,7 @@ app.controller 'AnimalCtrl', ($scope, Animal, AnimalTimelineEntry, $stateParams,
     Animal.query(
       where:
         username: $stateParams.username
-      include: 'breed,shelter'
+      include: 'breed,coat,traits,shelter'
     )
     .then (animals) ->
       $scope.animal = animals[0]

@@ -17,47 +17,81 @@ body.no-nav
     margin-top: 0px
   .container
     margin-top: -40px
-  .entries .entry
-    margin-top: 40px
-    text-align: center
+  .line
+    width: 4px
+    height: 100%
+    margin: 0 auto
+    position: absolute
+    background-color: #bbb
+    left: 218px
+    z-index: -100
+
+  .about
     background-color: #fff
-    padding: 10px
-    border: 1px solid #ccc
-    border-radius: 5px
-    width: 215px
+    color: #000
+    .field
+      width: 100%
+      border-bottom: 1px solid #ccc
+      .label
+        padding: 10px
+        font-size: 12px
+      .value
+        text-align: center
+        padding-bottom: 20px
+        ul
+          li
+            list-style-type: none
+            margin-left: -50px
+
+  .timeline
+    // background-color: #D5E1E5
     overflow: auto
-    &.left
-      float: left
-    &.right
-      float: right
-    h3
-      font-size: 20px
-      color: black
-    .date
-      text-align: left
-      margin-bottom: 10px
-    p
-      margin-top: 10px
-      margin-bottom: 0px
-      text-align: left
-      color: black
-    .type
-      background-size: 60px 60px
-      background-repeat: no-repeat
-      width: 60px
-      margin: 0 auto
-      &.birth
-        background-image: url("../img/timeline_born.png")
-        height: 60px
-      &.birthday
-        background-image: url("../img/timeline_birthday.png")
-        height: 60px
-      &.medical
-        background-image: url("../img/timeline_medical.png")
-        height: 60px
-      &.adopted
-        background-image: url("../img/timeline_adopted.png")
-        height: 60px
+    .entries
+      .entry-container
+        width: 100%
+        overflow: auto
+        &.left .entry
+          float: left
+        &.right .entry
+          float: right
+        .entry
+          margin-top: 20px
+          margin-bottom: 20px
+          text-align: center
+          background-color: #fff
+          padding: 10px
+          border: 1px solid #ccc
+          border-radius: 5px
+          width: 185px
+          overflow: auto
+          h3
+            font-size: 20px
+            color: black
+          .date
+            text-align: left
+            margin-bottom: 10px
+          p
+            margin-top: 10px
+            margin-bottom: 0px
+            text-align: left
+            color: black
+          .type
+            background-size: 60px 60px
+            background-repeat: no-repeat
+            width: 60px
+            margin: 0 auto
+            &.birth
+              background-image: url("../img/timeline_born.png")
+              height: 60px
+            &.birthday
+              background-image: url("../img/timeline_birthday.png")
+              height: 60px
+            &.medical
+              background-image: url("../img/timeline_medical.png")
+              height: 60px
+            &.adopted
+              background-image: url("../img/timeline_adopted.png")
+              height: 60px
   .hashtag
     width: 440px
     margin: 0 auto
@@ -77,7 +111,7 @@ body.no-nav
         margin-bottom: -90px
   .animal
     position: relative
-    top: 150px
+    top: 240px
     margin: 0 auto
     h1
       margin-top: 40px

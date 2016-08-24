@@ -269,7 +269,7 @@ app.controller('AnimalCtrl', function($scope, Animal, AnimalTimelineEntry, $stat
       where: {
         username: $stateParams.username
       },
-      include: 'breed,shelter'
+      include: 'breed,coat,traits,shelter'
     }).then(function(animals) {
       $scope.animal = animals[0];
       console.log($scope.animal.deceasedDate);
@@ -944,7 +944,7 @@ app.factory('Animal', function(Parse) {
       return Animal.__super__.constructor.apply(this, arguments);
     }
 
-    Animal.configure("Animal", "owner", "shelter", "name", "breed", "adoptable", "originalSourceLink", "birthDate", "gender", "profilePhoto", "coverPhoto", "username", "instagramUsername", "youtubeUsername", "twitterUsername");
+    Animal.configure("Animal", "owner", "shelter", "name", "breed", "coat", "hometown", "traits", "loves", "hates", "adoptable", "originalSourceLink", "birthDate", "gender", "profilePhoto", "coverPhoto", "username", "instagramUsername", "youtubeUsername", "twitterUsername");
 
     Animal.prototype.age = function() {
       var age, ageDate, ageDifMs, birthDate, deceasedDate, months;
@@ -1011,6 +1011,25 @@ app.factory('Breed', function(Parse) {
     Breed.configure("Breed", "name", "image", "description", "originCountry", "type", "coat", "groomingFrequency", "sheddingFrequency", "attentionNeed", "activity", "vocalization", "minLifeExpectancy", "maxLifeExpectancy", "minWeightLbs", "maxWeightLbs");
 
     return Breed;
+
+  })(Parse.Model);
+});
+
+var __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+app.factory('Coat', function(Parse) {
+  var Coat;
+  return Coat = (function(_super) {
+    __extends(Coat, _super);
+
+    function Coat() {
+      return Coat.__super__.constructor.apply(this, arguments);
+    }
+
+    Coat.configure("Coat", "name");
+
+    return Coat;
 
   })(Parse.Model);
 });

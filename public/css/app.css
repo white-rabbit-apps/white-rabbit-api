@@ -17,47 +17,78 @@ body.no-nav #page-wrapper {
 body.no-nav .container {
   margin-top: -40px; }
 
-body.no-nav .entries .entry {
-  margin-top: 40px;
-  text-align: center;
+body.no-nav .line {
+  width: 4px;
+  height: 100%;
+  margin: 0 auto;
+  position: absolute;
+  background-color: #bbb;
+  left: 218px;
+  z-index: -100; }
+
+body.no-nav .about {
   background-color: #fff;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 215px;
+  color: #000; }
+  body.no-nav .about .field {
+    width: 100%;
+    border-bottom: 1px solid #ccc; }
+    body.no-nav .about .field .label {
+      padding: 10px;
+      font-size: 12px; }
+    body.no-nav .about .field .value {
+      text-align: center;
+      padding-bottom: 20px; }
+      body.no-nav .about .field .value ul li {
+        list-style-type: none;
+        margin-left: -50px; }
+
+body.no-nav .timeline {
   overflow: auto; }
-  body.no-nav .entries .entry.left {
-    float: left; }
-  body.no-nav .entries .entry.right {
-    float: right; }
-  body.no-nav .entries .entry h3 {
-    font-size: 20px;
-    color: black; }
-  body.no-nav .entries .entry .date {
-    text-align: left;
-    margin-bottom: 10px; }
-  body.no-nav .entries .entry p {
-    margin-top: 10px;
-    margin-bottom: 0px;
-    text-align: left;
-    color: black; }
-  body.no-nav .entries .entry .type {
-    background-size: 60px 60px;
-    background-repeat: no-repeat;
-    width: 60px;
-    margin: 0 auto; }
-    body.no-nav .entries .entry .type.birth {
-      background-image: url("../img/timeline_born.png");
-      height: 60px; }
-    body.no-nav .entries .entry .type.birthday {
-      background-image: url("../img/timeline_birthday.png");
-      height: 60px; }
-    body.no-nav .entries .entry .type.medical {
-      background-image: url("../img/timeline_medical.png");
-      height: 60px; }
-    body.no-nav .entries .entry .type.adopted {
-      background-image: url("../img/timeline_adopted.png");
-      height: 60px; }
+  body.no-nav .timeline .entries .entry-container {
+    width: 100%;
+    overflow: auto; }
+    body.no-nav .timeline .entries .entry-container.left .entry {
+      float: left; }
+    body.no-nav .timeline .entries .entry-container.right .entry {
+      float: right; }
+    body.no-nav .timeline .entries .entry-container .entry {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      background-color: #fff;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 185px;
+      overflow: auto; }
+      body.no-nav .timeline .entries .entry-container .entry h3 {
+        font-size: 20px;
+        color: black; }
+      body.no-nav .timeline .entries .entry-container .entry .date {
+        text-align: left;
+        margin-bottom: 10px; }
+      body.no-nav .timeline .entries .entry-container .entry p {
+        margin-top: 10px;
+        margin-bottom: 0px;
+        text-align: left;
+        color: black; }
+      body.no-nav .timeline .entries .entry-container .entry .type {
+        background-size: 60px 60px;
+        background-repeat: no-repeat;
+        width: 60px;
+        margin: 0 auto; }
+        body.no-nav .timeline .entries .entry-container .entry .type.birth {
+          background-image: url("../img/timeline_born.png");
+          height: 60px; }
+        body.no-nav .timeline .entries .entry-container .entry .type.birthday {
+          background-image: url("../img/timeline_birthday.png");
+          height: 60px; }
+        body.no-nav .timeline .entries .entry-container .entry .type.medical {
+          background-image: url("../img/timeline_medical.png");
+          height: 60px; }
+        body.no-nav .timeline .entries .entry-container .entry .type.adopted {
+          background-image: url("../img/timeline_adopted.png");
+          height: 60px; }
 
 body.no-nav .hashtag {
   width: 440px;
@@ -79,7 +110,7 @@ body.no-nav .hashtag {
 
 body.no-nav .animal {
   position: relative;
-  top: 150px;
+  top: 240px;
   margin: 0 auto; }
   body.no-nav .animal h1 {
     margin-top: 40px; }

@@ -1,6 +1,6 @@
 app.factory 'Animal', (Parse) ->
   class Animal extends Parse.Model
-    @configure "Animal", "owner", "shelter", "name", "breed", "adoptable", "originalSourceLink", "birthDate", "gender", "profilePhoto", "coverPhoto", "username", "instagramUsername", "youtubeUsername", "twitterUsername"
+    @configure "Animal", "owner", "shelter", "name", "breed", "coat", "hometown", "traits", "loves", "hates", "adoptable", "originalSourceLink", "birthDate", "gender", "profilePhoto", "coverPhoto", "username", "instagramUsername", "youtubeUsername", "twitterUsername"
 
     age: () ->
       console.log("getting age")
