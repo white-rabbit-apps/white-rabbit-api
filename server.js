@@ -41,7 +41,7 @@ var api = new ParseServer({
     ios: [
       {
         pfx: __dirname + '/certs/dev.p12',
-        bundleId: 'net.whiterabbitapps.communikitty-dev',
+        bundleId: 'net.whiterabbitapps.communikitty',
         production: false
       },{
         pfx: __dirname + '/certs/prod.p12',
