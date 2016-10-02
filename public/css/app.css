@@ -1,6 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito:400,300,700);
 body {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Nunito', sans-serif !important;
   font-weight: 100;
   color: #000;
   background-color: #4A5665; }
@@ -483,12 +483,12 @@ form input[type="email"] {
   border-radius: 3px 0px 0px 3px; }
 
 form input[type="submit"] {
-  height: 50px;
+  height: 52px;
   border: medium none;
   float: left;
   font-size: 18px;
   font-weight: 700;
-  width: 110px;
+  width: 99px;
   color: #fff;
   background-color: silver;
   -webkit-border-radius: 0px 3px 3px 0px;

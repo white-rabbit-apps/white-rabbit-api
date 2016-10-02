@@ -41,7 +41,14 @@ script.
         a(href="/location/{{animal.shelter.short_name}}")
           | {{animal.shelter.name}}
 
-  .about
+  .about  
+    if animal && animal.intro
+      .field
+        .label
+          | Intro
+        .value
+          | {{animal.intro}}
+  
     .field
       .label
         | Breed
