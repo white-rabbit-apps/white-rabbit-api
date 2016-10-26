@@ -31,7 +31,7 @@ var api = new ParseServer({
   ),
   emailAdapter: SimpleSendGridAdapter({
     // The address that your emails come from
-    fromAddress: 'purrfactory@communikitty.com',
+    fromAddress: 'meow@communikitty.com',
     // Your domain from mailgun.com
     domain: 'communikitty.com',
     // Your API key from mailgun.com
@@ -65,6 +65,7 @@ app.use(express.static(__dirname + '/public'));
 
 app.get('/*', function(request, response, next) {
   if (request.url.includes('/api/')) return next();
+  if (request.url.includes('/apps/')) return next();
 
   if (request.url.includes('/admin/')) {
     var un = 'bosskitteh';
