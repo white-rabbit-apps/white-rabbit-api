@@ -14,7 +14,7 @@ var http = require('http'),
 var api = new ParseServer({
   appName: 'CommuniKitty',
   verifyUserEmails: true,
-  publicServerURL: 'http://www.communikitty.com',
+  publicServerURL: process.env.PUBLIC_SERVER_URL,
   serverURL: process.env.SERVER_API_URL || 'http://localhost:5000/api/',
   databaseURI: process.env.DATABASE_URI || 'mongodb://localhost:27017/dev',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
