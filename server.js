@@ -53,6 +53,8 @@ var api = new ParseServer({
 
 var app = express();
 
+app.use(cors());
+
 var mountPath = '/'; //process.env.PARSE_MOUNT || '/api';
 app.use(mountPath, api);
 
