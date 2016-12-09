@@ -6,7 +6,6 @@ var http = require('http'),
     ParseServer = require('parse-server').ParseServer,
     S3Adapter = require('parse-server').S3Adapter,
     SNSAdapter = require('parse-server').SNSAdapter,
-    connect_s4a = require('connect-s4a'),
     cors = require('cors'),
     SimpleSendGridAdapter = require('parse-server-sendgrid-adapter');
 
@@ -15,7 +14,7 @@ var api = new ParseServer({
   appName: 'CommuniKitty',
   verifyUserEmails: true,
   publicServerURL: process.env.PUBLIC_SERVER_URL,
-  serverURL: process.env.SERVER_API_URL || 'http://localhost:5000/api/',
+  serverURL: process.env.SERVER_API_URL || 'http://127.0.0.1:8008',
   databaseURI: process.env.DATABASE_URI || 'mongodb://localhost:27017/dev',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
   appId: process.env.PARSE_APP_ID,
@@ -54,73 +53,7 @@ var api = new ParseServer({
 
 var app = express();
 
-app.set("view engine", "jade");
-
-app.use(cors());
-
-app.use(connect_s4a("53362e02257fb59598457d5948c587b7"));
-
-// Host static files from public/
-app.use(express.static(__dirname + '/public'));
-
-app.get('/*', function(request, response, next) {
-  if (request.url.includes('/api/')) return next();
-  if (request.url.includes('/apps/')) return next();
-
-  if (request.url.includes('/admin/')) {
-    var un = 'bosskitteh';
-  	var pw = '#inurwebz#';
-    if(un == undefined && pw == undefined) { response.end(); return; }
-    if(!request.headers['authorization']){
-        response.writeHead(401, {'WWW-Authenticate': 'Basic realm="Secure Area"', 'Content-Type': 'text/plain'});
-        response.end("You must have credentials for this page");
-        return;
-    }
-    var header=request.headers['authorization']||'',        // get the header
-        token = header.split(/\s+/).pop()||'',            // and the encoded auth token
-        auth = new Buffer(token, 'base64').toString(),    // convert from base64
-        parts = auth.split(/:/),                          // split on colon
-        username = parts[0],
-        password = parts[1];
-    if(username != un || password != pw){
-        response.statusCode = 401
-		    response.end("Incorrect username or password");
-    }
-    else {
-    	response.statusCode = 200;
-    }
-  }
-
-  response.sendFile(__dirname + '/public/index.html');
-});
-
-// var auth = function (request, response, next) {
-//   function unauthorized(res) {
-//     response.set('WWW-Authenticate', 'Basic realm=Authorization Required');
-//     return response.send(401);
-//   };
-//
-//   var user = basicAuth(req);
-//
-//   if (!user || !user.name || !user.pass) {
-//     return unauthorized(res);
-//   } else if (user.name === 'foo' && user.pass === 'bar') {
-//     return next();
-//   } else {
-//     return unauthorized(res);
-//   };
-// };
-//
-// app.get('/admin/', auth, function (req, res) {
-//   res.send(200, 'Authenticated');
-// });
-
-// app.all('/api/*', function(req, res, next){
-//     console.log('General Validations');
-//     next();
-// });
-
-var mountPath = process.env.PARSE_MOUNT || '/api';
+var mountPath = '/'; //process.env.PARSE_MOUNT || '/api';
 app.use(mountPath, api);
 
 // Catch all unknown routes.
@@ -133,8 +66,6 @@ app.use(mountPath, api);
  */
 var port = process.env.PORT || 5000;
 var server = http.createServer(app);
-
-
 
 server.listen(port, function() {
   console.log('Cloud Code Webhooks server running on port ' + port + '.');

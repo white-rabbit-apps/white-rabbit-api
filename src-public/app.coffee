@@ -38,6 +38,10 @@ app.config (
     url: '/beta/:status'
     controller: 'BetaCtrl'
     templateUrl: 'landing.html'
+  .state 'verify',
+    url: '/verify/:username/:token'
+    controller: 'UserCtrl'
+    templateUrl: 'verify.html'
   .state 'entry',
     url: '/cat/:username/:entryId'
     controller: 'AnimalCtrl'
@@ -59,30 +63,31 @@ app.config (
     controller: 'HashtagCtrl'
     templateUrl: 'hashtag.html'
 
-  .state 'trait',
+
+  .state 'traits',
     url: '/admin/traits'
-    controller: 'TraitCtrl'
-    templateUrl: 'trait.html'
+    controller: 'TraitsCtrl'
+    templateUrl: 'admin/traits.html'
   .state 'animals',
     url: '/admin/animals'
     controller: 'AnimalsCtrl'
-    templateUrl: 'animals.html'
+    templateUrl: 'admin/animals.html'
   .state 'locations',
     url: '/admin/locations'
     controller: 'LocationsCtrl'
-    templateUrl: 'locations.html'
+    templateUrl: 'admin/locations.html'
   .state 'users',
     url: '/admin/users'
     controller: 'UsersCtrl'
-    templateUrl: 'users.html'
+    templateUrl: 'admin/users.html'
   .state 'breeds',
     url: '/admin/breeds'
     controller: 'BreedsCtrl'
-    templateUrl: 'breeds.html'
+    templateUrl: 'admin/breeds.html'
   .state 'products',
     url: '/admin/products'
     controller: 'ProductsCtrl'
-    templateUrl: 'products.html'
+    templateUrl: 'admin/products.html'
 
 
   $urlRouterProvider.otherwise '/'
@@ -91,7 +96,6 @@ app.config (
   ParseProvider.initialize(
     "IWr9xzTirLbjXH80mbTCtT9lWB73ggQe3PhA6nPg", # Application ID
     "Yxdst3hz76abMoAwG7FLh0NwDmPvYHFDUPao9WJJ"
-#    "SkDTdS8SBGzO9BkRHR3H8kwxCLJSvKsAe1jeOTnW"  # REST API Key
   )
 
   Parse.initialize("IWr9xzTirLbjXH80mbTCtT9lWB73ggQe3PhA6nPg", "Yxdst3hz76abMoAwG7FLh0NwDmPvYHFDUPao9WJJ")

@@ -1,4 +1,18 @@
 script.
+  $(function() {
+    console.log("got here");
+    $(".tab-button").click(function(e) {
+      var section = $(this).data("section");
+      alert(section);
+      $(".tab-button").removeClass("active");
+      $(this).addClass("active");
+      $(".tab-contents").hide();    
+      $(".tab-contents[data-section='" + section + "']").show();    
+    })
+
+    $(".tab-button").first().click();
+  })
+
   if (entryId)
     console.log('has entry id')
   else
@@ -41,7 +55,13 @@ script.
         a(href="/location/{{animal.shelter.short_name}}")
           | {{animal.shelter.name}}
 
-  .about  
+  .tab-buttons
+    .tab-button(data-section="about")
+      | About
+    .tab-button(data-section="timeline")
+      | Timeline
+      
+  .tab-contents.about(data-section="about")
     if animal && animal.intro
       .field
         .label
@@ -95,7 +115,7 @@ script.
 
 
 
-  .timeline
+  .tab-contents.timeline(data-section="timeline")
     .line
     .entries
       .entry-container(ng-repeat="entry in entries" ng-class-even="'right'" ng-class-odd="'left'")

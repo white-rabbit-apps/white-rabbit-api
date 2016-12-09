@@ -2,7 +2,6 @@ doctype html
 html(lang="en", ng-app="white-rabbit", ng-cloak, class="ng-cloak")
   head
     title(ng-bind="title")
-    //- base(href="/")
     meta(name='fragment', content='!')
 
     meta(property='og:title', content='{{title}}')
@@ -21,38 +20,38 @@ html(lang="en", ng-app="white-rabbit", ng-cloak, class="ng-cloak")
 
   body(class="{{bodyClass}}")
     #wrapper
-      nav.navbar.navbar-static-top(role='navigation', style='margin-bottom:0px;margin-top:60px;position:fixed;', ng-show='!hideNavigation')
-        .navbar-header
-          a.navbar-brand(href='/') 
-            img(src='/img/main_logo.png', width='170')
-        .sidebar(role='navigation', style="display: none;")
-          .sidebar-nav.navbar-collapse
-            ul#side-menu.nav.in
-              li
-                a.active(href='/admin/animals')
-                  i.fa.fa-paw.fa-fw
-                  |  Animals
-                ul.nav.nav-second-level
-                  li
-                    a(href='/admin/breeds')
-                      i.fa.fa-code-fork.fa-fw
-                      |  Breeds
-                  li
-                    a(href='/admin/traits')
-                      i.fa.fa-smile-o.fa-fw
-                      |  Traits
-              li
-                a(href='/admin/locations')
-                  i.fa.fa-location-arrow.fa-fw
-                  |  Locations
-              li
-                a(href='#/admin/products')
-                  i.fa.fa-list.fa-fw
-                  |  Products
-              li
-                a(href='/admin/users')
-                  i.fa.fa-group.fa-fw
-                  |  Users
+      //- nav.navbar.navbar-static-top(role='navigation', style='margin-bottom:0px;margin-top:60px;position:fixed;', ng-show='!hideNavigation')
+      //-   .navbar-header
+      //-     a.navbar-brand(href='/') 
+      //-       img(src='/img/main_logo.png', width='170')
+      //-   .sidebar(role='navigation', style="display: none;")
+      //-     .sidebar-nav.navbar-collapse
+      //-       ul#side-menu.nav.in
+      //-         li
+      //-           a.active(href='/admin/animals')
+      //-             i.fa.fa-paw.fa-fw
+      //-             |  Animals
+      //-           ul.nav.nav-second-level
+      //-             li
+      //-               a(href='/admin/breeds')
+      //-                 i.fa.fa-code-fork.fa-fw
+      //-                 |  Breeds
+      //-             li
+      //-               a(href='/admin/traits')
+      //-                 i.fa.fa-smile-o.fa-fw
+      //-                 |  Traits
+      //-         li
+      //-           a(href='/admin/locations')
+      //-             i.fa.fa-location-arrow.fa-fw
+      //-             |  Locations
+      //-         li
+      //-           a(href='#/admin/products')
+      //-             i.fa.fa-list.fa-fw
+      //-             |  Products
+      //-         li
+      //-           a(href='/admin/users')
+      //-             i.fa.fa-group.fa-fw
+      //-             |  Users
 
       #page-wrapper
         main.container(ui-view)
